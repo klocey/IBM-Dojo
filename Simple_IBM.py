@@ -43,12 +43,24 @@ def death(inds, spes):
 
 # dispersal
 '''
-four different list 
-1. inds
-2. spes
-3. x_coords
-4. y_coords
+Here are the steps to code up:
+
+1. Declare a function called "dispersal" and pass it inds, spes, x_coords, and y_coords.
+2. Declare a 'for' loop and have it iterate a number of times equal to the length of inds. 
+3. Inside the for loop: 
+  a. Choose a number at random using the 'randint' function. The number should be between 0 and the length of inds list.
+  The number will represent an index in the four lists. Assign the number to an object called 'i'. 
+  b. Choose from the numbers [-1, 0, 1] at random using the 'choice' function. Assign the number to an object called 'direction'. 
+      -1 means move left, 0 means stay put, 1 means move right
+  c. add the value of 'direction' to x_coords[i].
+  d. Choose from the numbers [-1, 0, 1] at random using the 'choice' function. Assign the number to an object called 'direction'. 
+      -1 means move down, 0 means stay put, 1 means move up
+  e. add the value of 'direction' to y_coords.
+4. Once the loop has completed, return inds, spes, x_coords, and y_coords.
+
+The function results in moving individuals in combinations of up, down, left, right, or no movement at all.
 '''
+
 
 # Part 3(below): declare objects/variables
 
