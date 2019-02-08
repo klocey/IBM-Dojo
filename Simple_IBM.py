@@ -41,6 +41,14 @@ def death(inds, spes):
         print(len(i1),len(s1))
   return i1, s1
 
+# dispersal
+'''
+four different list 
+1. inds
+2. spes
+3. x_coords
+4. y_coords
+'''
 
 # Part 3(below): declare objects/variables
 
