@@ -60,6 +60,10 @@ Here are the steps to code up:
 
 The function results in moving individuals in combinations of up, down, left, right, or no movement at all.
 '''
+def dispersal(inds, spes, x_coords, y_coords):
+    for num in spes:
+        
+return inds, spes, x_coords, y_coords
 
 
 # Part 3(below): declare objects/variables
