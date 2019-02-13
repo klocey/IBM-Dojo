@@ -4,8 +4,10 @@ from random import choice, uniform, randint
 import sys
 import os
 
+# we import modules 
+
 # Part 1 (above): Import modules
-mydir = os.path.expanduser('~/GitHub/IBM-Dojo/') 
+mydir = os.path.expanduser('~/GitHub/IBM-Dojo/') # use os to open a path in the same directory to GitHub then IBM-Dojo
 sys.path.append(mydir)
 
 ###### Model Description ##############
@@ -63,10 +65,10 @@ S = 100  # Number of species
 inds = list(range(N)) # inds is a list from 0 to 999, where values are individual IDs
 spes = np.random.randint(0, S, N).tolist() # 
 x_coords = [0]*N # have x_coords list be for 0 to the number of individual
-y_coords = [0]*N # have x_coords list be for 0 to the number of individual
+y_coords = [0]*N # have y_coords list be for 0 to the number of individual
 
 # Part 4 (Below): run model
-OUT = open(mydir + 'SimData/inds_data.csv', 'w+') 
+OUT = open(mydir + 'SimData/inds_data.csv', 'w+') # open mydir open SimData open inds_data.cvs, Write 
 OUT.close()
 
 OUT = open(mydir + 'SimData/spes_data.csv', 'w+')
@@ -78,7 +80,7 @@ OUT.close()
 OUT = open(mydir + 'SimData/y_coords_data.csv', 'w+')
 OUT.close()
 
-for x in range(10000):
+for x in range(1000):
   inds, spes, x_coords, y_coords = reproduce(inds, spes, x_coords, y_coords)
   inds, spes, x_coords, y_coords = death(inds, spes,x_coords, y_coords)
   inds, spes, x_coords, y_coords = dispersal(inds, spes, x_coords, y_coords)
