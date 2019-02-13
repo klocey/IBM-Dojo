@@ -32,6 +32,8 @@ def reproduce(inds, spes, x_coords, y_coords): #Made a function an called it rep
         s1.extend([val]) # list of spes is gonna be extend by val list
         max1 = max(inds) + 1 # get the max number of inds and assign it to max1
         i1.extend([max1]) # extend i1 by max1 which has assigned value of max(inds)
+        x1.extend([max1])
+        y1.extend([max1])
   return i1, s1, x1, y1 # we return i1, s1, x1 and y1  as we dont want the came data from the other list 
                         # they would both point at the same object
 
@@ -47,6 +49,8 @@ def death(inds, spes, x_coords, y_coords):# made a function called death and ass
     if x == 1: # if x is choosen then
         i1.pop(0) # in list of i1 take out index (0)
         s1.pop(0) # in list of s1 take out index (0)
+        x1.pop(1)
+        y1.pop(1)
   return i1, s1, x1, y1 # we return i1, s1, x1 and y1  as we dont want the came data from the other list 
                         # they would both point at the same object
 
