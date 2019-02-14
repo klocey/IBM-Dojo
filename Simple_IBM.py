@@ -3,6 +3,7 @@ import numpy as np
 from random import choice, uniform, randint
 import sys
 import os
+import matplotlib.pyplot as plt
 
 # we import modules 
 
@@ -32,8 +33,7 @@ def reproduce(inds, spes, x_coords, y_coords): #Made a function an called it rep
         s1.extend([val]) # list of spes is gonna be extend by val list
         max1 = max(inds) + 1 # get the max number of inds and assign it to max1
         i1.extend([max1]) # extend i1 by max1 which has assigned value of max(inds)
-        x1.extend([max1])
-        y1.extend([max1])
+      
   return i1, s1, x1, y1 # we return i1, s1, x1 and y1  as we dont want the came data from the other list 
                         # they would both point at the same object
 
@@ -49,8 +49,6 @@ def death(inds, spes, x_coords, y_coords):# made a function called death and ass
     if x == 1: # if x is choosen then
         i1.pop(0) # in list of i1 take out index (0)
         s1.pop(0) # in list of s1 take out index (0)
-        x1.pop(1)
-        y1.pop(1)
   return i1, s1, x1, y1 # we return i1, s1, x1 and y1  as we dont want the came data from the other list 
                         # they would both point at the same object
 
@@ -65,6 +63,8 @@ def dispersal(inds, spes, x_coords, y_coords):
 
 N = 1000 # Number of individual organisms
 S = 100  # Number of species
+
+Ns = []
 
 inds = list(range(N)) # inds is a list from 0 to 999, where values are individual IDs
 spes = np.random.randint(0, S, N).tolist() # 
@@ -90,24 +90,26 @@ OUT = open(mydir + 'SimData/y_coords_data.csv', 'w+') # open mydir open SimData 
 OUT.close()                                       # and create a file named y_coords_data.csv 
                                                   # always closed the file that was just open
 
-
 for x in range(1000):
   inds, spes, x_coords, y_coords = reproduce(inds, spes, x_coords, y_coords)
 # take reprodution list values and assign them to inds, spes, x_coords, y_coords
   inds, spes, x_coords, y_coords = death(inds, spes,x_coords, y_coords)
 # take death list values and assign them to inds, spes, x_coords, y_coords
   inds, spes, x_coords, y_coords = dispersal(inds, spes, x_coords, y_coords)
+
+float
+
 # take dispersal list values and assign them to inds, spes, x_coords, y_coords
 
-  len_list = [len(inds), len(spes), len(x_coords), len(y_coords)]
+len_list = [len(inds), len(spes), len(x_coords), len(y_coords)]
 # get the length of inds, spes, x_coords and y_coords then assign the value to 
 # the variable of len_list
-  if min(len_list) != max(len_list):
+if min(len_list) != max(len_list):
 # if min does not equal to max then print
-      print(len_list)
+    print(len_list)
       
   # write data to file every 10 time steps
-  if x%25 == 0:
+if x%25 == 0:
 # if 25 equal to 0 while running the the program 1000 time then gather data
 
     OUT = open(mydir + 'SimData/inds_data.csv', 'a+')
@@ -116,7 +118,7 @@ for x in range(1000):
                                     # of oulis
     outlist = outlist.replace(" ", "") # Use the variable of outlist and 
                                        # replace(x, y) all " " with "" then 
-                                       # assign the value back to outlist
+                                   # assign the value back to outlist
     OUT.write(outlist)
     OUT.close()
 
