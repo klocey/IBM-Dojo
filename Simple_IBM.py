@@ -68,7 +68,8 @@ def dispersal(inds, spes, x_coords, y_coords):
 N = 1000 # Number of individual organisms
 S = 100  # Number of species
 
-#Ns = []
+Ns = []
+Ss = []
 
 inds = list(range(N)) # inds is a list from 0 to 999, where values are individual IDs
 spes = np.random.randint(0, S, N).tolist() # 
@@ -95,25 +96,65 @@ OUT.close()                                       # and create a file named y_co
                                                   # always closed the file that was just open
 
 for x in range(1000):
-  inds, spes, x_coords, y_coords = reproduce(inds, spes, x_coords, y_coords)
+  j = choice([0, 1, 2])
+  if j == 0:
+    inds, spes, x_coords, y_coords = reproduce(inds, spes, x_coords, y_coords)
   # take reprodution list values and assign them to inds, spes, x_coords, y_coords
-  inds, spes, x_coords, y_coords = death(inds, spes,x_coords, y_coords)
+  elif j == 1:
+    inds, spes, x_coords, y_coords = death(inds, spes,x_coords, y_coords)
   # take death list values and assign them to inds, spes, x_coords, y_coords
-  inds, spes, x_coords, y_coords = dispersal(inds, spes, x_coords, y_coords)
+  elif j == 2:
+    inds, spes, x_coords, y_coords = dispersal(inds, spes, x_coords, y_coords)
 
-  #float
+  Ni = len(inds)
+  Si = len(list(set(spes)))
+  #if Ni == 0: break
+  if Ni <= 100: break
+      
+  Ns.append(Ni)
+  Ss.append(Si)
+  
+'''
+  1. Declare an empty list called "Ns" around line 68.
 
+  2. Get the total abundance of your community (i.e., total number of individuals) somewhere around line 101. Assign it to a float object called "Ni".
+
+  3. Use python's 'append' function to append the value of 'Ni' to the 'Ns' list. When the main loop is finished, you will then have a list that will allow you to analyze how the size of the community changes through time.
+
+  4. a. Use something like plt.plot(Ns, ...) to plot Ns vs. time. 
+     b. Use plt.show() to display your figure.
+
+  5. Add comments to your code to demonstrate that you understand it.
+
+  6. Git add, commit, push, and pull request as much as you like. If you submit a pull request, any subsequent commits and pushes you make after that point will automatically be added to your pull request. No worries.
+
+'''
+
+fig = plt.figure()
+fig.add_subplot(2, 2, 1)
+plt.plot(Ns, color = "c")
+plt.yscale('log')
+
+fig.add_subplot(2, 2, 2)
+plt.plot(Ss, color = "m")  
+plt.yscale('log')
+fig.show()
+
+fig.add_subplot(2, 2, 3)
+plt.scatter(x_coords, y_coords, color = "0.5")
+fig.show()
+
+'''
   # take dispersal list values and assign them to inds, spes, x_coords, y_coords
-
-  len_list = [len(inds), len(spes), len(x_coords), len(y_coords)]
+len_list = [len(inds), len(spes), len(x_coords), len(y_coords)]
   # get the length of inds, spes, x_coords and y_coords then assign the value to 
   # the variable of len_list
-  if min(len_list) != max(len_list):
+if min(len_list) != max(len_list):
   # if min does not equal to max then print
-    print(len_list)
+  print(len_list)
       
   # write data to file every 10 time steps
-  if x%25 == 0:
+if x%25 == 0:
   # if 25 equal to 0 while running the the program 1000 time then gather data
 
     OUT = open(mydir + 'SimData/inds_data.csv', 'a+')
@@ -155,3 +196,4 @@ for x in range(1000):
                                        # assign the value back to outlist
     OUT.write(outlist)
     OUT.close()
+'''
