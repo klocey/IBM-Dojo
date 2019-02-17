@@ -62,6 +62,9 @@ def dispersal(inds, spes, x_coords, y_coords):
     x_coords[i] += uniform(-1, 1) # += is a shortcut for x = x + y 
     y_coords[i] += uniform(-1, 1) # += is a shortcut for y = x + y 
   return inds, spes, x_coords, y_coords
+
+def immirgration(inds, spes, x_coords, y_coords):
+  r
   
 # Part 3(below): declare objects/variables
 
