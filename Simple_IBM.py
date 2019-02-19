@@ -39,9 +39,9 @@ def reproduce(inds, spes, x_coords, y_coords): #Made a function an called it rep
   return i1, s1, x1, y1 # we return i1, s1, x1 and y1  as we dont want the came data from the other list 
                         # they would both point at the same object
 
-def death(inds, spes, x_coords, y_coords):# made a function called death and assigned the list of inds, spes, x_coords and y_coords
+def death(inds, spes, x_coords, y_coords):# mdade a function called death and assigned the list of inds, spes, x_coords and y_coords
   
-  i1 = list(inds) # list of inds and assigned it the variable of i1
+  i1 = list(inds) # list of inds and assigne it the variable of i1
   s1 = list(spes) # list of spes and assigned it the variable of s1
   x1 = list(x_coords) # list of x_coords and assign it the variable of x1
   y1 = list(y_coords) # list of y_coords and assin it the variable of y1
@@ -63,16 +63,25 @@ def dispersal(inds, spes, x_coords, y_coords):
     y_coords[i] += uniform(-1, 1) # += is a shortcut for y = x + y 
   return inds, spes, x_coords, y_coords
 
-def immirgration(inds, spes, x_coords, y_coords):
-  r
+def immigration(inds, spes, x_coords, y_coords, S):
+  m = 8 #m is the immigration rate
+  for i in range(m): # number of orgrainism immirgerating per gen
+    s = randint(0, S)
+    inds.append(max(inds)+1)
+    spes.append(s)
+    x_coords.append(uniform(min(x_coords), max(x_coords)))
+    y_coords.append(uniform(min(y_coords), max(y_coords)))
+
+  return inds, spes, x_coords, y_coords
   
 # Part 3(below): declare objects/variables
 
-N = 1000 # Number of individual organisms
+N = 1000 #individual organisms
 S = 100  # Number of species
 
 Ns = []
 Ss = []
+iS = []
 
 inds = list(range(N)) # inds is a list from 0 to 999, where values are individual IDs
 spes = np.random.randint(0, S, N).tolist() # 
@@ -99,24 +108,29 @@ OUT.close()                                       # and create a file named y_co
                                                   # always closed the file that was just open
 
 for x in range(1000):
-  j = choice([0, 1, 2])
+  j = choice([0, 1, 2, 3])
   if j == 0:
     inds, spes, x_coords, y_coords = reproduce(inds, spes, x_coords, y_coords)
   # take reprodution list values and assign them to inds, spes, x_coords, y_coords
-  elif j == 1:
+  elif j == 1: 
     inds, spes, x_coords, y_coords = death(inds, spes,x_coords, y_coords)
   # take death list values and assign them to inds, spes, x_coords, y_coords
   elif j == 2:
     inds, spes, x_coords, y_coords = dispersal(inds, spes, x_coords, y_coords)
+  elif j == 3:
+    inds, spes, x_coords, y_coords = immigration(inds, spes, x_coords, y_coords, S)
+  
+
 
   Ni = len(inds)
   Si = len(list(set(spes)))
   #if Ni == 0: break
-  if Ni <= 100: break
+  if Ni <= 1: break
       
   Ns.append(Ni)
   Ss.append(Si)
   
+
 '''
   1. Declare an empty list called "Ns" around line 68.
 
@@ -146,6 +160,13 @@ fig.show()
 fig.add_subplot(2, 2, 3)
 plt.scatter(x_coords, y_coords, color = "0.5")
 fig.show()
+
+'''
+fig.add_subplot(2, 2, 4)
+plt.scatter(ii, color = "1")
+fig.show()
+'''
+
 
 '''
   # take dispersal list values and assign them to inds, spes, x_coords, y_coords
