@@ -79,9 +79,12 @@ def immigration(inds, spes, x_coords, y_coords, S):
 N = 1000 #individual organisms
 S = 100  # Number of species
 
+areas = []
 Ns = []
 Ss = []
 iS = []
+gens = []
+ms = range(30)
 
 inds = list(range(N)) # inds is a list from 0 to 999, where values are individual IDs
 spes = np.random.randint(0, S, N).tolist() # 
@@ -102,73 +105,42 @@ OUT = open(mydir + 'SimData/x_coords_data.csv', 'w+')# open mydir open SimData o
 OUT.close()                                       # and create a file named x_coords_data.csv 
                                                   # always closed the file that was just open
 
-
 OUT = open(mydir + 'SimData/y_coords_data.csv', 'w+') # open mydir open SimData open y_coords_data.cvs, Write 
 OUT.close()                                       # and create a file named y_coords_data.csv 
                                                   # always closed the file that was just open
-
-for x in range(1000):
-  j = choice([0, 1, 2, 3])
-  if j == 0:
-    inds, spes, x_coords, y_coords = reproduce(inds, spes, x_coords, y_coords)
-  # take reprodution list values and assign them to inds, spes, x_coords, y_coords
-  elif j == 1: 
-    inds, spes, x_coords, y_coords = death(inds, spes,x_coords, y_coords)
-  # take death list values and assign them to inds, spes, x_coords, y_coords
-  elif j == 2:
-    inds, spes, x_coords, y_coords = dispersal(inds, spes, x_coords, y_coords)
-  elif j == 3:
-    inds, spes, x_coords, y_coords = immigration(inds, spes, x_coords, y_coords, S)
   
-
-
-  Ni = len(inds)
-  Si = len(list(set(spes)))
-  #if Ni == 0: break
-  if Ni <= 1: break
-      
-  Ns.append(Ni)
-  Ss.append(Si)
   
+for m in ms:
+  t = 0 # start at generation 0  
+  while len(inds) > 0:
+    t += 1 # increment generation
+    j = choice([0, 1, 2, 3])
+    if j == 0:
+      inds, spes, x_coords, y_coords = reproduce(inds, spes, x_coords, y_coords)
+    # take reprodution list values and assign them to inds, spes, x_coords, y_coords
+    elif j == 1: 
+      inds, spes, x_coords, y_coords = death(inds, spes,x_coords, y_coords)
+    # take death list values and assign them to inds, spes, x_coords, y_coords
+    elif j == 2:
+      inds, spes, x_coords, y_coords = dispersal(inds, spes, x_coords, y_coords)
+    elif j == 3:
+      inds, spes, x_coords, y_coords = immigration(inds, spes, x_coords, y_coords, S)
 
-'''
-  1. Declare an empty list called "Ns" around line 68.
-
-  2. Get the total abundance of your community (i.e., total number of individuals) somewhere around line 101. Assign it to a float object called "Ni".
-
-  3. Use python's 'append' function to append the value of 'Ni' to the 'Ns' list. When the main loop is finished, you will then have a list that will allow you to analyze how the size of the community changes through time.
-
-  4. a. Use something like plt.plot(Ns, ...) to plot Ns vs. time. 
-     b. Use plt.show() to display your figure.
-
-  5. Add comments to your code to demonstrate that you understand it.
-
-  6. Git add, commit, push, and pull request as much as you like. If you submit a pull request, any subsequent commits and pushes you make after that point will automatically be added to your pull request. No worries.
-
-'''
-
-fig = plt.figure()
-fig.add_subplot(2, 2, 1)
-plt.plot(Ns, color = "c")
-plt.yscale('log')
-
-fig.add_subplot(2, 2, 2)
-plt.plot(Ss, color = "m")  
-plt.yscale('log')
-fig.show()
-
-fig.add_subplot(2, 2, 3)
-plt.scatter(x_coords, y_coords, color = "0.5")
-fig.show()
-
-'''
-fig.add_subplot(2, 2, 4)
-plt.scatter(ii, color = "1")
-fig.show()
-'''
+    Ni = len(inds)
+    Si = len(list(set(spes)))
+    if Ni <= 0: break    
+    
+    Ns.append(Ni)
+    Ss.append(Si)
+    gens.append(t)
+    A = (max(x_coords) - min(x_coords)) * (max(y_coords) - min(y_coords))
+    # A = area = length * height
+    areas.append(A)
 
 
-'''
+''' 
+ALL OF THIS COMMENTED OUT CODE BELONGS IN THE MAIN FOR LOOP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
   # take dispersal list values and assign them to inds, spes, x_coords, y_coords
 len_list = [len(inds), len(spes), len(x_coords), len(y_coords)]
   # get the length of inds, spes, x_coords and y_coords then assign the value to 
@@ -221,3 +193,39 @@ if x%25 == 0:
     OUT.write(outlist)
     OUT.close()
 '''
+
+
+# Part 5 make figures (show or save to file)
+
+fig = plt.figure()
+# N vs. time
+fig.add_subplot(2, 2, 1)
+plt.plot(Ns, color = "c")
+plt.xlabel()
+plt.ylabel()
+plt.yscale('log')
+
+
+fig.add_subplot(2, 2, 2)
+# S vs. time
+plt.plot(Ss, color = "m")  
+plt.xlabel()
+plt.ylabel()
+plt.yscale('log')
+
+
+fig.add_subplot(2, 2, 3)
+# area of occupied landscape vs. time (Does the area just keep increasing?)
+plt.scatter(x_coords, y_coords, color = "0.5")
+plt.xlabel()
+plt.ylabel()
+
+
+fig.add_subplot(2, 2, 4)
+# immigration rate vs. time to extinction (how does immigration rate effect how long the community lasts?)
+plt.scatter(m, gens, color = "1")
+plt.xlabel()
+plt.ylabel()
+
+fig.show()
+# plt.savefig()
