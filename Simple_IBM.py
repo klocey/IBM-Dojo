@@ -64,7 +64,7 @@ def dispersal(inds, spes, x_coords, y_coords):
   return inds, spes, x_coords, y_coords
 
 def immigration(inds, spes, x_coords, y_coords, S):
-  m = 8 #m is the immigration rate
+  m = 8 # m is the immigration rate
   for i in range(m): # number of orgrainism immirgerating per gen
     s = randint(0, S)
     inds.append(max(inds)+1)
@@ -129,23 +129,6 @@ for x in range(1000):
       
   Ns.append(Ni)
   Ss.append(Si)
-  
-
-'''
-  1. Declare an empty list called "Ns" around line 68.
-
-  2. Get the total abundance of your community (i.e., total number of individuals) somewhere around line 101. Assign it to a float object called "Ni".
-
-  3. Use python's 'append' function to append the value of 'Ni' to the 'Ns' list. When the main loop is finished, you will then have a list that will allow you to analyze how the size of the community changes through time.
-
-  4. a. Use something like plt.plot(Ns, ...) to plot Ns vs. time. 
-     b. Use plt.show() to display your figure.
-
-  5. Add comments to your code to demonstrate that you understand it.
-
-  6. Git add, commit, push, and pull request as much as you like. If you submit a pull request, any subsequent commits and pushes you make after that point will automatically be added to your pull request. No worries.
-
-'''
 
 fig = plt.figure()
 fig.add_subplot(2, 2, 1)
@@ -168,7 +151,7 @@ fig.show()
 '''
 
 
-'''
+
   # take dispersal list values and assign them to inds, spes, x_coords, y_coords
 len_list = [len(inds), len(spes), len(x_coords), len(y_coords)]
   # get the length of inds, spes, x_coords and y_coords then assign the value to 
@@ -220,4 +203,4 @@ if x%25 == 0:
                                        # assign the value back to outlist
     OUT.write(outlist)
     OUT.close()
-'''
+    
