@@ -3,18 +3,15 @@ import numpy as np
 from random import choice, uniform, randint
 import sys
 import os
-import matplotlib.pyplot as plt
-
-# we import modules 
-
 # Part 1 (above): Import modules
+
 mydir = os.path.expanduser('~/GitHub/IBM-Dojo/') # use os to open a path in the same directory to GitHub then IBM-Dojo
 sys.path.append(mydir)
 
 ###### Model Description ##############
 
 '''
-An individual-based model to simulate birth and death among species
+An individual-based model to simulate birth and death among species...
 '''
 
 # Part 2 (below): define functions
@@ -63,8 +60,8 @@ def dispersal(inds, spes, x_coords, y_coords):
     y_coords[i] += uniform(-1, 1) # += is a shortcut for y = x + y 
   return inds, spes, x_coords, y_coords
 
-def immigration(inds, spes, x_coords, y_coords, S):
-  m = 8 #m is the immigration rate
+
+def immigration(inds, spes, x_coords, y_coords, S, m):
   for i in range(m): # number of orgrainism immirgerating per gen
     s = randint(0, S)
     inds.append(max(inds)+1)
@@ -73,7 +70,8 @@ def immigration(inds, spes, x_coords, y_coords, S):
     y_coords.append(uniform(min(y_coords), max(y_coords)))
 
   return inds, spes, x_coords, y_coords
-  
+
+    
 # Part 3(below): declare objects/variables
 
 N = 1000 #individual organisms
@@ -84,14 +82,10 @@ Ns = []
 Ss = []
 iS = []
 gens = []
-ms = range(30)
+ms = list(range(10))
 
-inds = list(range(N)) # inds is a list from 0 to 999, where values are individual IDs
-spes = np.random.randint(0, S, N).tolist() # 
-x_coords = [0]*N # have x_coords list be for 0 to the lsit of individual
-y_coords = [0]*N # have y_coords list be for 0 to the list of individual
 
-# Part 4 (Below): run model
+# part 4 (below) open and clear data files
 # csv = comma separated values
 OUT = open(mydir + 'SimData/inds_data.csv', 'w+') # open mydir open SimData open inds_data.cvs, Write 
 OUT.close()                                       # and create a file named inds_data.csv 
@@ -109,8 +103,20 @@ OUT = open(mydir + 'SimData/y_coords_data.csv', 'w+') # open mydir open SimData 
 OUT.close()                                       # and create a file named y_coords_data.csv 
                                                   # always closed the file that was just open
   
+OUT = open(mydir + 'SimData/Complied_Data.csv', 'w+')
+OUT.write("m,t,N,S")
+OUT.close()
+
   
-for m in ms:
+# Part 5 (Below): run model  
+for x in range(100):
+  m = choice(ms)
+  print(m)
+  inds = list(range(N)) # inds is a list from 0 to 999, where values are individual IDs
+  spes = np.random.randint(0, S, N).tolist() # 
+  x_coords = [0]*N # have x_coords list be for 0 to the lsit of individual
+  y_coords = [0]*N # have y_coords list be for 0 to the list of individual
+
   t = 0 # start at generation 0  
   while len(inds) > 0:
     t += 1 # increment generation
@@ -124,103 +130,60 @@ for m in ms:
     elif j == 2:
       inds, spes, x_coords, y_coords = dispersal(inds, spes, x_coords, y_coords)
     elif j == 3:
-      inds, spes, x_coords, y_coords = immigration(inds, spes, x_coords, y_coords, S)
+      inds, spes, x_coords, y_coords = immigration(inds, spes, x_coords, y_coords, S, m)
 
     Ni = len(inds)
     Si = len(list(set(spes)))
-    if Ni <= 0: break    
-    
+    if Ni <= 0:
+      gens.append(t)   
+      
     Ns.append(Ni)
     Ss.append(Si)
-    gens.append(t)
-    A = (max(x_coords) - min(x_coords)) * (max(y_coords) - min(y_coords))
-    # A = area = length * height
+
+    if len(x_coords) == 0: A = 0
+    else: A = (max(x_coords) - min(x_coords)) * (max(y_coords) - min(y_coords))
+      # A = area = length * height
     areas.append(A)
     
-
-''' 
-ALL OF THIS COMMENTED OUT CODE BELONGS IN THE MAIN FOR LOOP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  # take dispersal list values and assign them to inds, spes, x_coords, y_coords
-len_list = [len(inds), len(spes), len(x_coords), len(y_coords)]
-  # get the length of inds, spes, x_coords and y_coords then assign the value to 
-  # the variable of len_list
-if min(len_list) != max(len_list):
-  # if min does not equal to max then print
-  print(len_list)
+    # take dispersal list values and assign them to inds, spes, x_coords, y_coords
+    len_list = [len(inds), len(spes), len(x_coords), len(y_coords)]
+    # get the length of inds, spes, x_coords and y_coords then assign the value to 
+    # the variable of len_list
       
-  # write data to file every 10 time steps
-if x%25 == 0:
-  # if 25 equal to 0 while running the the program 1000 time then gather data
-    OUT = open(mydir + 'SimData/inds_data.csv', 'a+')
-    outlist = str(inds).strip('[]') # in the list of inds strip all "[]" from 
-                                    # the list then assigen it to the variable 
-                                    # of oulis
-    outlist = outlist.replace(" ", "") # Use the variable of outlist and 
-                                       # replace(x, y) all " " with "" then 
-                                   # assign the value back to outlist
-    OUT.write(outlist)
-    OUT.close()
-    OUT = open(mydir + 'SimData/spes_data.csv', 'a+')
-    outlist = str(spes).strip('[]') # in the list of spes strip all "[]" from 
-                                    # the list then assigen it to the variable 
-                                    # of oulist
-    outlist = outlist.replace(" ", "") # Use the variable of outlist and 
-                                       # replace(x, y) all " " with "" then 
-                                       # assign the value back to outlist
-    OUT.write(outlist)
-    OUT.close()
-    OUT = open(mydir + 'SimData/x_coords_data.csv', 'a+')
-    outlist = str(x_coords).strip('[]') # in the list of x_coords strip all "[]" from 
-                                    # the list then assigen it to the variable 
-                                    # of oulist
-    outlist = outlist.replace(" ", "") # Use the variable of outlist and 
-                                       # replace(x, y) all " " with "" then 
-                                       # assign the value back to outlist
-    OUT.write(outlist)
-    OUT.close()
-    OUT = open(mydir + 'SimData/y_coords_data.csv', 'a+')
-    outlist = str(y_coords).strip('[]') # in the list of y_coords strip all "[]" from 
-                                    # the list then assigen it to the variable 
-                                    # of oulist
-    outlist = outlist.replace(" ", "") # Use the variable of outlist and 
-                                       # replace(x, y) all " " with "" then 
-                                       # assign the value back to outlist
-    OUT.write(outlist)
-    OUT.close()
-'''
+    # write data to file every 10 time steps
+    if t%10 == 0:
+    # if 25 equal to 0 while running the the program 1000 time then gather data
+      OUT = open(mydir + 'SimData/inds_data.csv', 'a+')
+      outlist = str(inds).strip('[]') # in the list of inds strip all "[]" from the list then assigen it to the variable of outlist
+      outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
+      OUT.write(outlist)
+      OUT.close()
+    
+    
+      OUT = open(mydir + 'SimData/spes_data.csv', 'a+')
+      outlist = str(spes).strip('[]') # in the list of spes strip all "[]" from the list then assigen it to the variable of oulist
+      outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
+      OUT.write(outlist)
+      OUT.close()
+    
+    
+      OUT = open(mydir + 'SimData/x_coords_data.csv', 'a+')
+      outlist = str(x_coords).strip('[]') # in the list of x_coords strip all "[]" from the list then assigen it to the variable of outlist
+      outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
+      OUT.write(outlist)
+      OUT.close()
+    
+      OUT = open(mydir + 'SimData/y_coords_data.csv', 'a+')
+      outlist = str(y_coords).strip('[]') # in the list of y_coords strip all "[]" from the list then assigen it to the variable of oulist
+      outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
+      OUT.write(outlist)
+      OUT.close()
+   
+      OUT = open(mydir + 'SimData/Complied_Data.csv', 'a+')
+      outlist = str([m,t,Ni,Si]).strip('[]') # in the list of y_coords strip all "[]" from the list then assigen it to the variable of oulist
+      outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
+      OUT.write(outlist)
+      OUT.close()   
 
+  
 
-# Part 5 make figures (show or save to file)
-
-fig = plt.figure()
-# N vs. time
-fig.add_subplot(2, 2, 1)
-plt.plot(Ns, color = "c")
-plt.xlabel()
-plt.ylabel()
-plt.yscale('log')
-
-
-fig.add_subplot(2, 2, 2)
-# S vs. time
-plt.plot(Ss, color = "m")  
-plt.xlabel()
-plt.ylabel()
-plt.yscale('log')
-
-
-fig.add_subplot(2, 2, 3)
-# area of occupied landscape vs. time (Does the area just keep increasing?)
-plt.scatter(x_coords, y_coords, color = "0.5")
-plt.xlabel()
-plt.ylabel()
-
-
-fig.add_subplot(2, 2, 4)
-# immigration rate vs. time to extinction (how does immigration rate effect how long the community lasts?)
-plt.scatter(m, gens, color = "1")
-plt.xlabel()
-plt.ylabel()
-
-fig.show()
-# plt.savefig()
