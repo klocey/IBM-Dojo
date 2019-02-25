@@ -30,6 +30,11 @@ def modelcolor(m):
     else: clr = 'purple'
     return clr
 
+'''
+model color is determine by immmigration rate if immigration is equal to 1 then
+the color well be darkred.
+'''
+
 def randcolor():
     c1 = randint(0,255)
     c2 = randint(0,255)
@@ -38,51 +43,97 @@ def randcolor():
     clr = '#%02x%02x%02x' % (c1, c2, c3)
     return clr
 
+'''
+
+'''
 
 def reproduce(inds, spes, x_coords, y_coords): #Made a function an called it reproduce assigned it the list of inds, spes, x_coords, y_coords
 
-  i1 = list(inds) # list of inds and asignned it the variable of i1
-  s1 = list(spes) # list of spes and asignned it the variable of i1
-  x1 = list(x_coords) # list of x_coords and asignned it the variable of i1
-  y1 = list(y_coords) # list of y_coords and asignned it the variable of i1
-  # we assigned the list new variable because we do not want them to point at the same data
+  i1 = list(inds) 
+  s1 = list(spes) 
+  x1 = list(x_coords) 
+  y1 = list(y_coords) 
+
+  '''
+  44) list of inds and asignned it the variable of i1
+  45) list of spes and asignned it the variable of i1
+  46) list of x_coords and asignned it the variable of i1
+  47) list of y_coords and asignned it the variable of i1
+  we assigned the list new variable because we do not want them to point at the same data
+  '''
 
   for i, val in enumerate(spes):# loop through val of spes
-    x = choice([0, 1]) # randomly choice a number between 0 and 1
-    if x == 1: # if x equal one
-        s1.append(val) # list of spes is gonna be extend by val list
-        max1 = max(inds) + 1 # max1 is a unique ID; get the max number of inds and assign it to max1
-        i1.append(max1) # extend i1 by max1 which has assigned value of max(inds)
+    x = choice([0, 1])
+    if x == 1: 
+        s1.append(val) 
+        max1 = max(inds) + 1 
+        i1.append(max1) 
         x1.append(x_coords[i])
         y1.append(y_coords[i])
 
-  return i1, s1, x1, y1 # we return i1, s1, x1 and y1  as we dont want the came data from the other list
-                        # they would both point at the same object
+  '''
+  58) randomly choice a number between 0 and 1
+  59) if x equal one
+  60) list of spes is gonna be extend by val list
+  61)  max1 is a unique ID; get the max number of inds and assign it to max1
+  62) extend i1 by max1 which has assigned value of max(inds)
 
-def death(inds, spes, x_coords, y_coords):# mdade a function called death and assigned the list of inds, spes, x_coords and y_coords
+  '''
 
-  i1 = list(inds) # list of inds and assigne it the variable of i1
-  s1 = list(spes) # list of spes and assigned it the variable of s1
-  x1 = list(x_coords) # list of x_coords and assign it the variable of x1
-  y1 = list(y_coords) # list of y_coords and assin it the variable of y1
+  return i1, s1, x1, y1 
+
+  '''we return i1, s1, x1 and y1  as we dont want the came data from the other list
+     they would both point at the same object
+  '''
+
+def death(inds, spes, x_coords, y_coords):
+# made a function called death and assigned the list of inds, spes, x_coords and y_coords
+
+  i1 = list(inds) 
+  s1 = list(spes) 
+  x1 = list(x_coords) 
+  y1 = list(y_coords) 
+
+  '''
+  83) list of inds and assigne it the variable of i1
+  84) list of spes and assigned it the variable of s1
+  85) list of x_coords and assign it the variable of x1
+  86) list of y_coords and assin it the variable of y1
+
+  '''
 
   for val in spes:
-    x = choice([0, 1]) # randomly choice 1 or 0
-    if x == 1: # if x is choosen then
-        i1.pop(0) # in list of i1 take out index (0)
-        s1.pop(0) # in list of s1 take out index (0)
+    x = choice([0, 1])
+    if x == 1: 
+        i1.pop(0)
+        s1.pop(0)
         x1.pop(0)
         y1.pop(0)
-  return i1, s1, x1, y1 # we return i1, s1, x1 and y1  as we dont want the came data from the other list
-                        # they would both point at the same object
+  return i1, s1, x1, y1
+  '''
+  98) randomly choice 1 or 0
+  99) if x is choosen then
+  100) in list of i1 take out index (0)
+  101) in list of s1 take out index (0)
+  104) we return i1, s1, x1 and y1 as we dont want the came data from the other list
+       they would both point at the same object
+  '''
+
+
 
 def dispersal(inds, spes, x_coords, y_coords):
-  for num in range(len(spes)): # for the range of spes use length for a loop
-    i = randint(0, len(inds)-1) # randomly choose a number between 0 and the length of inds
-    x_coords[i] += uniform(-1, 1) # += is a shortcut for x = x + y
-    y_coords[i] += uniform(-1, 1) # += is a shortcut for y = x + y
+  for num in range(len(spes)): 
+    i = randint(0, len(inds)-1) 
+    x_coords[i] += uniform(-1, 1) 
+    y_coords[i] += uniform(-1, 1) 
   return inds, spes, x_coords, y_coords
 
+  '''
+  117) for the range of spes use length for a loop
+  118) randomly choose a number between 0 and the length of inds
+  119) x_coords[i] += uniform(-1, 1) # += is a shortcut for x = x + y
+  120) y_coords[i] += uniform(-1, 1) # += is a shortcut for y = x + y
+  '''
 
 def immigration(inds, spes, x_coords, y_coords, S, m):
   for i in range(m): # number of orgrainism immirgerating per gen
@@ -110,36 +161,71 @@ ms = list(range(11))
 
 # part 4 (below) open and clear data files
 # txt = comma separated values
-OUT = open(mydir + 'SimData/inds_data.txt', 'w+') # open mydir open SimData open inds_data.cvs, Write
-OUT.close()                                       # and create a file named inds_data.txt
-                                                  # always closed the file that was just open
+OUT = open(mydir + 'SimData/inds_data.txt', 'w+') 
+OUT.close()                                       
 
-OUT = open(mydir + 'SimData/spes_data.txt', 'w+') # open mydir open SimData open spes_data.cvs, Write
-OUT.close()                                       # and create a file named spes_data.txt
-                                                  # always closed the file that was just open
+'''
+156) open mydir open SimData open inds_data.cvs, Write
+     and create a file named inds_data.txt
+157) always closed the file that was just open
 
-OUT = open(mydir + 'SimData/x_coords_data.txt', 'w+')# open mydir open SimData open x_coords_data.cvs, Write
-OUT.close()                                       # and create a file named x_coords_data.txt
-                                                  # always closed the file that was just open
+'''
 
-OUT = open(mydir + 'SimData/y_coords_data.txt', 'w+') # open mydir open SimData open y_coords_data.cvs, Write
-OUT.close()                                       # and create a file named y_coords_data.txt
-                                                  # always closed the file that was just open
+OUT = open(mydir + 'SimData/spes_data.txt', 'w+') 
+OUT.close()                                       
+
+'''
+166) open mydir open SimData open spes_data.cvs, Write
+     and create a file named spes_data.txt
+167) always closed the file that was just open
+'''
+
+OUT = open(mydir + 'SimData/x_coords_data.txt', 'w+')
+OUT.close()                                       
+
+'''
+175) open mydir open SimData open x_coords_data.cvs, Write and create a file named
+     x_coords_data.txt
+176) always closed the file that was just open
+
+'''
+
+OUT = open(mydir + 'SimData/y_coords_data.txt', 'w+')
+OUT.close()
+
+'''
+185) open mydir open SimData open y_coords_data.cvs, Write and create a file named 
+     y_coords_data.txt
+186) always closed the file that was just open
+'''
 
 OUT = open(mydir + 'SimData/Compiled_Data.txt', 'w+')
 OUT.write("model,clr,m,t,N,S,area,extinct\n")
 OUT.close()
 
+'''
+194) open mydir open SimData open Complied_Data.cvs, Write and create a file named 
+     y_coords_data.txt
+195) 
+196) always closed the file that was just open
+'''
 
 # Part 5 (Below): run model
 for x in range(1000):
   m = choice(ms)
   clr = modelcolor(m)
   print(m)
-  inds = list(range(N)) # inds is a list from 0 to 999, where values are individual IDs
-  spes = np.random.randint(0, S, N).tolist() #
-  x_coords = [0]*N # have x_coords list be for 0 to the lsit of individual
-  y_coords = [0]*N # have y_coords list be for 0 to the list of individual
+  inds = list(range(N))
+  spes = np.random.randint(0, S, N).tolist() 
+  x_coords = [0]*N 
+  y_coords = [0]*N 
+
+  '''
+  206) range of 0 to 999 does not include 1000
+  210) inds is a list from 0 to 999, where values are individual IDs
+  212) have x_coords list be for 0 to the lsit of individual
+  213) have y_coords list be for 0 to the list of individual
+  '''
 
   t = 0 # start at generation 0
   while len(inds) > 0:
