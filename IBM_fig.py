@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 
 mydir = os.path.expanduser('~/GitHub/IBM-Dojo')
-df = pd.read_csv(mydir + '/SimData/Compiled_Data.txt')
+df = pd.read_csv(mydir + '/EcoCom/SimData/Compiled_Data.txt')
 
 
 models = list(set(df['model'].tolist()))
@@ -95,7 +95,7 @@ plt.xlabel("Immigration Rate")
 
 
 plt.subplots_adjust(wspace=0.5, hspace=0.5)
-plt.savefig(mydir + '/figures/Fig1.png', dpi=400, bbox_inches = "tight")
+plt.savefig(mydir + '/EcoCom/figures/Fig1.png', dpi=400, bbox_inches = "tight")
 plt.close()
 
 '''
