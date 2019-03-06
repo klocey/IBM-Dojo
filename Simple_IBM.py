@@ -121,8 +121,21 @@ def death(inds, sick, x_coords, y_coords):
   '''
 
 def infection(inds, sick, x_coords, y_coords):
+
+  i1 = randint(len(inds))
+  i2 = randint(int(inds))
+  
+  x1 = x_coords[i1]
+  x2 = x_coords[i2]
+  y1 = y_coords[i1]
+  y2 = y_coords[i2]
+
+  sus = 0.5
+  
   for i, val in enumerate(sick):
+    pad = sqrt((x1 + x2)**2 + (y1 + y2)**2)
     x = np.random.binomial(1, 0.5)
+    pof = sus * pad
     if x == 1:
       sick[0] = 1
   return inds, sick, x_coords, y_coords
@@ -166,8 +179,6 @@ N = 1000 #individual organisms
 S = 100  # Number of species
 
 Sick = [0]*1000
-NumSick = sum[Sick]
-NumHealthy = len[Sick - sum[Sick]] 
 areas = []
 Ns = []
 Ss = []
@@ -274,14 +285,14 @@ for x in range(1000):
 
     Ni = len(inds)
     Si = len(list(set(sick)))
+    NumSick = sum(sick)
+    Healthy = len(Sick) - sum(Sick)
     if Ni <= 0:
       gens.append(t)
 
     Ns.append(Ni)
     Ss.append(Si)
-    NumSick = sum(sick)
-    NumHealthy = len(sick) - sum(sick)
-
+    
     if len(x_coords) == 0: A = 0
     else: A = (max(x_coords) - min(x_coords)) * (max(y_coords) - min(y_coords))
       # A = area = length * height
