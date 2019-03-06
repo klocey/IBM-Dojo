@@ -122,8 +122,8 @@ def death(inds, sick, x_coords, y_coords):
 
 def infection(inds, sick, x_coords, y_coords):
 
-  i1 = randint(len(inds))
-  i2 = randint(int(inds))
+  i1 = randint(0,len(inds)-1)
+  i2 = randint(0,len(inds)-1)
   
   x1 = x_coords[i1]
   x2 = x_coords[i2]
@@ -133,7 +133,7 @@ def infection(inds, sick, x_coords, y_coords):
   sus = 0.5
   
   for i, val in enumerate(sick):
-    pad = sqrt((x1 + x2)**2 + (y1 + y2)**2)
+    pad = np.sqrt((x1 + x2)**2 + (y1 + y2)**2)
     x = np.random.binomial(1, 0.5)
     pof = sus * pad
     if x == 1:
@@ -142,9 +142,9 @@ def infection(inds, sick, x_coords, y_coords):
 
 def recover(inds, sick, x_coords, y_coords):
   for i, val in enumerate(sick):
-      x = np.random.binomial(1, 0.5)
+      x = binomial(1, 0.5)
       if x == 1:
-          sick[1] = 0
+          sick[i] = 0
   return inds, sick, x_coords, y_coords
 
 
