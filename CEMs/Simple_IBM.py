@@ -1,5 +1,6 @@
 from __future__ import division
 import numpy as np
+from numpy.random import binomial
 from random import choice, uniform, randint
 import sys
 import os
@@ -47,22 +48,22 @@ def randcolor():
 
 '''
 
-def reproduce(inds, spes, x_coords, y_coords): #Made a function an called it reproduce assigned it the list of inds, spes, x_coords, y_coords
+def reproduce(inds, sick, x_coords, y_coords): #Made a function an called it reproduce assigned it the list of inds, sick, x_coords, y_coords
 
   i1 = list(inds) 
-  s1 = list(spes) 
+  s1 = list(sick) 
   x1 = list(x_coords) 
   y1 = list(y_coords) 
 
   '''
   44) list of inds and asignned it the variable of i1
-  45) list of spes and asignned it the variable of i1
+  45) list of sick and asignned it the variable of i1
   46) list of x_coords and asignned it the variable of i1
   47) list of y_coords and asignned it the variable of i1
   we assigned the list new variable because we do not want them to point at the same data
   '''
 
-  for i, val in enumerate(spes):# loop through val of spes
+  for i, val in enumerate(sick):# loop through val of sick
     x = choice([0, 1])
     if x == 1: 
         s1.append(val) 
@@ -74,7 +75,7 @@ def reproduce(inds, spes, x_coords, y_coords): #Made a function an called it rep
   '''
   58) randomly choice a number between 0 and 1
   59) if x equal one
-  60) list of spes is gonna be extend by val list
+  60) list of sick is gonna be extend by val list
   61)  max1 is a unique ID; get the max number of inds and assign it to max1
   62) extend i1 by max1 which has assigned value of max(inds)
 
@@ -86,23 +87,23 @@ def reproduce(inds, spes, x_coords, y_coords): #Made a function an called it rep
      they would both point at the same object
   '''
 
-def death(inds, spes, x_coords, y_coords):
-# made a function called death and assigned the list of inds, spes, x_coords and y_coords
+def death(inds, sick, x_coords, y_coords):
+# made a function called death and assigned the list of inds, sick, x_coords and y_coords
 
   i1 = list(inds) 
-  s1 = list(spes) 
+  s1 = list(sick) 
   x1 = list(x_coords) 
   y1 = list(y_coords) 
 
   '''
   83) list of inds and assigne it the variable of i1
-  84) list of spes and assigned it the variable of s1
+  84) list of sick and assigned it the variable of s1
   85) list of x_coords and assign it the variable of x1
   86) list of y_coords and assin it the variable of y1
 
   '''
 
-  for val in spes:
+  for val in sick:
     x = choice([0, 1])
     if x == 1: 
         i1.pop(0)
@@ -119,31 +120,57 @@ def death(inds, spes, x_coords, y_coords):
        they would both point at the same object
   '''
 
+def infection(inds, sick, x_coords, y_coords):
+
+  i1 = randint(0,len(inds)-1)
+  i2 = randint(0,len(inds)-1)
+  
+  x1 = x_coords[i1]
+  x2 = x_coords[i2]
+  y1 = y_coords[i1]
+  y2 = y_coords[i2]
+
+  sus = 0.5
+  
+  for i, val in enumerate(sick):
+    pad = np.sqrt((x1 + x2)**2 + (y1 + y2)**2)
+    x = np.random.binomial(1, 0.5)
+    pof = sus * pad
+    if x == 1:
+      sick[0] = 1
+  return inds, sick, x_coords, y_coords
+
+def recover(inds, sick, x_coords, y_coords):
+  for i, val in enumerate(sick):
+      x = binomial(1, 0.5)
+      if x == 1:
+          sick[i] = 0
+  return inds, sick, x_coords, y_coords
 
 
-def dispersal(inds, spes, x_coords, y_coords):
-  for num in range(len(spes)): 
+def dispersal(inds, sick, x_coords, y_coords):
+  for num in range(len(sick)): 
     i = randint(0, len(inds)-1) 
     x_coords[i] += uniform(-1, 1) 
     y_coords[i] += uniform(-1, 1) 
-  return inds, spes, x_coords, y_coords
+  return inds, sick, x_coords, y_coords
 
   '''
-  117) for the range of spes use length for a loop
+  117) for the range of sick use length for a loop
   118) randomly choose a number between 0 and the length of inds
   119) x_coords[i] += uniform(-1, 1) # += is a shortcut for x = x + y
   120) y_coords[i] += uniform(-1, 1) # += is a shortcut for y = x + y
   '''
 
-def immigration(inds, spes, x_coords, y_coords, S, m):
+def immigration(inds, sick, x_coords, y_coords, S, m):
   for i in range(m): # number of orgrainism immirgerating per gen
     s = randint(0, S)
     inds.append(max(inds)+1)
-    spes.append(s)
+    sick.append(s)
     x_coords.append(uniform(min(x_coords), max(x_coords)))
     y_coords.append(uniform(min(y_coords), max(y_coords)))
 
-  return inds, spes, x_coords, y_coords
+  return inds, sick, x_coords, y_coords
 
 
 # Part 3(below): declare objects/variables
@@ -151,6 +178,7 @@ def immigration(inds, spes, x_coords, y_coords, S, m):
 N = 1000 #individual organisms
 S = 100  # Number of species
 
+Sick = [0]*1000
 areas = []
 Ns = []
 Ss = []
@@ -170,7 +198,7 @@ ms = list(range(11))
 
 # part 4 (below) open and clear data files
 # txt = comma separated values
-OUT = open(mydir + 'SimData/inds_data.txt', 'w+') 
+OUT = open(mydir + 'EcoCom/SimData/inds_data.txt', 'w+') 
 OUT.close()                                       
 
 '''
@@ -180,16 +208,16 @@ OUT.close()
 
 '''
 
-OUT = open(mydir + 'SimData/spes_data.txt', 'w+') 
+OUT = open(mydir + 'EcoCom/SimData/sick_data.txt', 'w+') 
 OUT.close()                                       
 
 '''
-166) open mydir open SimData open spes_data.cvs, Write
-     and create a file named spes_data.txt
+166) open mydir open SimData open sick_data.cvs, Write
+     and create a file named sick_data.txt
 167) always closed the file that was just open
 '''
 
-OUT = open(mydir + 'SimData/x_coords_data.txt', 'w+')
+OUT = open(mydir + 'EcoCom/SimData/x_coords_data.txt', 'w+')
 OUT.close()                                       
 
 '''
@@ -199,7 +227,7 @@ OUT.close()
 
 '''
 
-OUT = open(mydir + 'SimData/y_coords_data.txt', 'w+')
+OUT = open(mydir + 'EcoCom/SimData/y_coords_data.txt', 'w+')
 OUT.close()
 
 '''
@@ -208,8 +236,8 @@ OUT.close()
 186) always closed the file that was just open
 '''
 
-OUT = open(mydir + 'SimData/Compiled_Data.txt', 'w+')
-OUT.write("model,clr,m,t,N,S,area,extinct\n")
+OUT = open(mydir + 'EcoCom/SimData/Compiled_Data.txt', 'w+')
+OUT.write("model,clr,m,t,N,Sick,Healthy,area,extinct\n")
 OUT.close()
 
 '''
@@ -225,7 +253,7 @@ for x in range(1000):
   clr = modelcolor(m)
   print(m)
   inds = list(range(N))
-  spes = np.random.randint(0, S, N).tolist() 
+  sick = np.random.randint(0, S, N).tolist() 
   x_coords = [0]*N 
   y_coords = [0]*N 
 
@@ -239,75 +267,81 @@ for x in range(1000):
   t = 0 # start at generation 0
   while len(inds) > 0:
     t += 1 # increment generation
-    j = choice([0, 1, 2, 3])
+    j = choice([0, 1, 2, 3, 4, 5])
     if j == 0:
-      inds, spes, x_coords, y_coords = reproduce(inds, spes, x_coords, y_coords)
-    # take reprodution list values and assign them to inds, spes, x_coords, y_coords
+      inds, sick, x_coords, y_coords = reproduce(inds, sick, x_coords, y_coords)
+    # take reprodution list values and assign them to inds, sick, x_coords, y_coords
     elif j == 1:
-      inds, spes, x_coords, y_coords = death(inds, spes,x_coords, y_coords)
-    # take death list values and assign them to inds, spes, x_coords, y_coords
+      inds, sick, x_coords, y_coords = death(inds, sick,x_coords, y_coords)
+    # take death list values and assign them to inds, sick, x_coords, y_coords
     elif j == 2:
-      inds, spes, x_coords, y_coords = dispersal(inds, spes, x_coords, y_coords)
+      inds, sick, x_coords, y_coords = dispersal(inds, sick, x_coords, y_coords)
     elif j == 3:
-      inds, spes, x_coords, y_coords = immigration(inds, spes, x_coords, y_coords, S, m)
+      inds, sick, x_coords, y_coords = immigration(inds, sick, x_coords, y_coords, S, m)
+    elif j == 4:
+      inds, sick, x_coords, y_coords = infection(inds, sick, x_coords, y_coords)
+    elif j == 5:
+      inds, sick, x_coords, y_coords = recover(inds, sick, x_coords, y_coords)
 
     Ni = len(inds)
-    Si = len(list(set(spes)))
+    Si = len(list(set(sick)))
+    NumSick = sum(sick)
+    Healthy = len(Sick) - sum(Sick)
     if Ni <= 0:
       gens.append(t)
 
     Ns.append(Ni)
     Ss.append(Si)
-
+    
     if len(x_coords) == 0: A = 0
     else: A = (max(x_coords) - min(x_coords)) * (max(y_coords) - min(y_coords))
       # A = area = length * height
     areas.append(A)
 
-    # take dispersal list values and assign them to inds, spes, x_coords, y_coords
-    len_list = [len(inds), len(spes), len(x_coords), len(y_coords)]
-    # get the length of inds, spes, x_coords and y_coords then assign the value to
+    # take dispersal list values and assign them to inds, sick, x_coords, y_coords
+    len_list = [len(inds), len(sick), len(x_coords), len(y_coords)]
+    # get the length of inds, sick, x_coords and y_coords then assign the value to
     # the variable of len_list
 
     # write data to file every so number of time steps
     if t%20 == 0 or Ni == 0:
     # if 25 equal to 0 while running the the program 1000 time then gather data
-      OUT = open(mydir + 'SimData/inds_data.txt', 'a+')
+      OUT = open(mydir + 'EcoCom/SimData/inds_data.txt', 'a+')
       outlist = str(inds).strip('[]') # in the list of inds strip all "[]" from the list then assigen it to the variable of outlist
       outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
-      #OUT.write(outlist)
-      print>>OUT, outlist
+      OUT.write(outlist)
+      #print>>OUT, outlist
       OUT.close()
 
 
-      OUT = open(mydir + 'SimData/spes_data.txt', 'a+')
-      outlist = str(spes).strip('[]') # in the list of spes strip all "[]" from the list then assigen it to the variable of oulist
+      OUT = open(mydir + 'EcoCom/SimData/sick_data.txt', 'a+')
+      outlist = str(sick).strip('[]') # in the list of sick strip all "[]" from the list then assigen it to the variable of oulist
       outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
-      #OUT.write(outlist)
-      print>>OUT, outlist
+      OUT.write(outlist)
+      #print>>OUT, outlist
       OUT.close()
 
 
-      OUT = open(mydir + 'SimData/x_coords_data.txt', 'a+')
+      OUT = open(mydir + 'EcoCom/SimData/x_coords_data.txt', 'a+')
       outlist = str(x_coords).strip('[]') # in the list of x_coords strip all "[]" from the list then assigen it to the variable of outlist
       outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
-      #OUT.write(outlist)
-      print>>OUT, outlist
+      OUT.write(outlist)
+      #print>>OUT, outlist
       OUT.close()
 
-      OUT = open(mydir + 'SimData/y_coords_data.txt', 'a+')
+      OUT = open(mydir + 'EcoCom/SimData/y_coords_data.txt', 'a+')
       outlist = str(y_coords).strip('[]') # in the list of y_coords strip all "[]" from the list then assigen it to the variable of oulist
       outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
-      #OUT.write(outlist)
-      print>>OUT, outlist
+      OUT.write(outlist)
+      #print>>OUT, outlist
       OUT.close()
 
-      OUT = open(mydir + 'SimData/Compiled_Data.txt', 'a+')
+      OUT = open(mydir + 'EcoCom/SimData/Compiled_Data.txt', 'a+')
       extinct = False
       if len(inds) == 0: extinct = True # This True/False designation will be used for accessing data when making figures
-      outlist = str([x, clr, m, t, Ni, Si, A, extinct]).strip('[]') # in the list of y_coords strip all "[]" from the list then assigen it to the variable of oulist
+      outlist = str([x, clr, m, t, Ni, Sick, Healthy, A, extinct]).strip('[]') # in the list of y_coords strip all "[]" from the list then assigen it to the variable of oulist
       outlist = outlist.replace(' ', '') # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
       outlist = outlist.replace("'", '')
-      #OUT.write(outlist)
-      print>>OUT, outlist
+      OUT.write(outlist)
+      #print>>OUT, outlist
       OUT.close()
