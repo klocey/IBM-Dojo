@@ -133,9 +133,10 @@ def infection(inds, sick, x_coords, y_coords):
   sus = 0.5
   
   for i, val in enumerate(sick):
-    pad = np.sqrt((x1 + x2)**2 + (y1 + y2)**2)
-    x = np.random.binomial(1, 0.5)
+    dist = np.sqrt((x1 + x2)**2 + (y1 + y2)**2)
+    pad = 1/(1+dist)
     pof = sus * pad
+    x = np.random.binomial(1, pof)
     if x == 1:
       sick[0] = 1
   return inds, sick, x_coords, y_coords
@@ -178,27 +179,17 @@ def immigration(inds, sick, x_coords, y_coords, S, m):
 N = 1000 #individual organisms
 S = 100  # Number of species
 
-Sick = [0]*1000
-areas = []
-Ns = []
-Ss = []
-iS = []
-gens = []
+
 ms = list(range(11))
 
 '''
-154) we made an empty list then assinged the varibale areas
-155) we made an empty list then assinged the varibale Ns
-156) we made an empty list then assinged the varibale Ss
-157) we made an empty list then assinged the varibale iS
-158) we made an empty list then assinged the varibale gens
 159) get the range from 11 (0, 1, 2, ..., 10). 11 is not included take the range
      then turn that in that into a list. Assign the variable of ms
 '''
 
 # part 4 (below) open and clear data files
 # txt = comma separated values
-OUT = open(mydir + 'EcoCom/SimData/inds_data.txt', 'w+') 
+OUT = open(mydir + 'CEMs/SimData/inds_data.txt', 'w+') 
 OUT.close()                                       
 
 '''
@@ -208,7 +199,7 @@ OUT.close()
 
 '''
 
-OUT = open(mydir + 'EcoCom/SimData/sick_data.txt', 'w+') 
+OUT = open(mydir + 'CEMs/SimData/sick_data.txt', 'w+') 
 OUT.close()                                       
 
 '''
@@ -217,7 +208,7 @@ OUT.close()
 167) always closed the file that was just open
 '''
 
-OUT = open(mydir + 'EcoCom/SimData/x_coords_data.txt', 'w+')
+OUT = open(mydir + 'CEMs/SimData/x_coords_data.txt', 'w+')
 OUT.close()                                       
 
 '''
@@ -227,7 +218,7 @@ OUT.close()
 
 '''
 
-OUT = open(mydir + 'EcoCom/SimData/y_coords_data.txt', 'w+')
+OUT = open(mydir + 'CEMs/SimData/y_coords_data.txt', 'w+')
 OUT.close()
 
 '''
@@ -236,7 +227,7 @@ OUT.close()
 186) always closed the file that was just open
 '''
 
-OUT = open(mydir + 'EcoCom/SimData/Compiled_Data.txt', 'w+')
+OUT = open(mydir + 'CEMs/SimData/Compiled_Data.txt', 'w+')
 OUT.write("model,clr,m,t,N,Sick,Healthy,area,extinct\n")
 OUT.close()
 
@@ -248,11 +239,11 @@ OUT.close()
 '''
 
 # Part 5 (Below): run model
-for x in range(1000):
+for x in range(1):
   m = choice(ms)
   clr = modelcolor(m)
-  print(m)
   inds = list(range(N))
+  
   sick = np.random.randint(0, S, N).tolist() 
   x_coords = [0]*N 
   y_coords = [0]*N 
@@ -266,6 +257,8 @@ for x in range(1000):
 
   t = 0 # start at generation 0
   while len(inds) > 0:
+    print(len(inds))
+
     t += 1 # increment generation
     j = choice([0, 1, 2, 3, 4, 5])
     if j == 0:
@@ -286,17 +279,11 @@ for x in range(1000):
     Ni = len(inds)
     Si = len(list(set(sick)))
     NumSick = sum(sick)
-    Healthy = len(Sick) - sum(Sick)
-    if Ni <= 0:
-      gens.append(t)
-
-    Ns.append(Ni)
-    Ss.append(Si)
+    Healthy = len(sick) - sum(sick)
     
     if len(x_coords) == 0: A = 0
     else: A = (max(x_coords) - min(x_coords)) * (max(y_coords) - min(y_coords))
       # A = area = length * height
-    areas.append(A)
 
     # take dispersal list values and assign them to inds, sick, x_coords, y_coords
     len_list = [len(inds), len(sick), len(x_coords), len(y_coords)]
@@ -306,42 +293,42 @@ for x in range(1000):
     # write data to file every so number of time steps
     if t%20 == 0 or Ni == 0:
     # if 25 equal to 0 while running the the program 1000 time then gather data
-      OUT = open(mydir + 'EcoCom/SimData/inds_data.txt', 'a+')
+      OUT = open(mydir + 'CEMs/SimData/inds_data.txt', 'a+')
       outlist = str(inds).strip('[]') # in the list of inds strip all "[]" from the list then assigen it to the variable of outlist
       outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
-      OUT.write(outlist)
+      OUT.write(outlist+'\n')
       #print>>OUT, outlist
       OUT.close()
 
 
-      OUT = open(mydir + 'EcoCom/SimData/sick_data.txt', 'a+')
+      OUT = open(mydir + 'CEMs/SimData/sick_data.txt', 'a+')
       outlist = str(sick).strip('[]') # in the list of sick strip all "[]" from the list then assigen it to the variable of oulist
       outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
-      OUT.write(outlist)
+      OUT.write(outlist+'\n')
       #print>>OUT, outlist
       OUT.close()
 
 
-      OUT = open(mydir + 'EcoCom/SimData/x_coords_data.txt', 'a+')
+      OUT = open(mydir + 'CEMs/SimData/x_coords_data.txt', 'a+')
       outlist = str(x_coords).strip('[]') # in the list of x_coords strip all "[]" from the list then assigen it to the variable of outlist
       outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
-      OUT.write(outlist)
+      OUT.write(outlist+'\n')
       #print>>OUT, outlist
       OUT.close()
 
-      OUT = open(mydir + 'EcoCom/SimData/y_coords_data.txt', 'a+')
+      OUT = open(mydir + 'CEMs/SimData/y_coords_data.txt', 'a+')
       outlist = str(y_coords).strip('[]') # in the list of y_coords strip all "[]" from the list then assigen it to the variable of oulist
       outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
-      OUT.write(outlist)
+      OUT.write(outlist+'\n')
       #print>>OUT, outlist
       OUT.close()
 
-      OUT = open(mydir + 'EcoCom/SimData/Compiled_Data.txt', 'a+')
+      OUT = open(mydir + 'CEMs/SimData/Compiled_Data.txt', 'a+')
       extinct = False
       if len(inds) == 0: extinct = True # This True/False designation will be used for accessing data when making figures
-      outlist = str([x, clr, m, t, Ni, Sick, Healthy, A, extinct]).strip('[]') # in the list of y_coords strip all "[]" from the list then assigen it to the variable of oulist
+      outlist = str([x, clr, m, t, Ni, NumSick, Healthy, A, extinct]).strip('[]') # in the list of y_coords strip all "[]" from the list then assigen it to the variable of oulist
       outlist = outlist.replace(' ', '') # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
       outlist = outlist.replace("'", '')
-      OUT.write(outlist)
+      OUT.write(outlist+'\n')
       #print>>OUT, outlist
       OUT.close()
