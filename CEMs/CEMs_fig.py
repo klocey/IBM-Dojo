@@ -20,11 +20,16 @@ fig.add_subplot(2, 2, 1)
 for model in models:
     df2 = df[df['model'] == model]
     clr = df2['clr'].tolist()[0]
-    plt.plot(df2['t'], df2['Healthy'], color = "red", linewidth=0.25, alpha=0.8)
-    plt.plot(df2['t'], df2['Sick'], color = "blue", linewidth=0.25, alpha=0.8)
-    
+    plt.plot(df2['t'], df2['Healthy'], label = "Healthy", color = "red", linewidth=0.25, alpha=0.8)
+    plt.plot(df2['t'], df2['Sick'], label = "Sick", color = "blue", linewidth=0.25, alpha=0.8)
 
-'''
+fig.add_subplot(2, 2, 2)
+for model in models:
+    df2 = df[df['model'] == model]
+    clr = df2['clr'].tolist()[0]
+    plt.plot(df2['t'], df2['Healthy']/df2['N'], label = "Healthy", color = "red", linewidth=0.25, alpha=0.8)
+    plt.plot(df2['t'], df2['Sick']/df2['N'], label = "Sick", color = "blue", linewidth=0.25, alpha=0.8)
+'''r
 22) we open a path called df then assigned it the name 'Model' then we gave it the
     variable of df2
 23) this line determind the color of the line that well be on the graph
@@ -43,9 +48,10 @@ for model in models:
 37) y axis we be scaled to log
 '''
 
-plt.subplots_adjust(wspace=0.15, hspace=0.15)
-plt.savefig(mydir + '/figures/Fig1.png', dpi=400, bbox_inches = "tight")
-plt.close()
+plt.legend(loc='best', edgecolor='None', fontsize=8)
+plt.subplots_adjust(wspace=0.5, hspace=0.5)
+plt.savefig(mydir + '/CEMs/figures/Fig1.png', dpi=400, bbox_inches = "tight")
+#plt.close('all')
 
 '''
 we save the data that we are collecting as we are running that way we dont have 

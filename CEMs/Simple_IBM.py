@@ -17,17 +17,17 @@ An individual-based model to simulate birth and death among species...
 
 # Part 2 (below): define functions
 
-def modelcolor(m):
+def modelcolor(imm):
     clr = str()
-    if m <= 1: clr = 'darkred'
-    elif m < 2: clr = 'red'
-    elif m < 3: clr = 'orange'
-    elif m < 4: clr = 'yellow'
-    elif m < 5: clr = 'lawngreen'
-    elif m < 6: clr = 'green'
-    elif m < 7: clr = 'deepskyblue'
-    elif m < 8: clr = 'blue'
-    elif m < 9: clr = 'blueviolet'
+    if imm <= 1: clr = 'darkred'
+    elif imm < 2: clr = 'red'
+    elif imm < 3: clr = 'orange'
+    elif imm < 4: clr = 'yellow'
+    elif imm < 5: clr = 'lawngreen'
+    elif imm < 6: clr = 'green'
+    elif imm < 7: clr = 'deepskyblue'
+    elif imm < 8: clr = 'blue'
+    elif imm < 9: clr = 'blueviolet'
     else: clr = 'purple'
     return clr
 
@@ -87,7 +87,7 @@ def reproduce(inds, sick, x_coords, y_coords): #Made a function an called it rep
      they would both point at the same object
   '''
 
-def death(inds, sick, x_coords, y_coords):
+def death(inds, sick, x_coords, y_coords, inf_ded, nat_ded):
 # made a function called death and assigned the list of inds, sick, x_coords and y_coords
 
   i1 = list(inds) 
@@ -103,8 +103,8 @@ def death(inds, sick, x_coords, y_coords):
 
   '''
 
-  for val in sick:
-    x = choice([0, 1])
+  for i, val in enumerate(sick):
+    x = binomial(1, val*inf_ded)
     if x == 1: 
         i1.pop(0)
         s1.pop(0)
@@ -120,7 +120,7 @@ def death(inds, sick, x_coords, y_coords):
        they would both point at the same object
   '''
 
-def infection(inds, sick, x_coords, y_coords):
+def infection(inds, sick, x_coords, y_coords, inf):
 
   i1 = randint(0,len(inds)-1)
   i2 = randint(0,len(inds)-1)
@@ -129,21 +129,20 @@ def infection(inds, sick, x_coords, y_coords):
   x2 = x_coords[i2]
   y1 = y_coords[i1]
   y2 = y_coords[i2]
-
-  sus = 0.5
   
   for i, val in enumerate(sick):
-    dist = np.sqrt((x1 + x2)**2 + (y1 + y2)**2)
+    dist = np.sqrt((x1 - x2)**2 + (y1 - y2)**2)
     pad = 1/(1+dist)
-    pof = sus * pad
+    pof = inf * pad
     x = np.random.binomial(1, pof)
     if x == 1:
-      sick[0] = 1
+      sick[i] = 1
   return inds, sick, x_coords, y_coords
 
-def recover(inds, sick, x_coords, y_coords):
+
+def recover(inds, sick, x_coords, y_coords, rec):
   for i, val in enumerate(sick):
-      x = binomial(1, 0.5)
+      x = binomial(1, rec)
       if x == 1:
           sick[i] = 0
   return inds, sick, x_coords, y_coords
@@ -163,9 +162,11 @@ def dispersal(inds, sick, x_coords, y_coords):
   120) y_coords[i] += uniform(-1, 1) # += is a shortcut for y = x + y
   '''
 
-def immigration(inds, sick, x_coords, y_coords, S, m):
-  for i in range(m): # number of orgrainism immirgerating per gen
-    s = randint(0, S)
+def immigration(inds, sick, x_coords, y_coords, S, imm):
+  for i in range(imm): # number of orgrainism immirgerating per gen
+    z = 0.1 # probability that an immigrant is sick
+    s = binomial(1, z)
+    
     inds.append(max(inds)+1)
     sick.append(s)
     x_coords.append(uniform(min(x_coords), max(x_coords)))
@@ -175,12 +176,6 @@ def immigration(inds, sick, x_coords, y_coords, S, m):
 
 
 # Part 3(below): declare objects/variables
-
-N = 1000 #individual organisms
-S = 100  # Number of species
-
-
-ms = list(range(11))
 
 '''
 159) get the range from 11 (0, 1, 2, ..., 10). 11 is not included take the range
@@ -228,7 +223,7 @@ OUT.close()
 '''
 
 OUT = open(mydir + 'CEMs/SimData/Compiled_Data.txt', 'w+')
-OUT.write("model,clr,m,t,N,Sick,Healthy,area,extinct\n")
+OUT.write("model,clr,imm,inf_ded,nat_ded, inf,rec,t,N,Sick,Healthy,area,extinct\n")
 OUT.close()
 
 '''
@@ -240,8 +235,19 @@ OUT.close()
 
 # Part 5 (Below): run model
 for x in range(1):
-  m = choice(ms)
-  clr = modelcolor(m)
+  N = 1000 #individual organisms
+  S = 1  # Number of species
+  
+  # Primary model parameters  
+  ms = list(range(11))
+  imm = 5 #choice(ms) # immigration rate
+  nat_ded = 0.1
+  inf_ded = nat_ded+0.1 #uniform(0, 1) # mortality rate
+  
+  inf = 0.5 #uniform(0, 1) # infection rate at distance = 0
+  rec = 0.5 #uniform(0, 1) # recovery rate
+  
+  clr = modelcolor(imm)
   inds = list(range(N))
   
   sick = np.random.randint(0, S, N).tolist() 
@@ -265,16 +271,16 @@ for x in range(1):
       inds, sick, x_coords, y_coords = reproduce(inds, sick, x_coords, y_coords)
     # take reprodution list values and assign them to inds, sick, x_coords, y_coords
     elif j == 1:
-      inds, sick, x_coords, y_coords = death(inds, sick,x_coords, y_coords)
+      inds, sick, x_coords, y_coords = death(inds, sick,x_coords, y_coords, inf_ded, nat_ded)
     # take death list values and assign them to inds, sick, x_coords, y_coords
     elif j == 2:
       inds, sick, x_coords, y_coords = dispersal(inds, sick, x_coords, y_coords)
     elif j == 3:
-      inds, sick, x_coords, y_coords = immigration(inds, sick, x_coords, y_coords, S, m)
+      inds, sick, x_coords, y_coords = immigration(inds, sick, x_coords, y_coords, S, imm)
     elif j == 4:
-      inds, sick, x_coords, y_coords = infection(inds, sick, x_coords, y_coords)
+      inds, sick, x_coords, y_coords = infection(inds, sick, x_coords, y_coords, inf)
     elif j == 5:
-      inds, sick, x_coords, y_coords = recover(inds, sick, x_coords, y_coords)
+      inds, sick, x_coords, y_coords = recover(inds, sick, x_coords, y_coords, rec)
 
     Ni = len(inds)
     Si = len(list(set(sick)))
@@ -291,7 +297,7 @@ for x in range(1):
     # the variable of len_list
 
     # write data to file every so number of time steps
-    if t%20 == 0 or Ni == 0:
+    if t%25 == 0 or Ni == 0:
     # if 25 equal to 0 while running the the program 1000 time then gather data
       OUT = open(mydir + 'CEMs/SimData/inds_data.txt', 'a+')
       outlist = str(inds).strip('[]') # in the list of inds strip all "[]" from the list then assigen it to the variable of outlist
@@ -326,7 +332,9 @@ for x in range(1):
       OUT = open(mydir + 'CEMs/SimData/Compiled_Data.txt', 'a+')
       extinct = False
       if len(inds) == 0: extinct = True # This True/False designation will be used for accessing data when making figures
-      outlist = str([x, clr, m, t, Ni, NumSick, Healthy, A, extinct]).strip('[]') # in the list of y_coords strip all "[]" from the list then assigen it to the variable of oulist
+      outlist = str([x, clr, imm, inf_ded, nat_ded, inf, rec, t, Ni, NumSick, Healthy, A, extinct]).strip('[]') # in the list of y_coords strip all "[]" from the list then assigen it to the variable of oulist
+      '''         model,clr, imm, inf_ded, nat_ded, inf, rec, t, N, Sick, Healthy, area, extinct
+      '''
       outlist = outlist.replace(' ', '') # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
       outlist = outlist.replace("'", '')
       OUT.write(outlist+'\n')
