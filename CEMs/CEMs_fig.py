@@ -23,12 +23,22 @@ for model in models:
     plt.plot(df2['t'], df2['Healthy'], label = "Healthy", color = "red", linewidth=0.25, alpha=0.8)
     plt.plot(df2['t'], df2['Sick'], label = "Sick", color = "blue", linewidth=0.25, alpha=0.8)
 
+plt.xlabel("Time")
+plt.ylabel("Total abundance (N)")
+plt.yscale('log')
+
+
 fig.add_subplot(2, 2, 2)
 for model in models:
     df2 = df[df['model'] == model]
     clr = df2['clr'].tolist()[0]
     plt.plot(df2['t'], df2['Healthy']/df2['N'], label = "Healthy", color = "red", linewidth=0.25, alpha=0.8)
     plt.plot(df2['t'], df2['Sick']/df2['N'], label = "Sick", color = "blue", linewidth=0.25, alpha=0.8)
+
+plt.xlabel("Time")
+plt.ylabel("Relative abundance")
+#plt.yscale('log')
+
 '''r
 22) we open a path called df then assigned it the name 'Model' then we gave it the
     variable of df2
@@ -38,9 +48,6 @@ for model in models:
     the line well be 0.25
 '''
 
-#plt.xlabel("Time")
-#plt.ylabel("Total abundance (N)")
-#plt.yscale('log')
 
 '''
 35) xlabel well have the name of time
@@ -51,8 +58,7 @@ for model in models:
 plt.legend(loc='best', edgecolor='None', fontsize=8)
 plt.subplots_adjust(wspace=0.5, hspace=0.5)
 plt.savefig(mydir + '/CEMs/figures/Fig1.png', dpi=400, bbox_inches = "tight")
-#plt.close('all')
-
+#plt.close()
 '''
 we save the data that we are collecting as we are running that way we dont have 
 any chance of lose the data for some reason
