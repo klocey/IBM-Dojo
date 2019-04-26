@@ -12,10 +12,24 @@ sys.path.append(mydir)
 ###### Model Description ##############
 
 '''
-An individual-based model to simulate birth and death among species...
+An Agent-Based Model to simulate the spread of disease...
 '''
 
 # Part 2 (below): define functions
+def update_times(age, dsr, dsi, dsv, sick, ebs, ebr,vac, rec):
+    age = np.array(age)
+    age = age + 1
+    age = age.tolist()
+    
+    for i, val in enumerate(sick):
+        if val == 1:
+            dsi[i] += 1
+        elif val == 0:
+            if ebr[i] == 1:
+                dsr[i] += 1
+    
+    return age, dsr,dsi, dsv, ebs, ebr, vac, rec
+
 
 def modelcolor(imm):
     clr = str()
@@ -45,7 +59,7 @@ def randcolor():
     return clr
 
 '''
-
+to choose a color for the line in the graph
 '''
 
 def reproduce(inds, sick, x_coords, y_coords): #Made a function an called it reproduce assigned it the list of inds, sick, x_coords, y_coords
@@ -115,20 +129,20 @@ def death(inds, sick, x_coords, y_coords, inf_ded, nat_ded):
   return i1, s1, x1, y1
 
 '''
-  92) list of inds and assigne it the variable of i1
-  93) list of sick and assigned it the variable of s1
-  94) list of x_coords and assign it the variable of x1
-  95) list of y_coords and assin it the variable of y
-  100) randomly choice 1 or 0
-  101) if x is choosen then
-  102) in list of i1 take out index (0)
-  103) in list of s1 take out index (0)
-  106) if the disease is HantaVirus then follow these parameters
-  107) The disease life span will be between 14 and 21 days 
-  108) The possible of dying from HantaVirus ranging from 33% to 50% than with
-       disease life span we will divide it to get mortality rate for the individuals
-  109) at random choose a 1 or the variable of p and assign it to x
-  115) we return i1, s1, x1 and y1 as we dont want the came data from the other list
+92) list of inds and assigne it the variable of i1
+93) list of sick and assigned it the variable of s1
+94) list of x_coords and assign it the variable of x1
+95) list of y_coords and assin it the variable of y
+100) randomly choice 1 or 0
+101) if x is choosen then
+102) in list of i1 take out index (0)
+103) in list of s1 take out index (0)
+106) if the disease is HantaVirus then follow these parameters
+107) The disease life span will be between 14 and 21 days 
+108) The possible of dying from HantaVirus ranging from 33% to 50% than with
+     disease life span we will divide it to get mortality rate for the individuals
+109) at random choose a 1 or the variable of p and assign it to x
+115) we return i1, s1, x1 and y1 as we dont want the came data from the other list
        they would both point at the same object
 '''
 
@@ -233,12 +247,12 @@ def dispersal(inds, sick, x_coords, y_coords):
     y_coords[i] += uniform(-1, 1) 
   return inds, sick, x_coords, y_coords
 
-  '''
-  ) for the range of sick use length for a loop
-  168) randomly choose a number between 0 and the length of inds
-  169) x_coords[i] += uniform(-1, 1) # += is a shortcut for x = x + y
-  170) y_coords[i] += uniform(-1, 1) # += is a shortcut for y = x + y
-  '''
+'''
+167) for the range of sick use length for a loop
+168) randomly choose a number between 0 and the length of inds
+169) x_coords[i] += uniform(-1, 1) # += is a shortcut for x = x + y
+170) y_coords[i] += uniform(-1, 1) # += is a shortcut for y = x + y
+'''
 
 def immigration(inds, sick, x_coords, y_coords, S, imm):
   for i in range(imm): # number of orgrainism immirgerating per gen
@@ -321,23 +335,13 @@ for x in range(1):
   disease = choice(d_list);
   
   if disease == "HantaVirus":
-    #https://www.rightdiagnosis.com/c/cold/stats.htm
-    ''' The common cold. An Adenovirus that rarely ever causes death but often 
-    infects a large portion of a population. '''
-    
-    inf_ded = nat_ded+0.5 #uniform(0, 1) # mortality rate    
     inf = 0.5 #uniform(0, 1) # infection rate at distance = 0
-    rec = 0.6 #uniform(0, 1) # recovery rate
     
   elif disease == "Influenza":
-    inf_ded = nat_ded+0.1 #uniform(0, 1) # mortality rate    
     inf = 0.8 #uniform(0, 1) # infection rate at distance = 0
-    rec = 0.3 #uniform(0, 1) # recovery rate
   
   elif disease == "Ebola":    
-    inf_ded = nat_ded+0.7 #uniform(0, 1) # mortality rate https://thehill.com/policy/healthcare/220644-ebola-death-rate-rises-to-70-percent    
     inf = 0.6 #uniform(0, 1) # infection rate at distance = 0
-    rec = 0.3 #uniform(0, 1) # recovery rate 
   
   print(disease)
 
@@ -345,11 +349,19 @@ for x in range(1):
 
   # Lists for properties of individuals
   inds = list(range(N))
-  sick = np.random.randint(0, S, N).tolist() 
+  sick = [0]*N
   x_coords = [0]*N 
   y_coords = [0]*N 
   ages = np.random.randint(0, 7500, len(inds)) # age in days
   sex = np.random.binomial(1, 0.5, len(inds)) # 1 = male; 0 = female
+  dsi = [0]*N
+  dsr = [0]*N
+  ebs = [0]*N
+  ebr = [0]*N
+  vac = [0]*N
+  rec = [0]*N
+  con = [0]*N
+
 
   '''
   253) range of 0 to 999 does not include 1000
