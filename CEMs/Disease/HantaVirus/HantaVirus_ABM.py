@@ -1,5 +1,6 @@
 from __future__ import division
 import numpy as np
+from random import choice
 import sys
 import os
 # Part 1 (above): Import modules
@@ -15,8 +16,6 @@ import ABM_Function as ABM
 An Agent-Based Model to simulate the spread of disease...
 '''
 
-# Part 2 (below): define functions
-
 # Part 3(below): declare objects/variables
 
 # part 4 (below) open and clear data files
@@ -24,12 +23,8 @@ An Agent-Based Model to simulate the spread of disease...
 OUT = open(mydir + 'CEMs/SimData/inds_data.txt', 'w+') 
 OUT.close()                                       
 
-
-
 OUT = open(mydir + 'CEMs/SimData/sick_data.txt', 'w+') 
 OUT.close()                                       
-
-
 
 OUT = open(mydir + 'CEMs/SimData/x_coords_data.txt', 'w+')
 OUT.close()                                       
@@ -49,13 +44,6 @@ for x in range(1):
   inf_ded = 0.6
   imm = 2  
   # Primary model parameters 
-  d_list = ["HantaVirus"]
-  disease = choice(d_list);
-  
-  if disease == "HantaVirus":
-    inf = 0.5 #uniform(0, 1) # infection rate at distance = 0
-  
-  print(disease)
 
   clr = ABM(imm)
 
@@ -91,11 +79,11 @@ for x in range(1):
     elif j == 3:
       inds, sick, x_coords, y_coords = ABM.immigration(inds, sick, x_coords, y_coords, S, imm)
     elif j == 4:
-      inds, sick, x_coords, y_coords = ABM.infection(inds, sick, x_coords, y_coords, inf)
+      inds, sick, x_coords, y_coords = ABM.infection(inds, sick, x_coords, y_coords)
     elif j == 5:
       inds, sick, x_coords, y_coords = ABM.recover(inds, sick, x_coords, y_coords, rec)
     elif j == 6:
-      inds, sick, x_coords, y_coords = ABM.Incubation(inds, sick, x_coords, y_coords, inf)
+      inds, sick, x_coords, y_coords, dsi = ABM.Incubation(inds, sick, x_coords, y_coords, dsi)
 
     Ni = len(inds)
     Si = len(list(set(sick)))
@@ -147,9 +135,9 @@ for x in range(1):
       OUT = open(mydir + 'CEMs/SimData/Compiled_Data.txt', 'a+')
       extinct = False
       if len(inds) == 0: extinct = True # This True/False designation will be used for accessing data when making figures
-      outlist = str([x, clr, imm, inf_ded, nat_ded, inf, rec, t, Ni, NumSick, Healthy, A, extinct]).strip('[]') # in the list of y_coords strip all "[]" from the list then assigen it to the variable of oulist
-      '''         model,clr, imm, inf_ded, nat_ded, inf, rec, t, N, Sick, Healthy, area, extinct
-      '''
+      outlist = str([x, clr, imm, inf_ded, nat_ded, rec, t, Ni, NumSick, Healthy, A, extinct, dsi, dsr, vac, ages, sex, ebs, ebr]).strip('[]') # in the list of y_coords strip all "[]" from the list then assigen it to the variable of oulist
+      '''         model,clr, imm, inf_ded, nat_ded, rec, t, N, Sick, Healthy, area, extinct
+s      '''
       outlist = outlist.replace(' ', '') # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
       outlist = outlist.replace("'", '')
       OUT.write(outlist+'\n')

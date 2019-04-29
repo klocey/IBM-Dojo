@@ -3,34 +3,19 @@ import numpy as np
 from numpy.random import binomial
 from random import choice, uniform, randint
 
-# Part 2 (below): define functions
-
-d_list = ["HantaVirus"]
-disease = choice(d_list); 
-if disease == "HantaVirus":
-  inf = 0.5 #uniform(0, 1) # infection rate at distance = 0
-
-  
 def update_times(age, dsr, dsi, dsv, sick, ebs, ebr,vac, rec):
     age = np.array(age)
     age = age + 1
     age = age.tolist()
     
-    for i, val in enumerate(inds): 
-        vac != 90
-        if val == 1:
-            vac[i] += 1 
-        elif vac == 90:
-            vac[i] = 0
-
     for i, val in enumerate(sick):
         if val == 1:
             dsi[i] += 1
         elif val == 0:
             if ebr[i] == 1:
                 dsr[i] += 1
-
-    return age, dsr, dsi, dsv, ebs, ebr, vac, rec
+    
+    return age, dsr,dsi, dsv, ebs, ebr, vac, rec
 
 
 def modelcolor(imm):
@@ -55,7 +40,7 @@ def randcolor():
     clr = '#%02x%02x%02x' % (c1, c2, c3)
     return clr
 
-def reproduce(inds, sick, x_coords, y_coords, age, gender): #Made a function an called it reproduce assigned it the list of inds, sick, x_coords, y_coords
+def reproduce(inds, sick, x_coords, y_coords): #Made a function an called it reproduce assigned it the list of inds, sick, x_coords, y_coords
 
   i1 = list(inds) 
   s1 = list(sick) 
@@ -73,7 +58,7 @@ def reproduce(inds, sick, x_coords, y_coords, age, gender): #Made a function an 
 
   return i1, s1, x1, y1 
 
-def death(inds, sick, x_coords, y_coords, inf_ded, nat_ded, age, gender, dsi):
+def death(inds, sick, x_coords, y_coords, inf_ded, nat_ded):
 # made a function called death and assigned the list of inds, sick, x_coords and y_coords
 
   i1 = list(inds) 
@@ -102,7 +87,7 @@ def death(inds, sick, x_coords, y_coords, inf_ded, nat_ded, age, gender, dsi):
   return i1, s1, x1, y1
 
 
-def infection(inds, sick, x_coords, y_coords, vac, dsi, dsr):
+def infection(inds, sick, x_coords, y_coords, inf):
 
   i1 = randint(0,len(inds)-1)
   i2 = randint(0,len(inds)-1)
@@ -115,7 +100,6 @@ def infection(inds, sick, x_coords, y_coords, vac, dsi, dsr):
   for i, val in enumerate(sick):
     D = np.sqrt((x1 - x2)**2 + (y1 - y2)**2)
     pad = 1/(1+D)
-    pof = inf * pad
         
     if disease == "HantaVirus": 
         x = np.random.binomial(1, pof)
@@ -123,7 +107,7 @@ def infection(inds, sick, x_coords, y_coords, vac, dsi, dsr):
           sick[i] = 1
   return inds, sick, x_coords, y_coords
 
-def recover(inds, sick, x_coords, y_coords, rec, vac, dsi, ebs, ebr):
+def recover(inds, sick, x_coords, y_coords, rec):
   for i, val in enumerate(sick):
       x = binomial(1, rec)
       if x == 1:
@@ -137,7 +121,7 @@ def recover(inds, sick, x_coords, y_coords, rec, vac, dsi, ebs, ebr):
   return inds, sick, x_coords, y_coords
 
 
-def Incubation(inds, sick, x_coords, y_coords, dsi, age):
+def Incubation(inds, sick, x_coords, y_coords, inf):
     for i, val in enumerate(sick):
         x = np.random.binomial(1,inf)
         if x == 1:
@@ -146,7 +130,7 @@ def Incubation(inds, sick, x_coords, y_coords, dsi, age):
         incubation = np.random.uniform(7,39)
         p = (1 - np.random.uniform(0.33,0.5))/incubation
         x = np.random.binomial(p,1)
-    return inds, sick, x_coords, y_coords, dsi
+    return inds, sick, x_coords, y_coords, inf
 
 def dispersal(inds, sick, x_coords, y_coords):
   for num in range(len(sick)): 
@@ -165,28 +149,3 @@ def immigration(inds, sick, x_coords, y_coords, S, imm):
     x_coords.append(uniform(min(x_coords), max(x_coords)))
     y_coords.append(uniform(min(y_coords), max(y_coords)))
   return inds, sick, x_coords, y_coords
-
-
-N = 1000 #individual organisms
-S = 1  # Number of species
-nat_ded = 0.1
-inf_ded = 0.6
-imm = 2  
-# Primary model parameters 
-
-clr = (imm)
-# Lists for properties of individuals
-inds = list(range(N))
-sick = [0]*N
-x_coords = [0]*N 
-y_coords = [0]*N 
-ages = np.random.randint(0, 7500, len(inds)) # age in days
-sex = np.random.binomial(1, 0.5, len(inds)) # 1 = male; 0 = female
-dsi = [0]*N
-dsr = [0]*N
-ebs = [0]*N
-ebr = [0]*N
-ebv = [0]*N
-vac = [0]*N
-rec = [0]*N
-con = [0]*N
