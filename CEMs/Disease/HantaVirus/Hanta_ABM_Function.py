@@ -16,11 +16,13 @@ def update_times(age, dsr, dsi, dsv, sick, ebs, ebr,vac, rec):
     age = age + 1
     age = age.tolist()
     
-    for i, val in enumerate(inds): 
-        vac != 90
+    
+    
+    for i, val in enumerate(vac): 
+        dsv != 90
         if val == 1:
-            vac[i] += 1 
-        elif vac == 90:
+            dsv[i] += 1 
+        elif dsv == 90:
             vac[i] = 0
 
     for i, val in enumerate(sick):
@@ -182,11 +184,12 @@ x_coords = [0]*N
 y_coords = [0]*N 
 ages = np.random.randint(0, 7500, len(inds)) # age in days
 sex = np.random.binomial(1, 0.5, len(inds)) # 1 = male; 0 = female
-dsi = [0]*N
-dsr = [0]*N
-ebs = [0]*N
-ebr = [0]*N
-ebv = [0]*N
-vac = [0]*N
-rec = [0]*N
-con = [0]*N
+dsi = [0]*N # Days since infection
+dsr = [0]*N # Days since recovery
+dsv = [0]*N # Days since Vaccinated
+ebs = [0]*N # Ever been sick
+ebr = [0]*N # Ever been recovered
+ebv = [0]*N # Ever been vaccined
+vac = [0]*N # Vaccinated
+rec = [0]*N # Recovered
+con = [0]*N # Contagious
