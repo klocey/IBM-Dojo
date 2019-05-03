@@ -97,3 +97,8 @@ def Clear_to_File(mydir,x, clr,t, imm, disease, Ni,  inds, sick, x_coords, y_coo
     OUT.write(outlist+'\n')
     #print>>OUT, outlist
     OUT.close()
+
+    Ni = len(inds)
+    Si = len(list(set(sick)))
+    NumSick = sum(sick)
+    Healthy = len(sick) - sum(sick)

@@ -4,7 +4,7 @@ from random import choice
 import sys
 import os
 
-import ABM_Function as ABM
+import Hanta_ABM_Function as ABM
 import File_Function as File
 
 # Part 1 (above): Import modules
@@ -34,7 +34,7 @@ for x in range(1):
   disease = ["HantaVirus"]
   # Primary model parameters 
 
-  clr = ABM(imm)
+#  clr = ABM(imm)
 
   # Lists for properties of individuals
   inds = list(range(N))
@@ -60,21 +60,21 @@ for x in range(1):
     t += 1 # increment generation
     j = choice([0, 1, 2, 3, 4, 5, 6])
     if j == 0:
-      inds, sick, x_coords, y_coords = ABM.reproduce(inds, sick, x_coords, y_coords)
+      inds, sick, x_coords, y_coords = ABM.reproduce(inds, sick, x_coords, y_coords, ages, sex)
     # take reprodution list values and assign them to inds, sick, x_coords, y_coords
     elif j == 1:
-      inds, sick, x_coords, y_coords = ABM.death(inds, sick,x_coords, y_coords, inf_ded, nat_ded)
+      inds, sick, x_coords, y_coords = ABM.death(inds, sick, x_coords, y_coords, inf_ded, nat_ded, ages, sex, dsi)
     # take death list values and assign them to inds, sick, x_coords, y_coords
     elif j == 2:
-      inds, sick, x_coords, y_coords = ABM.dispersa(inds, sick, x_coords, y_coords)
+      inds, sick, x_coords, y_coords = ABM.dispersal(inds, sick, x_coords, y_coords)
     elif j == 3:
       inds, sick, x_coords, y_coords = ABM.immigration(inds, sick, x_coords, y_coords, S, imm)
     elif j == 4:
-      inds, sick, x_coords, y_coords = ABM.infection(inds, sick, x_coords, y_coords)
+      inds, sick, x_coords, y_coords = ABM.infection(inds, sick, x_coords, y_coords, vac, dsi, dsr)
     elif j == 5:
-      inds, sick, x_coords, y_coords = ABM.recover(inds, sick, x_coords, y_coords, rec)
+      inds, sick, x_coords, y_coords = ABM.recover(inds, sick, x_coords, y_coords, rec, vac, dsi, ebs, ebr)
     elif j == 6:
-      inds, sick, x_coords, y_coords, dsi = ABM.Incubation(inds, sick, x_coords, y_coords, dsi)
+      inds, sick, x_coords, y_coords = ABM.Incubation(inds, sick, x_coords, y_coords, ages, sex)
 
     Ni = len(inds)
     Si = len(list(set(sick)))
