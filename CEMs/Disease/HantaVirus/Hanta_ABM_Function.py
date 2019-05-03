@@ -11,16 +11,18 @@ if disease == "HantaVirus":
   inf = 0.5 #uniform(0, 1) # infection rate at distance = 0
 
   
-def update_times(age, dsr, dsi, dsv, sick, ebs, ebr,vac, rec):
-    age = np.array(age)
-    age = age + 1
-    age = age.tolist()
+def update_times(ages, dsr, dsi, dsv, sick, ebs, ebr,vac, rec):
+    ages = np.array(ages)
+    ages = ages + 1
+    ages = ages.tolist()
     
-    for i, val in enumerate(inds): 
-        vac != 90
+    
+    
+    for i, val in enumerate(vac): 
+        dsv != 90
         if val == 1:
-            vac[i] += 1 
-        elif vac == 90:
+            dsv[i] += 1 
+        elif dsv == 90:
             vac[i] = 0
 
     for i, val in enumerate(sick):
@@ -30,7 +32,7 @@ def update_times(age, dsr, dsi, dsv, sick, ebs, ebr,vac, rec):
             if ebr[i] == 1:
                 dsr[i] += 1
 
-    return age, dsr, dsi, dsv, ebs, ebr, vac, rec
+    return ages, dsr, dsi, dsv, ebs, ebr, vac, rec
 
 
 def modelcolor(imm):
@@ -55,7 +57,7 @@ def randcolor():
     clr = '#%02x%02x%02x' % (c1, c2, c3)
     return clr
 
-def reproduce(inds, sick, x_coords, y_coords, age, gender): #Made a function an called it reproduce assigned it the list of inds, sick, x_coords, y_coords
+def reproduce(inds, sick, x_coords, y_coords, ages, sex): #Made a function an called it reproduce assigned it the list of inds, sick, x_coords, y_coords
 
   i1 = list(inds) 
   s1 = list(sick) 
@@ -73,7 +75,7 @@ def reproduce(inds, sick, x_coords, y_coords, age, gender): #Made a function an 
 
   return i1, s1, x1, y1 
 
-def death(inds, sick, x_coords, y_coords, inf_ded, nat_ded, age, gender, dsi):
+def death(inds, sick, x_coords, y_coords, inf_ded, nat_ded, ages, sex, dsi):
 # made a function called death and assigned the list of inds, sick, x_coords and y_coords
 
   i1 = list(inds) 
@@ -125,7 +127,7 @@ def infection(inds, sick, x_coords, y_coords, vac, dsi, dsr):
 
 def recover(inds, sick, x_coords, y_coords, rec, vac, dsi, ebs, ebr):
   for i, val in enumerate(sick):
-      x = binomial(1, rec)
+      x = binomial(1, np.all(rec))
       if x == 1:
           sick[i] = 0
   if disease == "HantaVirus":
@@ -137,7 +139,7 @@ def recover(inds, sick, x_coords, y_coords, rec, vac, dsi, ebs, ebr):
   return inds, sick, x_coords, y_coords
 
 
-def Incubation(inds, sick, x_coords, y_coords, dsi, age):
+def Incubation(inds, sick, x_coords, y_coords, ages, sex):
     for i, val in enumerate(sick):
         x = np.random.binomial(1,inf)
         if x == 1:
@@ -146,7 +148,7 @@ def Incubation(inds, sick, x_coords, y_coords, dsi, age):
         incubation = np.random.uniform(7,39)
         p = (1 - np.random.uniform(0.33,0.5))/incubation
         x = np.random.binomial(p,1)
-    return inds, sick, x_coords, y_coords, dsi
+    return inds, sick, x_coords, y_coords
 
 def dispersal(inds, sick, x_coords, y_coords):
   for num in range(len(sick)): 
@@ -182,11 +184,12 @@ x_coords = [0]*N
 y_coords = [0]*N 
 ages = np.random.randint(0, 7500, len(inds)) # age in days
 sex = np.random.binomial(1, 0.5, len(inds)) # 1 = male; 0 = female
-dsi = [0]*N
-dsr = [0]*N
-ebs = [0]*N
-ebr = [0]*N
-ebv = [0]*N
-vac = [0]*N
-rec = [0]*N
-con = [0]*N
+dsi = [0]*N # Days since infection
+dsr = [0]*N # Days since recovery
+dsv = [0]*N # Days since Vaccinated
+ebs = [0]*N # Ever been sick
+ebr = [0]*N # Ever been recovered
+ebv = [0]*N # Ever been vaccined
+vac = [0]*N # Vaccinated
+rec = [0]*N # Recovered
+con = [0]*N # Contagious

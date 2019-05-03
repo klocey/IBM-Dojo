@@ -1,0 +1,84 @@
+model color is determine by immmigration rate if immigration is equal to 1 then
+the color well be darkred.
+to choose a color for the line in the graph
+  53) list of inds and asignned it the variable of i1
+  54) list of sick and asignned it the variable of i1
+  55) list of x_coords and asignned it the variable of i1
+  56) list of y_coords and asignned it the variable of i1
+  we assigned the list new variable because we do not want them to point at the same data
+67) randomly choice a number between 0 and 1
+  68) if x equal one
+  69) list of sick is gonna be extend by val list
+  70)  max1 is a unique ID; get the max number of inds and assign it to max1
+  71) extend i1 by max1 which has assigned value of max(inds)
+we return i1, s1, x1 and y1  as we dont want the came data from the other list
+     they would both point at the same object
+     92) list of inds and assigne it the variable of i1
+93) list of sick and assigned it the variable of s1
+94) list of x_coords and assign it the variable of x1
+95) list of y_coords and assin it the variable of y
+100) randomly choice 1 or 0
+101) if x is choosen then
+102) in list of i1 take out index (0)
+103) in list of s1 take out index (0)
+106) if the disease is HantaVirus then follow these parameters
+107) The disease life span will be between 14 and 21 days 
+108) The possible of dying from HantaVirus ranging from 33% to 50% than with
+     disease life span we will divide it to get mortality rate for the individuals
+109) at random choose a 1 or the variable of p and assign it to x
+115) we return i1, s1, x1 and y1 as we dont want the came data from the other list
+       they would both point at the same object
+137) randomly choose an individuals from the inds list and assign it the variable 
+     i1
+138) randomly choose an individuals from the inds list and assign it the variable 
+     i2
+140) get the x coordinates for i1 from the x_coords list and assign the value to
+     variable x1
+141) get the x coordinates for i2 from the x_coords list and assign the value to
+     variable x2
+142) get the y coordinates for i1 from the y_coords list and assign the value to
+     variable y1
+143) get the y coordinates for i2 from the y_coords list and assign the value to
+     variable y2 
+146) Use the Pythagorean Theorem to get the distance betwwen i1 and i2 then assign 
+     that value to the variable of D meaning distance
+147) 1/(1+D) is to get the probably of getting infected affected by distance with
+     the value we assign it the variable of pad which means "Probably Affected by 
+     Distance" 
+149) use the value that was assigned to variable "inf" multipy it by the value that
+     was assigned to pad. Assign that value to variable "pof" which means "Probably 
+     Of Infection" It well be a number between 0 and 1 but never going above 1 or below 0 
+152) 4 is the radius of every individuals.
+153) multiply 2 by the variable r than assign the value to the variable R
+200) randomly choose a 1 or 0, it affected by the rec list 
+201) if x equal 1 then get the sick individuals and cure it from the disease
+204) randomly choose a number between 14 and 21. This is how long HantaVirus last
+205) randomly choice a number betweem 0.33 to 0.5 that use the variable "rec" to 
+     to get the probably of recovering from HantaVirus
+167) for the range of sick use length for a loop
+168) randomly choose a number between 0 and the length of inds
+169) x_coords[i] += uniform(-1, 1) # += is a shortcut for x = x + y
+170) y_coords[i] += uniform(-1, 1) # += is a shortcut for y = x + y
+181) get the range from 11 (0, 1, 2, ..., 10). 11 is not included take the range
+     then turn that in that into a list. Assign the variable of ms
+202) open mydir open SimData open inds_data.cvs, Write
+     and create a file named inds_data.txt
+203) always closed the file that was just open
+212) open mydir open SimData open sick_data.cvs, Write
+     and create a file named sick_data.txt
+213) always closed the file that was just open
+'''
+221) open mydir open SimData open x_coords_data.cvs, Write and create a file named
+     x_coords_data.txt
+222) always closed the file that was just open
+231) open mydir open SimData open y_coords_data.cvs, Write and create a file named 
+     y_coords_data.txt
+232) always closed the file that was just open
+240) open mydir open SimData open Complied_Data.cvs, Write and create a file named 
+     y_coords_data.txt
+241) 
+241) always closed the file that was just open
+253) range of 0 to 999 does not include 1000
+  210) inds is a list from 0 to 999, where values are individual IDs
+  286) have x_oords list be for 0 to the lsit of individual
+  287) have y_coords list be for 0 to the list of individual
