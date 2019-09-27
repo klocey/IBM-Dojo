@@ -1,11 +1,14 @@
 from __future__ import division
+import numpy as np
+from random import choice, uniform, randint
 import pandas as pd
+import sys
 import os
 import matplotlib.pyplot as plt
 
 
 mydir = os.path.expanduser('~/GitHub/IBM-Dojo')
-df = pd.read_csv(mydir + '/EcoCom/SimData/Compiled_Data.txt')
+df = pd.read_csv(mydir + '/SimData/Compiled_Data.txt')
 
 
 models = list(set(df['model'].tolist()))
