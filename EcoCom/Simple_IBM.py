@@ -7,7 +7,11 @@ import os
 import IBM_Function as IBM
 # Part 1 (above): Import modules
 
+<<<<<<< HEAD
+mydir = os.path.expanduser('~/GitHub/IBM-Dojo/EcoCom/') # use os to open a path in the same directory to GitHub then IBM-Dojo
+=======
 mydir = os.path.expanduser('~/GitHub/IBM-Dojo/EcoCom') # use os to open a path in the same directory to GitHub then IBM-Dojo
+>>>>>>> 28ec13606dbe2f223766df0814abcfbe9aa0911d
 sys.path.append(mydir)
 
 ###### Model Description ##############
@@ -145,31 +149,31 @@ for x in range(1000):
       OUT = open(mydir + 'SimData/inds_data.txt', 'a+')
       outlist = str(inds).strip('[]') # in the list of inds strip all "[]" from the list then assigen it to the variable of outlist
       outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
-      #OUT.write(outlist)
-      print>>OUT, outlist
+      OUT.write(outlist)
+      #print>>OUT, outlist
       OUT.close()
 
 
       OUT = open(mydir + 'SimData/spes_data.txt', 'a+')
       outlist = str(spes).strip('[]') # in the list of spes strip all "[]" from the list then assigen it to the variable of oulist
       outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
-      #OUT.write(outlist)
-      print>>OUT, outlist
+      OUT.write(outlist)
+      #print>>OUT, outlist
       OUT.close()
 
 
       OUT = open(mydir + 'SimData/x_coords_data.txt', 'a+')
       outlist = str(x_coords).strip('[]') # in the list of x_coords strip all "[]" from the list then assigen it to the variable of outlist
       outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
-      #OUT.write(outlist)
-      print>>OUT, outlist
+      OUT.write(outlist)
+      #print>>OUT, outlist
       OUT.close()
 
       OUT = open(mydir + 'SimData/y_coords_data.txt', 'a+')
       outlist = str(y_coords).strip('[]') # in the list of y_coords strip all "[]" from the list then assigen it to the variable of oulist
       outlist = outlist.replace(" ", "") # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
-      #OUT.write(outlist)
-      print>>OUT, outlist
+      OUT.write(outlist)
+      #print>>OUT, outlist
       OUT.close()
 
       OUT = open(mydir + 'SimData/Compiled_Data.txt', 'a+')
@@ -178,6 +182,6 @@ for x in range(1000):
       outlist = str([x, clr, m, t, Ni, Si, A, extinct]).strip('[]') # in the list of y_coords strip all "[]" from the list then assigen it to the variable of oulist
       outlist = outlist.replace(' ', '') # Use the variable of outlist and replace(x, y) all " " with "" then assign the value back to outlist
       outlist = outlist.replace("'", '')
-      #OUT.write(outlist)
-      print>>OUT, outlist
+      OUT.write(outlist)
+      #print>>OUT, outlist
       OUT.close()

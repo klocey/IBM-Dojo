@@ -16,7 +16,11 @@ sys.path.append(mydir)
 '''
 An Agent-Based Model to simulate the spread of disease...
 '''
+<<<<<<< HEAD
+c
+=======
 
+>>>>>>> 28ec13606dbe2f223766df0814abcfbe9aa0911d
 # Part 3(below): declare objects/variables
 
 # part 4 (below) open and clear data files
