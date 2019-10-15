@@ -1,17 +1,36 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Oct 12 16:19:34 2019
+from __future__ import division
+import numpy as np
+from random import choice
+from numpy.random import binomial
+from random import randint
 
-@author: AlexanderNez
-"""
+'''
+List = []
+Function = ()
+Dictionarys = {}
 
+'''
+
+
+age =randint(0,100) # Age is randomly choosen from 0 to 100
+sex = np.random.binomial(1, 0.5) # Gender is 1 or 0 they have 50% chance of happening
+clat = randint(0,1000) # Lat range from 0 to 1000
+clon = randint(0,1000) # Lon range from 0 to 1000
+healthy = np.random.binomial(1, 0.3) # Healthy is ethier 1 or 0 and they have a 30% chance of being healthy 
 iDict = {}
 
-for i in range(100):
-    iDict[i] = {'age' : 19, 'sex' : 1, 'clat' : 0,
-          'clon' : 0, 'healthy' : 1}
+for i in range(5):
+    iDict[i] = {age, sex, clat,
+         clon, healthy}
 '''
-print()
+print(iDict.keys())
 print(list(iDict.keys())[0])
 '''
-rkey
+
+#'''
+keylist = [iDict]
+rkey = choice(keylist)
+rani = rkey
+
+print(keylist)
+#'''
