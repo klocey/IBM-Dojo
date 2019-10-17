@@ -25,6 +25,7 @@ An Agent-Based Model to simulate the spread of disease...
 File.Write_to_File
 
 # Part 5 (Below): run model
+inds_Dict = {}
 for x in range(1):
   N = 1000 
   S = 1  
@@ -52,6 +53,7 @@ for x in range(1):
   vac = [0]*N
   rec = [0]*N
   con = [0]*N
+  inds_Dict[x] = {ages, }
 
   t = 0 # start at generation 0
   while len(inds) > 0:
