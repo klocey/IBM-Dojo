@@ -1,0 +1,54 @@
+﻿Part 5: Run the Model
+for x in range(1):
+  N = 1000 # The number of individuals is set to 1000
+  S = 1 # S stands for species and we are only modeling one species
+  Nat_ded = 0.1 # The probability of a natural death
+  Inf_ded = 0.6  # The probability of an individuals dying from the disease
+  imm = 2 # The Rate of immagration in the model
+  Disease = ["HantaVirus"] # The Disease that we are modeling 
+
+
+t += 1 # “t” is how we keep track of time and we increment for every loop 
+while len(inds) > 0: # if the length of inds list is less than 0 the loop well break
+    print(len(inds)) # print the current population
+
+
+    t += 1 # increment generation
+    j = choice([0, 1, 2, 3, 4, 5, 6]) # Randomly choose of the seven numbers 
+    if j == 0:
+      inds, sick, x_coords, y_coords = ABM.reproduce(inds, sick, x_coords, y_coords, ages, sex)
+    # take reproduction list values and assign them to inds, sick, x_coords, y_coords
+    elif j == 1:
+      inds, sick, x_coords, y_coords = ABM.death(inds, sick, x_coords, y_coords, inf_ded, nat_ded, ages, sex, dsi)
+    # take death list values and assign them to inds, sick, x_coords, y_coords
+    elif j == 2:
+      inds, sick, x_coords, y_coords = ABM.dispersal(inds, sick, x_coords, y_coords)
+    elif j == 3:
+      inds, sick, x_coords, y_coords = ABM.immigration(inds, sick, x_coords, y_coords, S, imm)
+    elif j == 4:
+      inds, sick, x_coords, y_coords = ABM.infection(inds, sick, x_coords, y_coords, vac, dsi, dsr)
+    elif j == 5:
+      inds, sick, x_coords, y_coords = ABM.recover(inds, sick, x_coords, y_coords, rec, vac, dsi, ebs, ebr)
+    elif j == 6:
+      inds, sick, x_coords, y_coords = ABM.Incubation(inds, sick, x_coords, y_coords, ages, sex)
+ 
+  Ni = len(inds) # Reassigned the inds list to Ni so we will not overwrite inds list
+  Si = len(list(set(sick))) # for the individuals that are sick we assign them to Si
+  NumSick = sum(sick) # The sum of the list of sick is assigned to NumSick
+  Healthy = len(sick) - sum(sick) # The length of list “Sick” is minus for the sum sick is give us the value of healthy
+
+
+if len(x_coords) == 0: A = 0
+    else: A = (max(x_coords) - min(x_coords)) * (max(y_coords) - min(y_coords))
+      # A = area = length * height
+
+
+    # take dispersal list values and assign them to inds, sick, x_coords, y_coords
+    len_list = [len(inds), len(sick), len(x_coords), len(y_coords)]
+    # get the length of inds, sick, x_coords and y_coords then assign the value to
+    # the variable of len_list
+
+
+    # write data to file every so number of time steps
+    if t%1 == 0 or Ni == 0:
+    # if 25 equal to 0 while running the program 1000 time then gather data
