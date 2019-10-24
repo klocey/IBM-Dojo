@@ -1,0 +1,38 @@
+# Dataset Title
+Navajo Roads
+
+
+# URL
+http://databasin.org/datasets/12bb770eb2e047d1a99ea3745ec1e8cf
+
+
+# Dataset Type
+ArcGIS
+
+
+# Credits
+Grand Canyon Trust GIS - Flagstaff, AZ  
+U.S. Department of Commerce, U.S. Census Bureau, Geography Division
+
+
+# Uploaded By
+[Stephanie Smith](http://databasin.org/people/sfluck)
+
+
+# Description
+Detailed roads of the Navajo Nation and vicnity for use in mapping.  Not intended for use as centerlines data.  In September 2011, 2010 Tiger Line roads were re-attributed into six classes using OpenStreetMap and Bing Aerial Imagery as reference sources. Route numbers were corrected or assigned and segments were split when necessary. Due to overlapping segments, use Symbol Levels for proper display.  
+  
+The TIGER/Line Files are shapefiles and related database files (.dbf) that are an extract of selected geographic and cartographic information from the U.S. Census Bureau&#39;s Master Address File / Topologically Integrated Geographic Encoding and Referencing (MAF/TIGER) Database (MTDB). The MTDB represents a seamless national file with no overlaps or gaps between parts, however, each TIGER/Line File is designed to stand alone as an independent data set, or they can be combined to cover the entire nation. The All Roads Shapefile includes all features within the MTDB Super Class &quot;Road/Path Features&quot; distinguished where the MAF/TIGER Feature Classification Code (MTFCC) for the feature in MTDB tha begin with &quot;S&quot;. This includes all primary, secondary, local neighborhood, and rural roads, city streets, vehicular trails (4wd), ramps, service drives, alleys, parking lot roads, private roads for service vehicles (logging, oil fields, ranches, etc.), bike paths or trails, bridle/horse paths, walkways/pedestrian trails, and stairways.
+
+
+# Use Constraints
+The TIGER/Line Shapefile products are not copyrighted however TIGER/Line and Census TIGER are registered trademarks of the U.S. Census Bureau. These products are free to use in a product or publication, however acknowledgement must be given to the U.S. Census Bureau as the source.The horizontal spatial accuracy information present in these files is provided for the purposes of statistical analysis and census operations only. No warranty, expressed or implied is made with regard to the accuracy of the spatial accuracy, and no liability is assumed by the U.S. Government in general or the U.S. Census Bureau, specifically as to the spatial or attribute accuracy of the data. The TIGER/Line Shapefiles may not be suitable for high-precision measurement applications such as engineering problems, property transfers, or other uses that might require highly accurate measurements of the earth&#39;s surface.Coordinates in the TIGER/Line shapefiles have six implied decimal places, but the positional accuracy of these coordinates is not as great as the six decimal places suggest.
+
+
+### Original Metadata
+metadata/metadata1_original.xml
+
+
+### Data Basin Metadata
+metadata/metadata1.xml
+

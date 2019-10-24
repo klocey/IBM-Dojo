@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <idinfo>
+    <descript>
+      <abstract>Detailed roads of the Navajo Nation and vicnity for use in mapping.&amp;#160; Not intended for use as centerlines data.&amp;#160; In September 2011, 2010 Tiger Line roads were re-attributed into six classes using OpenStreetMap and Bing Aerial Imagery as reference sources. Route numbers were corrected or assigned and segments were split when necessary. Due to overlapping segments, use Symbol Levels for proper display.
+ 
+ The TIGER/Line Files are shapefiles and related database files (.dbf) that are an extract of selected geographic and cartographic information from the U.S. Census Bureau&amp;apos;s Master Address File / Topologically Integrated Geographic Encoding and Referencing (MAF/TIGER) Database (MTDB). The MTDB represents a seamless national file with no overlaps or gaps between parts, however, each TIGER/Line File is designed to stand alone as an independent data set, or they can be combined to cover the entire nation. The All Roads Shapefile includes all features within the MTDB Super Class &amp;quot;Road/Path Features&amp;quot; distinguished where the MAF/TIGER Feature Classification Code (MTFCC) for the feature in MTDB tha begin with &amp;quot;S&amp;quot;. This includes all primary, secondary, local neighborhood, and rural roads, city streets, vehicular trails (4wd), ramps, service drives, alleys, parking lot roads, private roads for service vehicles (logging, oil fields, ranches, etc.), bike paths or trails, bridle/horse paths, walkways/pedestrian trails, and stairways.</abstract>
+      <purpose>For use in Navajo Nation mapping projects at scales ranging from 1:24,000 (display &amp;quot;TYPE_GCT=Other&amp;quot;) to 1:400,000 (do not display &amp;quot;Other&amp;quot;).&amp;#160; In ArcMap, select &amp;quot;Use Symbol Levels&amp;quot; to display the correct road class due to overlapping segments.
+ 
+ In order for others to use the information in the Census MAF/TIGER database in a geographic information system (GIS) or for other geographic applications, the Census Bureau releases to the public extracts of the database in the form of TIGER/Line Shapefiles.</purpose>
+      <supplinf />
+    </descript>
+    <useconst>The TIGER/Line Shapefile products are not copyrighted however TIGER/Line and Census TIGER are registered trademarks of the U.S. Census Bureau. These products are free to use in a product or publication, however acknowledgement must be given to the U.S. Census Bureau as the source.
+The horizontal spatial accuracy information present in these files is provided for the purposes of statistical analysis and census operations only. No warranty, expressed or implied is made with regard to the accuracy of the spatial accuracy, and no liability is assumed by the U.S. Government in general or the U.S. Census Bureau, specifically as to the spatial or attribute accuracy of the data. The TIGER/Line Shapefiles may not be suitable for high-precision measurement applications such as engineering problems, property transfers, or other uses that might require highly accurate measurements of the earth&amp;apos;s surface.Coordinates in the TIGER/Line shapefiles have six implied decimal places, but the positional accuracy of these coordinates is not as great as the six decimal places suggest.</useconst>
+    <datacred />
+    <citation>
+      <citeinfo>
+        <title>Navajo Roads</title>
+        <pubdate />
+        <othercit>http://www.census.gov/geo/www/tiger 
+ http://www.grandcanyontrust.org/</othercit>
+        <origin>Grand Canyon Trust GIS - Flagstaff</origin>
+        <origin>AZ
+ U.S. Department of Commerce</origin>
+        <origin>U.S. Census Bureau</origin>
+        <origin>Geography Division</origin>
+        <onlink>http://app.databasin.org/app/pages/datasetPage.jsp?id=12bb770eb2e047d1a99ea3745ec1e8cf</onlink>
+        <pubinfo>
+          <publish />
+          <pubplace />
+        </pubinfo>
+      </citeinfo>
+    </citation>
+    <ptcontac>
+      <cntinfo>
+        <cntperp>
+          <cntper>steve fluck (sfluck@grandcanyontrust.org)</cntper>
+          <cntorg>U.S. Department of Commerce, U.S. Census Bureau, Geography Division, Geographic Products Branch</cntorg>
+        </cntperp>
+      </cntinfo>
+    </ptcontac>
+    <status>
+      <progress />
+      <update />
+    </status>
+    <timeperd>
+      <timeinfo>
+        <sngdate>2009 - 2010</sngdate>
+        <current />
+      </timeinfo>
+    </timeperd>
+    <keywords>
+      <theme>
+        <themekey>transportation</themekey>
+        <themekey>County or equivalent entity</themekey>
+        <themekey>Linear Feature</themekey>
+        <themekey>Address Range</themekey>
+        <themekey>Street Centerline</themekey>
+        <themekey>Road Feature</themekey>
+        <themekey>Roads</themekey>
+        <themekey>Routes</themekey>
+        <themekey>Navajo</themekey>
+        <themekt>Data Basin tags</themekt>
+      </theme>
+    </keywords>
+    <spdom>
+      <bounding>
+        <northbc>37.90654309298647</northbc>
+        <eastbc>-106.45814136794996</eastbc>
+        <southbc>34.416897886458216</southbc>
+        <westbc>-112.19395534304994</westbc>
+      </bounding>
+    </spdom>
+  </idinfo>
+  <dataqual>
+    <attracc>
+      <attraccr>Accurate against Federal Information Processing Standards (FIPS), FIPS Publication 6-4, and FIPS-55 at the 100% level for the codes and base names. The remaining attribute information has been examined but has not been fully tested for accuracy.</attraccr>
+    </attracc>
+    <complete>Data completeness of the TIGER/Line Shapefiles reflects the contents of the Census MAF/TIGER database at the time the TIGER/Line Shapefiles were created.</complete>
+    <lineage>
+      <procstep>
+        <procdesc>Consolidated Data Basin Info: OpenStreetMap and Bing Aerial Imagery in ArcGIS 10.0 &amp;quot;Add Basemap&amp;quot; were used as reference layers to modify the TIGER/Line data.
+ 
+ TIGER/Line Shapefiles are extracted from the Census MAF/TIGER database by nation, state, county, and entity. Census MAF/TIGER data for all of the aforementioned geographic entities are then distributed among the shapefiles each containing attributes for line, polygon, or landmark geographic data. (Census MAF/TIGER)</procdesc>
+      </procstep>
+    </lineage>
+  </dataqual>
+  <eainfo>
+    <detailed>
+      <attr>
+        <attrlabl>OBJECTID</attrlabl>
+        <attalias>OBJECTID</attalias>
+        <attrdef>Internal feature number.</attrdef>
+        <attrdomv />
+      </attr>
+      <attr>
+        <attrlabl>Shape</attrlabl>
+        <attalias>Shape</attalias>
+        <attrdef>Feature geometry.</attrdef>
+        <attrdomv />
+      </attr>
+      <attr>
+        <attrlabl>STATEFP</attrlabl>
+        <attalias>STATEFP</attalias>
+        <attrdef>Current state Federal Information Processing Standards (FIPS) code</attrdef>
+        <attrdomv />
+      </attr>
+      <attr>
+        <attrlabl>COUNTYFP</attrlabl>
+        <attalias>COUNTYFP</attalias>
+        <attrdef>Current county Federal Information Processing Standards (FIPS) code</attrdef>
+        <attrdomv />
+      </attr>
+      <attr>
+        <attrlabl>LINEARID</attrlabl>
+        <attalias>LINEARID</attalias>
+        <attrdef>Linear feature identifier</attrdef>
+        <attrdomv />
+      </attr>
+      <attr>
+        <attrlabl>FULLNAME</attrlabl>
+        <attalias>FULLNAME</attalias>
+        <attrdef>Concatenation of expanded text for prefix qualifier, prefix direction, prefix type, base name, suffix type, suffix direction, and suffix qualifier (as available) with a space between each expanded text field</attrdef>
+        <attrdomv />
+      </attr>
+      <attr>
+        <attrlabl>RTTYP</attrlabl>
+        <attalias>RTTYP</attalias>
+        <attrdef>Route type code</attrdef>
+        <attrdomv />
+      </attr>
+      <attr>
+        <attrlabl>MTFCC</attrlabl>
+        <attalias>MTFCC</attalias>
+        <attrdef>MAF/TIGER feature class code</attrdef>
+        <attrdomv />
+      </attr>
+      <attr>
+        <attrlabl>ORIG_FID</attrlabl>
+        <attalias>ORIG_FID</attalias>
+        <attrdef>ID</attrdef>
+        <attrdomv />
+      </attr>
+      <attr>
+        <attrlabl>TYPE_GCT</attrlabl>
+        <attalias>TYPE_GCT</attalias>
+        <attrdef>Six road classes as determined by Grand Canyon Trust</attrdef>
+        <attrdomv />
+      </attr>
+      <attr>
+        <attrlabl>SHIELD_RTE_NUM2</attrlabl>
+        <attalias>SHIELD_RTE_NUM2</attalias>
+        <attrdef>Route number obtained from OpenStreetMap by Grand Canyon Trust</attrdef>
+        <attrdomv />
+      </attr>
+      <attr>
+        <attrlabl>Shape_Length</attrlabl>
+        <attalias>Shape_Length</attalias>
+        <attrdef>Length of feature in internal units.</attrdef>
+        <attrdomv />
+      </attr>
+    </detailed>
+  </eainfo>
+  <distinfo>
+    <distrib>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>Data Basin</cntorg>
+          <cntper>Data Basin Administrator</cntper>
+        </cntorgp>
+        <cntaddr>
+          <addrtype>physical address</addrtype>
+          <address>136 SW Washington Ave, Suite 202</address>
+          <city>Corvallis</city>
+          <state>OR</state>
+          <postal>97333</postal>
+          <country>USA</country>
+        </cntaddr>
+        <cntvoice>541-757-0687</cntvoice>
+        <cntemail>databasin_admin@consbio.org</cntemail>
+      </cntinfo>
+    </distrib>
+    <resdesc>Navajo Roads</resdesc>
+    <distliab>No warranty is made by Data Basin for use of this dataset.  No warranty is made by Data Basin regarding the accuracy, reliability, or completeness of this dataset. In no event shall Data Basin have any liability whatsoever for payment of any consequential, incidental, indirect, special, or tort damages of any kind, including, but not limited to, any loss of profits arising out of the use or reliance on the geographic or attribute data contained within this dataset or arising out of the delivery, installation, operation, or support by Data Basin.</distliab>
+    <stdorder>
+      <digform>
+        <digtinfo>
+          <formname>Feature Layer</formname>
+          <formvern>ArcGIS  10</formvern>
+          <formspec>Feature Layer</formspec>
+          <filedec>No compression applied</filedec>
+        </digtinfo>
+        <digtopt>
+          <onlinopt>
+            <computer>
+              <networka>
+                <networkr>http://app.databasin.org/app/pages/datasetPage.jsp?id=12bb770eb2e047d1a99ea3745ec1e8cf</networkr>
+              </networka>
+            </computer>
+            <accinstr>Download from http://databasin.org</accinstr>
+          </onlinopt>
+        </digtopt>
+      </digform>
+      <fees>None</fees>
+      <ordering>Download from http://databasin.org</ordering>
+    </stdorder>
+    <techpreq>ESRI ArcGIS Desktop and supporting operating systems.</techpreq>
+  </distinfo>
+</metadata>
+

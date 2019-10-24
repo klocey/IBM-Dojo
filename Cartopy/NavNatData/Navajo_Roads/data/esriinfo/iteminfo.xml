@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ESRI_ItemInformation Culture='en-US'>
+<name>12bb770eb2e047d1a99ea3745ec1e8cf</name>
+<guid>6FBBC2A7-CCF4-4C08-8BF8-7DE701170D09</guid>
+<catalogpath></catalogpath>
+<snippet></snippet>
+<description>Detailed roads of the Navajo Nation and vicnity for use in mapping.&amp;nbsp; Not intended for use as centerlines data.&amp;nbsp; In September 2011, 2010 Tiger Line roads were re-attributed into six classes using OpenStreetMap and Bing Aerial Imagery as reference sources. Route numbers were corrected or assigned and segments were split when necessary. Due to overlapping segments, use Symbol Levels for proper display.
+
+
+
+The TIGER/Line Files are shapefiles and related database files (.dbf) that are an extract of selected geographic and cartographic information from the U.S. Census Bureau&apos;s Master Address File / Topologically Integrated Geographic Encoding and Referencing (MAF/TIGER) Database (MTDB). The MTDB represents a seamless national file with no overlaps or gaps between parts, however, each TIGER/Line File is designed to stand alone as an independent data set, or they can be combined to cover the entire nation. The All Roads Shapefile includes all features within the MTDB Super Class &amp;quot;Road/Path Features&amp;quot; distinguished where the MAF/TIGER Feature Classification Code (MTFCC) for the feature in MTDB tha begin with &amp;quot;S&amp;quot;. This includes all primary, secondary, local neighborhood, and rural roads, city streets, vehicular trails (4wd), ramps, service drives, alleys, parking lot roads, private roads for service vehicles (logging, oil fields, ranches, etc.), bike paths or trails, bridle/horse paths, walkways/pedestrian trails, and stairways.
+
+This dataset was uploaded to Data Basin and is available with additional information at: http://app.databasin.org/app/pages/datasetPage.jsp?id=12bb770eb2e047d1a99ea3745ec1e8cf</description>
+<summary></summary>
+<title>Navajo Roads</title>
+<tags></tags>
+<type>Layer Package</type>
+<typekeywords>
+<typekeyword>File Geodatabase Feature Class</typekeyword>
+<typekeyword>Layer Package</typekeyword>
+<typekeyword>Data</typekeyword>
+<typekeyword>ArcMap</typekeyword>
+<typekeyword>.lpk</typekeyword>
+</typekeywords>
+<thumbnail>thumbnail/thumbnail.png</thumbnail>
+<documentation></documentation>
+<url></url>
+<datalastmodifiedtime></datalastmodifiedtime>
+<extent>
+<xmin>-111.933236526</xmin>
+<ymin>34.5788689990001</ymin>
+<xmax>-106.718860185</xmax>
+<ymax>37.7513133500001</ymax>
+</extent>
+<spatialreference>GCS_WGS_1984</spatialreference>
+<accessinformation></accessinformation>
+</ESRI_ItemInformation>
