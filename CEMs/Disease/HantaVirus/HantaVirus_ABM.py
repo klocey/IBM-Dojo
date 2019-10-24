@@ -16,11 +16,7 @@ sys.path.append(mydir)
 '''
 An Agent-Based Model to simulate the spread of disease...
 '''
-<<<<<<< HEAD
-c
-=======
 
->>>>>>> 28ec13606dbe2f223766df0814abcfbe9aa0911d
 # Part 3(below): declare objects/variables
 
 # part 4 (below) open and clear data files
@@ -29,9 +25,10 @@ c
 File.Write_to_File
 
 # Part 5 (Below): run model
+inds_Dict = {}
 for x in range(1):
-  N = 1000 #individual organisms
-  S = 1  # Number of species
+  N = 1000 
+  S = 1  
   nat_ded = 0.1
   inf_ded = 0.6
   imm = 2  
@@ -56,6 +53,7 @@ for x in range(1):
   vac = [0]*N
   rec = [0]*N
   con = [0]*N
+  inds_Dict[x] = {ages, }
 
   t = 0 # start at generation 0
   while len(inds) > 0:
