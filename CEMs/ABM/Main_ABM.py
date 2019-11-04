@@ -15,7 +15,8 @@ import SimFxns
 
 OUT = open(mydir + '/SimData/main_data.txt', 'w+')
 # Print column headers
-print>>OUT, 'sim,disease,day,N,Nmale,Nfemale,N_age10orless,N_age20orless, ...' # etc.
+print(OUT, 'sim,disease,day,N,Nmale,Nfemale,N_age10orless,N_age20orless, ...') # etc.
+#print>>OUT, 'sim,disease,day,N,Nmale,Nfemale,N_age10orless,N_age20orless, ...'
 OUT.close()
 
 
@@ -23,11 +24,23 @@ file_name = '2019_10_01_1330_MasterData-Sheet1.txt'
 MainDF = pd.read_csv(mydir + '/GIS_Data_Frame/'+file_name, delimiter="\t")
 
 
+# Get chapters and chapter population size
+# 1. use pandas to pull in master dataframe
+# 2. use pandas to get a list of chapter names
+# 4. using list of chapter names, get chapter population sizes
+# 5. check whether the sum of chapter population sizes adds up to N.
+# 6. if sum != N, use the actual sum from above.
+# 7. construct list of probabilities.
+
+chapter_names = []
+chapter_rel_popsize = [] # relative pop size = probability
+
+
 
 num_sims = 1
 for sim in range(num_sims):
-    
-  N = 1000 # This should be the size of the Navajo Nation
+
+  N = 173667 # This should be the size of the Navajo Nation
   nat_ded = 0.1
   inf_ded = 0.6
   imm = 2  
@@ -59,14 +72,13 @@ for sim in range(num_sims):
       # choose home town (or chapter) according to n/N, where n is the 
       # population size of various towns (or chapters) and N is the population
       # size of the Navajo Nation
-      town_or_chapter_names = []
-      ns = [] # list of town or chapter population sizes
-      ns = np.array(ns)/N
-      home_chapter = np.random.choice(town_or_chapter_names, size=1, replace=True, p=ns)
+    
+      home_chapter = np.random.choice(chapter_names, size=1, replace=True, 
+                                      p=chapter_rel_popsize)
       
       inf = 0 # all individuals start healthy
       
-      inds_Dict[i] = {'sex': sex, 'age': age, 'dsi': 0, 'dsr':0, 'dsv':0, 
+      iDict[i] = {'sex': sex, 'age': age, 'dsi': 0, 'dsr':0, 'dsv':0, 
                'ebs':0, 'ebr':0, 'ebv':0, 'vac':0, 'rec':0, 'con':0, 
                'infected':inf, 'home_chapter': home_chapter}
       
@@ -119,10 +131,11 @@ for sim in range(num_sims):
     
     Population demographics:
         You can do this the hard way (below) or a more creative way.
+    '''
     
-    Number of individuals
-    Number of males
-    Number of females
+    Nt =  # Number of individuals
+    Nm = # Number of males
+    Nf = # Number of females
     Number of persons under age 10
     Number of persons under age 20
     Number of persons under age ...
@@ -133,46 +146,23 @@ for sim in range(num_sims):
     Number of sick persons under age 20
     Number of sick persons under age ...
     
-    Number of individuals in Tsaile
-    Number of males in Tsaile
-    Number of females in Tsaile
-    Number of persons under age 10 in Tsaile
-    Number of persons under age 20 in Tsaile
-    Number of persons under age ... in Tsaile
-    Number of sick individuals in Tsaile
-    Number of sick males in Tsaile
-    Number of sick females in Tsaile
-    Number of sick persons under age 10 in Tsaile
-    Number of sick persons under age 20 in Tsaile
-    Number of sick persons under age ... in Tsaile
+    # Loop through chapter names:
+    for ch in chapter_names:
+        
+        Nc = # Number of individuals in a particular chapter
+        Number of males in Tsaile
+        Number of females in Tsaile
+        Number of persons under age 10 in Tsaile
+        Number of persons under age 20 in Tsaile
+        Number of persons under age ... in Tsaile
+        Number of sick individuals in Tsaile
+        Number of sick males in Tsaile
+        Number of sick females in Tsaile
+        Number of sick persons under age 10 in Tsaile
+        Number of sick persons under age 20 in Tsaile
+        Number of sick persons under age ... in Tsaile
     
-    Number of individuals in Chinle
-    Number of males in Chinle
-    Number of females in Chinle
-    Number of persons under age 10 in Chinle
-    Number of persons under age 20 in Chinle
-    Number of persons under age ... in Chinle
-    Number of sick individuals in Chinle
-    Number of sick males in Chinle
-    Number of sick females in Chinle
-    Number of sick persons under age 10 in Chinle
-    Number of sick persons under age 20 in Chinle
-    Number of sick persons under age ... in Chinle
     
-    Number of individuals in ...
-    Number of males in ...
-    Number of females in ...
-    Number of persons under age 10 in ...
-    Number of persons under age 20 in ...
-    Number of persons under age ... in ...
-    Number of sick individuals in ...
-    Number of sick males in ...
-    Number of sick females in ...
-    Number of sick persons under age 10 in ...
-    Number of sick persons under age 20 in ...
-    Number of sick persons under age ... in ...
-    
-    '''
     
 
 
