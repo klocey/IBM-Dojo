@@ -1,0 +1,21 @@
+Model	Color	Time	inds	age	Chapter Name	Sex	Disease	Healthy	Vac
+1	Blue	478	1	60	Blue Gap	1	HantaVirsus	0	1
+1	Blue	478	2	26	Chinle	0	HantaVirsus	0	1
+1	Blue	478	3	10	Tsaile	0	HantaVirsus	1	0
+1	Blue	478	4	26	Blue Gap	1	HantaVirsus	1	1
+1	Blue	478	5	80	Blue Gap	0	HantaVirsus	0	1
+1	Blue	478	6	31	Chinle	0	HantaVirsus	0	1
+1	Blue	478	7	45	Tsaile	1	HantaVirsus	0	0
+1	Blue	478	8	5	Tsaile	1	HantaVirsus	0	1
+1	Blue	478	9	64	Blue Gap	0	HantaVirsus	0	1
+1	Blue	478	10	34	Chinle	0	HantaVirsus	1	1
+1	Blue	478	11	60	Blue Gap	1	HantaVirsus	1	1
+1	Blue	478	12	97	Tsaile	0	HantaVirsus	0	1
+1	Blue	478	13	41	Tsaile	0	HantaVirsus	1	0
+1	Blue	478	14	20	Blue Gap	1	HantaVirsus	1	1
+1	Blue	478	15	19	Blue Gap	1	HantaVirsus	0	0
+1	Blue	478	16	73	Chinle	0	HantaVirsus	1	0
+1	Blue	478	17	34	Chinle	0	HantaVirsus	1	1
+1	Blue	478	18	45	Blue Gap	1	HantaVirsus	0	0
+1	Blue	478	19	12	Tsaile	1	HantaVirsus	1	1
+1	Blue	478	20	34	Tsaile	1	HantaVirsus	0	1
