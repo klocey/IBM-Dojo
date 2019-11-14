@@ -132,23 +132,47 @@ for sim in range(num_sims):
     Population demographics:
         You can do this the hard way (below) or a more creative way.
     '''
+####################### Convert Dictionary to dataframe ########################
+    NN = pd.DataFrame.from_dict(iDict)
+    NN = NN.transpose()
     
-    Nt =  # Number of individuals
-    Nm = # Number of males
-    Nf = # Number of females
-    Number of persons under age 10
-    Number of persons under age 20
-    Number of persons under age ...
-    Number of sick individuals
-    Number of sick males
-    Number of sick females
-    Number of sick persons under age 10
-    Number of sick persons under age 20
-    Number of sick persons under age ...
+    CH = NN.sort_values('home_chapter') # CH is abvr for Chapter house
+
+    CH_inds = len(list(CH))   
     
+    CH_males = len(CH.loc[(CH['sex'] < 1)])
+    CH_females = len(CH.loc[(CH['sex'] == 1)])
+    
+    CH_sick = CH.loc[(CH['infecetd']) < 1]
+    CH_sick_males = CH.loc[(CH['infected'] < 1) & (CH['Sex'] < 1)]
+    CH_sick_females = CH.loc[(CH['infected'] < 1) & (CH['Sex'] == 1)]
+        
+    CH_age_0_9 = CH.loc[ CH['age'] < 10]
+    CH_age_10_19 = len(CH.loc[ CH['age'] < 20])
+    CH_age_20_29 = len(CH.loc[ CH['age'] < 30])
+    CH_age_30_39 = len(CH.loc[ CH['age'] < 40])
+    CH_age_40_49 = len(CH.loc[ CH['age'] < 50])
+    CH_age_50_59 = len(CH.loc[ CH['age'] < 60])
+    CH_age_60_69 = len(CH.loc[ CH['age'] < 70])
+    CH_age_70_79 = len(CH.loc[ CH['age'] < 80])
+    CH_age_80 = len(CH.loc[ CH['age'] < 80])
+
+    S_CH_age_0_9 = CH.loc[(CH['age'] < 10) & (CH['infected'] < 1)]
+    S_CH_age_10_19 = CH.loc[(CH['age'] < 20) & (CH['infected'] < 1)]
+    S_CH_age_20_29 = CH.loc[(CH['age'] < 30) & (CH['infected'] < 1)]
+    S_CH_age_30_39 = CH.loc[(CH['age'] < 40) & (CH['infected'] < 1)]
+    S_CH_age_40_49 = CH.loc[(CH['age'] < 50) & (CH['infected'] < 1)]
+    S_CH_age_50_59 = CH.loc[(CH['age'] < 60) & (CH['infected'] < 1)]
+    S_CH_age_60_69 = CH.loc[(CH['age'] < 70) & (CH['infected'] < 1)]
+    S_CH_age_70_79 = CH.loc[(CH['age'] < 80) & (CH['infected'] < 1)]
+    S_CH_age_80 = CH.loc[(CH['age'] < 80)  & (CH['infected'] < 1)]
+        
     # Loop through chapter names:
     for ch in chapter_names:
         
+        
+        
+        '''
         Nc = # Number of individuals in a particular chapter
         Number of males in Tsaile
         Number of females in Tsaile
@@ -161,11 +185,8 @@ for sim in range(num_sims):
         Number of sick persons under age 10 in Tsaile
         Number of sick persons under age 20 in Tsaile
         Number of sick persons under age ... in Tsaile
+        '''
     
-    
-    
-
-
     # write data to file for every day
     OUT = open(mydir + '/SimData/main_data.txt', 'a+')
     print>>OUT, # what to print
