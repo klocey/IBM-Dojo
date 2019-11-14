@@ -3,6 +3,7 @@ import sys
 import os
 from random import choice
 import numpy as np
+from timeit import default_timer as timer
 
 mydir = os.path.expanduser('~/GitHub/IBM-Dojo')
 df = pd.read_csv(mydir + '/Pratice_Code/Pratice_Pandas_Sheets.txt', delimiter = '\t')
@@ -56,34 +57,60 @@ for sim in range(num_sims):
                'infected':inf, 'home_chapter': home_chapter}
 
 ################################# Convert iDict ################################
+start = timer()
+
 NN = pd.DataFrame.from_dict(iDict)
+
 NN = NN.transpose()
+
+end = timer()
+print(end - start) # Time in seconds
 ################################# Chapters Houses ##############################
 '''
-Chapters = NN.sort_values('home_chapter')
+CH = NN.sort_values('home_chapter') # CH is abvr for Chapter house
 
-Chapter_inds = len(Chapters['inds'])
-Chapter_males = len(Chapters.loc[(Chapters['Sex'] < 1)])
-Chapter_females = len(Chapters.loc[(Chapters['Sex'] == 1)])
-
-Chapter_sick = Chapters.loc[(Chapters['Healthy']) < 1]
-Chapters_sick_males = Chapters.loc[(Chapters['Healthy'] < 1) & (Chapters['Sex'] < 1)]
-Chapters_sick_females = Chapters.loc[(Chapters['Healthy'] < 1) & (Chapters['Sex'] == 1)]
-
-Chapter_age = Chapters['age']  
+CH_inds = len(list(CH))   
+   
+CH_males = len(CH.loc[(CH['sex'] < 1)])
+CH_females = len(CH.loc[(CH['sex'] == 1)])
+    
+CH_sick = CH.loc[(CH['infecetd']) < 1]
+CH_sick_males = CH.loc[(CH['infected'] < 1) & (CH['Sex'] < 1)]
+CH_sick_females = CH.loc[(CH['infected'] < 1) & (CH['Sex'] == 1)]
+        
+CH_age_0_9 = CH.loc[CH['age'] < 10]
+CH_age_10_19 = CH.loc[CH['age'] < 20]
+CH_age_20_29 = CH.loc[CH['age'] < 30]
+CH_age_30_39 = CH.loc[CH['age'] < 40]
+CH_age_40_49 = CH.loc[CH['age'] < 50]
+CH_age_50_59 = CH.loc[CH['age'] < 60]
+CH_age_60_69 = CH.loc[CH['age'] < 70]
+CH_age_70_79 = CH.loc[CH['age'] < 80]
+CH_age_80 = CH.loc[CH['age'] < 80]
+ 
+S_CH_age_0_9 = CH.loc[(CH['age'] < 10) & (CH['infected'] < 1)]
+S_CH_age_10_19 = CH.loc[(CH['age'] < 20) & (CH['infected'] < 1)]
+S_CH_age_20_29 = CH.loc[(CH['age'] < 30) & (CH['infected'] < 1)]
+S_CH_age_30_39 = CH.loc[(CH['age'] < 40) & (CH['infected'] < 1)]
+S_CH_age_40_49 = CH.loc[(CH['age'] < 50) & (CH['infected'] < 1)]
+S_CH_age_50_59 = CH.loc[(CH['age'] < 60) & (CH['infected'] < 1)]
+S_CH_age_60_69 = CH.loc[(CH['age'] < 70) & (CH['infected'] < 1)]
+S_CH_age_70_79 = CH.loc[(CH['age'] < 80) & (CH['infected'] < 1)]
+S_CH_age_80 = CH.loc[(CH['age'] < 80)  & (CH['infected'] < 1)]
+Chapter_age = CH['age']  
 #print(Chapters)
 
 #################################### Blue Gap ##################################
-BG = df.loc[df['Chapter Name'] == 'Blue Gap']
+CH = df.loc[df['Chapter Name'] == 'Blue Gap']
 
-BG_inds = len(BG['inds'])
+CH_inds = len(BG['inds'])
 BG_males =len(BG.loc[(BG['Sex'] < 1)])
 BG_females = len(BG.loc[(BG['Sex'] == 1)])
 
 sick_inds = BG.loc[(BG['Healthy']) == 1]
 sick_males = BG.loc[(BG['Healthy'] == 1) & (BG['Sex'] < 1)]
 sick_females = BG.loc[(BG['Healthy'] == 1) & (BG['Sex'] == 1)]
- 
+  
 BG_age = BG['age']
 # print(BG_age)
 BG_age_0_9 = BG.loc[BG['age'] < 10]

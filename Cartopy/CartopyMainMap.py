@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
-import cartopy.crs as ccrs
 import cartopy
+import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import numpy as np
 
