@@ -6,41 +6,32 @@ import os
 import pandas as pd
 
 
-mydir = os.path.expanduser('~/GitHub/IBM-Dojo/CEMs/ABM')
+mydir = os.path.expanduser('~/GitHub/Python-ABMs/CEMs/ABM')
 sys.path.append(mydir)
-
 import SimFxns
 
-###### Model Description ##############
 
-OUT = open(mydir + '/SimData/main_data.txt', 'w+')
-# Print column headers
-print(OUT, 'sim,disease,day,N,Nmale,Nfemale,N_age10orless,N_age20orless, ...') # etc.
-#print>>OUT, 'sim,disease,day,N,Nmale,Nfemale,N_age10orless,N_age20orless, ...'
-OUT.close()
+#OUT = open(mydir + '/SimData/main_data.txt', 'w+')
+#print(OUT, 'sim,disease,day,N,Nmale,Nfemale,N_age10orless,N_age20orless, ...') # etc.
+#OUT.close()
+
 
 
 file_name = '2019_10_01_1330_MasterData-Sheet1.txt'
 MainDF = pd.read_csv(mydir + '/GIS_Data_Frame/'+file_name, delimiter="\t")
 
 
-# Get chapters and chapter population size
-# 1. use pandas to pull in master dataframe
-# 2. use pandas to get a list of chapter names
-# 4. using list of chapter names, get chapter population sizes
-# 5. check whether the sum of chapter population sizes adds up to N.
-# 6. if sum != N, use the actual sum from above.
-# 7. construct list of probabilities.
+chapter_names = list(set(MainDF['Chapter']))
+#print len(chapter_names)
+#sys.exit()
 
-chapter_names = []
 chapter_rel_popsize = [] # relative pop size = probability
-
 
 
 num_sims = 1
 for sim in range(num_sims):
-
-  N = 173667 # This should be the size of the Navajo Nation
+    
+  N = 1736 # This should be the size of the Navajo Nation
   nat_ded = 0.1
   inf_ded = 0.6
   imm = 2  
@@ -52,11 +43,11 @@ for sim in range(num_sims):
       
 
       # sexes for individuals on the Navajo Nation
-      sexes = choice(['m','f'])
+      sexes = ['m','f']
       # probabilities for a randomly chosen individual being M or F
       sex_ps = [0.47, 0.53]
       
-      sex = np.random.choice(sexes, size=1, replace=True, p=sex_ps)
+      sex = np.random.choice(sexes, size=1, replace=True, p=sex_ps)[0]
       
       
       # get age groups (e.g., <10, < 20, etc.) using age demographics of 
@@ -66,21 +57,26 @@ for sim in range(num_sims):
       # will belong to a given age group. These probabilities must add up to 1.0
       # if all probabilities equal 0.1, then all age groups are equally likely.
       demographies = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
-      age = np.random.choice(age_groups, size=1, replace=True, p=demographies)
+      age = np.random.choice(age_groups, size=1, replace=True, p=demographies)[0]
       
       
       # choose home town (or chapter) according to n/N, where n is the 
       # population size of various towns (or chapters) and N is the population
       # size of the Navajo Nation
-    
-      home_chapter = np.random.choice(chapter_names, size=1, replace=True, 
-                                      p=chapter_rel_popsize)
+      
+      rel_N = [(N/109)/N]*109
+      #print sum(rel_N)
+      #print sys.exit()
+      home_chapter = np.random.choice(chapter_names, size=1, replace=True, p=rel_N)[0]
       
       inf = 0 # all individuals start healthy
       
       iDict[i] = {'sex': sex, 'age': age, 'dsi': 0, 'dsr':0, 'dsv':0, 
                'ebs':0, 'ebr':0, 'ebv':0, 'vac':0, 'rec':0, 'con':0, 
-               'infected':inf, 'home_chapter': home_chapter}
+               'inf':inf, 'home_chapter': home_chapter, 'alive': 1}
+      
+      # IN THIS DICTIONARY (iDict):
+      #   0 = NO, 1 = YES for 'rec', 'inf', 'vac', and 'alive'
       
       
       ''' ADD ADDITIONAL INFORMATION AS NECESSARY
@@ -92,102 +88,91 @@ for sim in range(num_sims):
   # Iterate over some number of days
   for day in range(365*1): # 365*x = years
       
-    for i in len(iDict):
-        
-        print('simulation:', sim, '| Day:', day, ' | N:', len(inds))
+    agg_data = {}
+    for ch in chapter_names:
+      # agg_data can include as much chapter specific info as needed
+      agg_data[ch] = {
+              # Note: ls = []*100 represents a list of 100 elements, where
+              # each element is an age corresponding to its index.
+              # So: ls[0] would hold the value for the number of individuals of age 0.
+              
+              'm_a_inf_age': [0]*101, 'm_a_rec_age': [0]*101, 'm_a_vac_age': [0]*101,
+              'm_d_inf_age': [0]*101, 'm_d_rec_age': [0]*101, 'm_d_vac_age': [0]*101, 
+              'f_a_inf_age': [0]*101, 'f_a_rec_age': [0]*101, 'f_a_vac_age': [0]*101,
+              'f_d_inf_age': [0]*101, 'f_d_rec_age': [0]*101, 'f_d_vac_age': [0]*101}
+              
 
+    #print agg_data[chapter_names[0]]
+    #sys.exit()                 
+    
+    Ni = len(iDict)
+    print 'simulation:', sim, '| Day:', day, ' | N:', Ni
+    for key, val in iDict.items():
+        
+        #print val
+        #sys.exit()
+
+
+        # SimFxns ARE COMMENTED OUT FOR THE PURPOSE OF JUST HAVING THE CODE RUN
+        # AND HAVING agg_data INITIATED AND PROCESSED
+        
+        '''
         j = choice([0, 1, 2, 3, 4, 5, 6])
         if j == 0:
-            iDict = SimFxns.reproduce(iDict, MainDF, disease)
+            iDict = SimFxns.reproduce(key, iDict, MainDF, disease)
         elif j == 1:
-            iDict = SimFxns.death(iDict, MainDF, disease)
+            iDict = SimFxns.death(key, iDict, MainDF, disease)
         elif j == 2:
-            iDict = SimFxns.dispersal(iDict, MainDF, disease)
+            iDict = SimFxns.dispersal(key, iDict, MainDF, disease)
         elif j == 3:
-            iDict = SimFxns.immigration(iDict, MainDF, disease)
+            iDict = SimFxns.immigration(key, iDict, MainDF, disease)
         elif j == 4:
-            iDict = SimFxns.infection(iDict, MainDF, disease)
+            iDict = SimFxns.infection(key, iDict, MainDF, disease)
         elif j == 5:
-            iDict = SimFxns.recover(iDict, MainDF, disease)
+            iDict = SimFxns.recover(key, iDict, MainDF, disease)
         elif j == 6:
-            iDict = SimFxns.Incubation(iDict, MainDF, disease)
+            iDict = SimFxns.Incubation(key, iDict, MainDF, disease)
+        '''
 
-    Ni = len(iDict)
-    NumSick = 0
-    
-    for key, value in iDict.items():
-        if value['infected'] == 1:
-            NumSick += 1
+        inf = val['inf']
+        rec = val['rec']
+        vac = val['vac']
+        age = val['age']
+        sex = val['sex']
+        alive = val['alive']
+        ch = val['home_chapter']
+        
+        p1, p2, p3 = str(), str(), str()
+        
+        if sex == 'm': p1 = 'm_'
+        else: p1 = 'f_'
+        
+        if alive == 1: p2 = 'a_'
+        else: p2 = 'd_'
+        
+        if rec == 0:
+            p3 = 'rec_'
+            agg_data[ch][p1+p2+p3+'age'][age] += 1
+        if inf == 0:
+            p3 = 'inf_'
+            agg_data[ch][p1+p2+p3+'age'][age] += 1
+        if vac == 0:
+            p3 = 'inf_'
+            agg_data[ch][p1+p2+p3+'age'][age] += 1
 
 
+
+        
+    print agg_data['Becenti']
+    sys.exit()
+        
     outlist = [sim, disease, day, N] # list to hold data 
     
-    TotalHealthy = Ni - NumSick
-    outlist.append(TotalHealthy) # add new info to outlist
-    
-
-    ''' The following lines should contain code that will gather data from
-    iDict, MainDF, etc.
-    
-    Population demographics:
-        You can do this the hard way (below) or a more creative way.
-    '''
-####################### Convert Dictionary to dataframe ########################
-    NN = pd.DataFrame.from_dict(iDict)
-    NN = NN.transpose()
-    
-    CH = NN.sort_values('home_chapter') # CH is abvr for Chapter house
-
-    CH_inds = len(list(CH))   
-    
-    CH_males = len(CH.loc[(CH['sex'] < 1)])
-    CH_females = len(CH.loc[(CH['sex'] == 1)])
-    
-    CH_sick = CH.loc[(CH['infecetd']) < 1]
-    CH_sick_males = CH.loc[(CH['infected'] < 1) & (CH['Sex'] < 1)]
-    CH_sick_females = CH.loc[(CH['infected'] < 1) & (CH['Sex'] == 1)]
+    # Process data in agg_data to get data for outlist
         
-    CH_age_0_9 = CH.loc[ CH['age'] < 10]
-    CH_age_10_19 = len(CH.loc[ CH['age'] < 20])
-    CH_age_20_29 = len(CH.loc[ CH['age'] < 30])
-    CH_age_30_39 = len(CH.loc[ CH['age'] < 40])
-    CH_age_40_49 = len(CH.loc[ CH['age'] < 50])
-    CH_age_50_59 = len(CH.loc[ CH['age'] < 60])
-    CH_age_60_69 = len(CH.loc[ CH['age'] < 70])
-    CH_age_70_79 = len(CH.loc[ CH['age'] < 80])
-    CH_age_80 = len(CH.loc[ CH['age'] < 80])
-
-    S_CH_age_0_9 = CH.loc[(CH['age'] < 10) & (CH['infected'] < 1)]
-    S_CH_age_10_19 = CH.loc[(CH['age'] < 20) & (CH['infected'] < 1)]
-    S_CH_age_20_29 = CH.loc[(CH['age'] < 30) & (CH['infected'] < 1)]
-    S_CH_age_30_39 = CH.loc[(CH['age'] < 40) & (CH['infected'] < 1)]
-    S_CH_age_40_49 = CH.loc[(CH['age'] < 50) & (CH['infected'] < 1)]
-    S_CH_age_50_59 = CH.loc[(CH['age'] < 60) & (CH['infected'] < 1)]
-    S_CH_age_60_69 = CH.loc[(CH['age'] < 70) & (CH['infected'] < 1)]
-    S_CH_age_70_79 = CH.loc[(CH['age'] < 80) & (CH['infected'] < 1)]
-    S_CH_age_80 = CH.loc[(CH['age'] < 80)  & (CH['infected'] < 1)]
-        
-    # Loop through chapter names:
-    for ch in chapter_names:
-        
-        
-        
-        '''
-        Nc = # Number of individuals in a particular chapter
-        Number of males in Tsaile
-        Number of females in Tsaile
-        Number of persons under age 10 in Tsaile
-        Number of persons under age 20 in Tsaile
-        Number of persons under age ... in Tsaile
-        Number of sick individuals in Tsaile
-        Number of sick males in Tsaile
-        Number of sick females in Tsaile
-        Number of sick persons under age 10 in Tsaile
-        Number of sick persons under age 20 in Tsaile
-        Number of sick persons under age ... in Tsaile
-        '''
+    
     
     # write data to file for every day
-    OUT = open(mydir + '/SimData/main_data.txt', 'a+')
-    print>>OUT, # what to print
-    OUT.close()
+    #OUT = open(mydir + '/SimData/main_data.txt', 'a+')
+    #print>>OUT, # what to print
+    #OUT.close()

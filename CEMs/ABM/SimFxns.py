@@ -4,6 +4,13 @@ from numpy.random import binomial
 from random import choice, uniform, randint
 
 
+
+#def agg_data(i, iDict):
+    
+    
+    
+
+
 def modelcolor(imm):
     clr = str()
     if imm <= 1: clr = 'darkred'
@@ -17,6 +24,7 @@ def modelcolor(imm):
     elif imm < 9: clr = 'blueviolet'
     else: clr = 'purple'
     return clr
+
 
 def randcolor():
     c1 = randint(0,255)

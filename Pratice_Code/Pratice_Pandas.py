@@ -12,27 +12,33 @@ chapter_names = ['BG']
 chapter_rel_popsize = [1.0] # relative pop size = probability
 
 ################################### Chapters Houses ############################
-print(df.shape) # 20 rows x 10 columns
+#print(df.shape) # 20 rows x 10 columns
 Chapters = df.sort_values('Chapter Name') # inappropriate name
-print(Chapters.shape) # 20 rows x 10 columns
+#print(Chapters.shape) # 20 rows x 10 columns
 
 
 Chapter_inds = len(Chapters['inds']) # Going to be 20, inappropriate name
 
 Chapter_males = len(Chapters.loc[(Chapters['Sex'] < 1)]) # inappropriate name
-print(Chapter_males)
+#print(Chapter_males)
 Chapter_females = len(Chapters.loc[(Chapters['Sex'] == 1)]) # inappropriate name
-print(Chapter_females)
+#print(Chapter_females)
 
 
 Chapter_sick = Chapters.loc[(Chapters['Healthy']) < 1] # inappropriate name
-print(Chapter_sick.shape)
+#print(Chapter_sick.shape)
 
 
 Chapters_sick_males = Chapters.loc[(Chapters['Healthy'] < 1) & (Chapters['Sex'] < 1)]
 Chapters_sick_females = Chapters.loc[(Chapters['Healthy'] < 1) & (Chapters['Sex'] == 1)]
 
 num_sims = 1
+cols = ['sex', 'age', 'dsi', 'dsr', 'dsv', 'ebs', 'ebr', 'ebv', 'vac',
+          'rec', 'con', 'infected', 'home_ch']
+
+#iDF = pd.DataFrame(columns = cols)
+
+
 for sim in range(num_sims):
 
   N = 17366 # This should be the size of the Navajo Nation
@@ -76,17 +82,31 @@ for sim in range(num_sims):
       iDict[i] = {'sex': sex, 'age': age, 'dsi': 0, 'dsr':0, 'dsv':0, 
                'ebs':0, 'ebr':0, 'ebv':0, 'vac':0, 'rec':0, 'con':0, 
                'infected':inf, 'home_chapter': home_chapter}
+      
+      
+      #ind = {'sex': sex, 'age': age, 'dsi': 0, 'dsr':0, 'dsv':0, 
+      #         'ebs':0, 'ebr':0, 'ebv':0, 'vac':0, 'rec':0, 'con':0, 
+      #         'infected':inf, 'home_ch': home_chapter}
+      
+      #iDF = iDF.append(ind, ignore_index=True)
 
 
 ################################# Convert iDict ################################
 start = timer()
 
-NN = pd.DataFrame.from_dict(iDict)
-
+NN = pd.DataFrame(iDict)
+#NN = pd.DataFrame.from_dict(iDict)
 NN = NN.transpose()
 
+
 end = timer()
+
+print NN.iloc[0]
 print(end - start) # Time in seconds
+
+
+
+
 ################################# Chapters Houses ##############################
 '''
 CH = NN.sort_values('home_chapter') # CH is abvr for Chapter house
