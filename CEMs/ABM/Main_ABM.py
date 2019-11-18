@@ -78,9 +78,13 @@ for sim in range(num_sims):
       
       inf = 0 # all individuals start healthy
       
+      c_lat = # latitude of the home chaper
+      c_lon = # similar to above
+      
       iDict[i] = {'sex': sex, 'age': age, 'dsi': 0, 'dsr':0, 'dsv':0, 
                'ebs':0, 'ebr':0, 'ebv':0, 'vac':0, 'rec':0, 'con':0, 
-               'infected':inf, 'home_chapter': home_chapter}
+               'infected':inf, 'home_chapter': home_chapter, 'c_lat': c_lat,
+               'c_lon': c_lon}
       
       
       ''' ADD ADDITIONAL INFORMATION AS NECESSARY
@@ -94,7 +98,7 @@ for sim in range(num_sims):
       
     for i in len(iDict):
         
-        print('simulation:', sim, '| Day:', day, ' | N:', len(inds))
+        print('simulation:', sim, '| Day:', day, ' | N:', len(iDict['inds']))
 
         j = choice([0, 1, 2, 3, 4, 5, 6])
         if j == 0:
