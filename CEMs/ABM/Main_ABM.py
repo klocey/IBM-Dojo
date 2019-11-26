@@ -35,14 +35,12 @@ for sim in range(num_sims):
   iDict = {}
   for i in range(N):
        
-
       # sexes for individuals on the Navajo Nation
       sexes = ['m','f']
       # probabilities for a randomly chosen individual being M or F
       sex_ps = [0.47, 0.53]
       
       sex = np.random.choice(sexes, size=1, replace=True, p=sex_ps)[0]
-      
       
       # get age groups (e.g., <10, < 20, etc.) using age demographics of 
       # the Navajo Nation
@@ -65,12 +63,12 @@ for sim in range(num_sims):
       
       inf = 0 # all individuals start healthy
       
-      c_lat = MainDF['lat']# latitude of the home chaper
-      c_lon = MainDF['lon']# similar to above
+      c_lat = MainDF['Lat']# latitude of the home chaper
+      c_lon = MainDF['Lon']# similar to above
       
       iDict[i] = {'sex': sex, 'age': age, 'dsi': 0, 'dsr':0, 'dsv':0, 
                'ebs':0, 'ebr':0, 'ebv':0, 'vac':0, 'rec':0, 'con':0, 
-               'inf':inf, 'home_chapter': home_chapter, 'c_lat': c_lat, 
+               'inf': inf, 'home_chapter': home_chapter, 'c_lat': c_lat, 
                'c_lon': c_lon, 'alive': 1}
       
       # IN THIS DICTIONARY (iDict):
@@ -106,7 +104,7 @@ for sim in range(num_sims):
     print('simulation:', sim, '| Day:', day, ' | N:', Ni)
     for key, val in iDict.items():
         
-        #print val
+        print(key)
         #sys.exit()
 
         # SimFxns ARE COMMENTED OUT FOR THE PURPOSE OF JUST HAVING THE CODE RUN
@@ -127,16 +125,16 @@ for sim in range(num_sims):
         elif j == 5:
             iDict = SimFxns.recover(key, iDict, MainDF, disease)
         elif j == 6:
-            iDict = SimFxns.Incubation(key, iDict, MainDF, disease)
+            iDict = SimFxns.incubation(key, iDict, MainDF, disease)
         '''
 
-        inf = iDict['inf']
-        rec = iDict['rec']
-        vac = iDict['vac']
-        age = iDict['age']
-        sex = iDict['sex']
-        alive = iDict['alive']
-        ch = iDict['home_chapter']
+        inf = val['inf']
+        rec = val['rec']
+        vac = val['vac']
+        age = val['age']
+        sex = val['sex']
+        alive = val['alive']
+        ch = val['home_chapter']
         
         p1, p2, p3 = str(), str(), str()
         
