@@ -5,28 +5,22 @@ import sys
 import os
 import pandas as pd
 
-
-mydir = os.path.expanduser('~/GitHub/Python-ABMs/CEMs/ABM')
+mydir = os.path.expanduser('~/GitHub/IBM-Dojo/CEMs/ABM')
 sys.path.append(mydir)
-import SimFxns
 
+#import SimFxns
 
 #OUT = open(mydir + '/SimData/main_data.txt', 'w+')
 #print(OUT, 'sim,disease,day,N,Nmale,Nfemale,N_age10orless,N_age20orless, ...') # etc.
 #OUT.close()
-
-
-
-file_name = '2019_10_01_1330_MasterData-Sheet1.txt'
+file_name = '2019_10_28_1345_MasterData.tsv'
 MainDF = pd.read_csv(mydir + '/GIS_Data_Frame/'+file_name, delimiter="\t")
-
 
 chapter_names = list(set(MainDF['Chapter']))
 #print len(chapter_names)
 #sys.exit()
 
 chapter_rel_popsize = [] # relative pop size = probability
-
 
 num_sims = 1
 for sim in range(num_sims):
@@ -40,7 +34,7 @@ for sim in range(num_sims):
   # Generate iDict:
   iDict = {}
   for i in range(N):
-      
+       
 
       # sexes for individuals on the Navajo Nation
       sexes = ['m','f']
@@ -71,19 +65,22 @@ for sim in range(num_sims):
       
       inf = 0 # all individuals start healthy
       
+      c_lat = MainDF['lat']# latitude of the home chaper
+      c_lon = MainDF['lon']# similar to above
+      
       iDict[i] = {'sex': sex, 'age': age, 'dsi': 0, 'dsr':0, 'dsv':0, 
                'ebs':0, 'ebr':0, 'ebv':0, 'vac':0, 'rec':0, 'con':0, 
-               'inf':inf, 'home_chapter': home_chapter, 'alive': 1}
+               'inf':inf, 'home_chapter': home_chapter, 'c_lat': c_lat, 
+               'c_lon': c_lon, 'alive': 1}
       
       # IN THIS DICTIONARY (iDict):
       #   0 = NO, 1 = YES for 'rec', 'inf', 'vac', and 'alive'
-      
+
       
       ''' ADD ADDITIONAL INFORMATION AS NECESSARY
           Need:
               current latitude, current longtidue, etc.
       '''
-      
       
   # Iterate over some number of days
   for day in range(365*1): # 365*x = years
@@ -106,12 +103,11 @@ for sim in range(num_sims):
     #sys.exit()                 
     
     Ni = len(iDict)
-    print 'simulation:', sim, '| Day:', day, ' | N:', Ni
+    print('simulation:', sim, '| Day:', day, ' | N:', Ni)
     for key, val in iDict.items():
         
         #print val
         #sys.exit()
-
 
         # SimFxns ARE COMMENTED OUT FOR THE PURPOSE OF JUST HAVING THE CODE RUN
         # AND HAVING agg_data INITIATED AND PROCESSED
@@ -134,13 +130,13 @@ for sim in range(num_sims):
             iDict = SimFxns.Incubation(key, iDict, MainDF, disease)
         '''
 
-        inf = val['inf']
-        rec = val['rec']
-        vac = val['vac']
-        age = val['age']
-        sex = val['sex']
-        alive = val['alive']
-        ch = val['home_chapter']
+        inf = iDict['inf']
+        rec = iDict['rec']
+        vac = iDict['vac']
+        age = iDict['age']
+        sex = iDict['sex']
+        alive = iDict['alive']
+        ch = iDict['home_chapter']
         
         p1, p2, p3 = str(), str(), str()
         
@@ -163,7 +159,7 @@ for sim in range(num_sims):
 
 
         
-    print agg_data['Becenti']
+    print(agg_data['Becenti'])
     sys.exit()
         
     outlist = [sim, disease, day, N] # list to hold data 

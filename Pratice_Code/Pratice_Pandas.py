@@ -41,7 +41,7 @@ cols = ['sex', 'age', 'dsi', 'dsr', 'dsv', 'ebs', 'ebr', 'ebv', 'vac',
 
 for sim in range(num_sims):
 
-  N = 17366 # This should be the size of the Navajo Nation
+  N = 1736 # This should be the size of the Navajo Nation 173667
   nat_ded = 0.1
   inf_ded = 0.6
   imm = 2  
@@ -92,57 +92,81 @@ for sim in range(num_sims):
 
 
 ################################# Convert iDict ################################
+
+<<<<<<< HEAD
+#NN = pd.DataFrame.from_dict(iDict)
+#NN = NN.transpose()
+
+
 start = timer()
 
+df = pd.DataFrame(columns=['sex', 'age', 'dsi', 'dsr', 'dsv', 
+               'ebs', 'ebr', 'ebv', 'vac', 'rec', 'con', 
+               'infected', 'home_chapter'])
+    
+=======
 NN = pd.DataFrame(iDict)
 #NN = pd.DataFrame.from_dict(iDict)
 NN = NN.transpose()
 
 
+>>>>>>> 8ac91b6fa2bc4983851c6bf244d4216f5098f2c7
 end = timer()
 
 print NN.iloc[0]
 print(end - start) # Time in seconds
 
+<<<<<<< HEAD
+=======
 
 
 
+>>>>>>> 8ac91b6fa2bc4983851c6bf244d4216f5098f2c7
 ################################# Chapters Houses ##############################
 '''
-CH = NN.sort_values('home_chapter') # CH is abvr for Chapter house
+NN = NN.sort_values('home_chapter') # CH is abvr for Chapter house
 
-CH_inds = len(list(CH))   
+NN_inds = len(list(NN))   
    
-CH_males = len(CH.loc[(CH['sex'] < 1)])
-CH_females = len(CH.loc[(CH['sex'] == 1)])
+NN_males = len(NN.loc[(NN['sex'] == 'm')])
+NN_females = len(NN.loc[(NN['sex'] == 'f')])
     
-CH_sick = CH.loc[(CH['infecetd']) < 1]
-CH_sick_males = CH.loc[(CH['infected'] < 1) & (CH['Sex'] < 1)]
-CH_sick_females = CH.loc[(CH['infected'] < 1) & (CH['Sex'] == 1)]
+NN_sick = NN.loc[(NN['infected']) < 1]
+NN_sick_males = NN.loc[(NN['infected'] < 1) & (NN['sex'] == 'm')]
+NN_sick_females = NN.loc[(NN['infected'] < 1) & (NN['sex'] == 'f')]
         
-CH_age_0_9 = CH.loc[CH['age'] < 10]
-CH_age_10_19 = CH.loc[CH['age'] < 20]
-CH_age_20_29 = CH.loc[CH['age'] < 30]
-CH_age_30_39 = CH.loc[CH['age'] < 40]
-CH_age_40_49 = CH.loc[CH['age'] < 50]
-CH_age_50_59 = CH.loc[CH['age'] < 60]
-CH_age_60_69 = CH.loc[CH['age'] < 70]
-CH_age_70_79 = CH.loc[CH['age'] < 80]
-CH_age_80 = CH.loc[CH['age'] < 80]
+NN_age_0_9 = NN.loc[NN['age'] < 10]
+NN_age_10_19 = NN.loc[NN['age'] < 20]
+NN_age_20_29 = NN.loc[NN['age'] < 30]
+NN_age_30_39 = NN.loc[NN['age'] < 40]
+NN_age_40_49 = NN.loc[NN['age'] < 50]
+NN_age_50_59 = NN.loc[NN['age'] < 60]
+NN_age_60_69 = NN.loc[NN['age'] < 70]
+NN_age_70_79 = NN.loc[NN['age'] < 80]
+NN_age_80 = NN.loc[NN['age'] < 80]
  
-S_CH_age_0_9 = CH.loc[(CH['age'] < 10) & (CH['infected'] < 1)]
-S_CH_age_10_19 = CH.loc[(CH['age'] < 20) & (CH['infected'] < 1)]
-S_CH_age_20_29 = CH.loc[(CH['age'] < 30) & (CH['infected'] < 1)]
-S_CH_age_30_39 = CH.loc[(CH['age'] < 40) & (CH['infected'] < 1)]
-S_CH_age_40_49 = CH.loc[(CH['age'] < 50) & (CH['infected'] < 1)]
-S_CH_age_50_59 = CH.loc[(CH['age'] < 60) & (CH['infected'] < 1)]
-S_CH_age_60_69 = CH.loc[(CH['age'] < 70) & (CH['infected'] < 1)]
-S_CH_age_70_79 = CH.loc[(CH['age'] < 80) & (CH['infected'] < 1)]
-S_CH_age_80 = CH.loc[(CH['age'] < 80)  & (CH['infected'] < 1)]
-Chapter_age = CH['age']  
-#print(Chapters)
+S_NN_age_0_9 = NN.loc[(NN['age'] < 10) & (NN['infected'] < 1)]
+S_NN_age_10_19 = NN.loc[(NN['age'] < 20) & (NN['infected'] < 1)]
+S_NN_age_20_29 = NN.loc[(NN['age'] < 30) & (NN['infected'] < 1)]
+S_NN_age_30_39 = NN.loc[(NN['age'] < 40) & (NN['infected'] < 1)]
+S_NN_age_40_49 = NN.loc[(NN['age'] < 50) & (NN['infected'] < 1)]
+S_NN_age_50_59 = NN.loc[(NN['age'] < 60) & (NN['infected'] < 1)]
+S_NN_age_60_69 = NN.loc[(NN['age'] < 70) & (NN['infected'] < 1)]
+S_NN_age_70_79 = NN.loc[(NN['age'] < 80) & (NN['infected'] < 1)]
+S_NN_age_80 = NN.loc[(NN['age'] < 80)  & (NN['infected'] < 1)]
+Chapter_age = NN['age']  
 
+for ch in range(N):
+    Home = list(NN.groupby(['home_chapter']))
+    age = NN.groupby(['age'])
+    sex = list(NN['home_chapter'].groupby(NN['sex']))
+    inf = NN.groupby(['infected'])
+    print(age)
+    '''
 #################################### Blue Gap ##################################
+<<<<<<< HEAD
+'''
+=======
 <<<<<<< HEAD
 BG = df.loc[df['Chapter Name'] == 'Blue Gap']
 
@@ -190,6 +214,7 @@ BG_age_70_79 = (len(BG.loc[BG['age'] > 80]) - int(len(BG_age_60_69)))
 BG_age_80 = (len(BG.loc[BG['age'] > 90]) - int(len(BG_age_70_79)))
 
 =======
+>>>>>>> 8ac91b6fa2bc4983851c6bf244d4216f5098f2c7
 CH = df.loc[df['Chapter Name'] == 'Blue Gap']
 
 CH_inds = len(BG['inds'])
