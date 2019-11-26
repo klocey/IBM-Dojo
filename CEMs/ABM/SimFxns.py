@@ -168,7 +168,7 @@ def recover(key, iDict, MainDF, disease):
         iDict['inf'] = 0      
   return iDict
 
-def Incubation(key, iDict, MainDF, disease):
+def incubation(key, iDict, MainDF, disease):
     # inds, sick, x_coords, y_coords, ages, sex
     for i, val in enumerate(iDict['inf']):
         x = np.random.binomial(1,inf)
