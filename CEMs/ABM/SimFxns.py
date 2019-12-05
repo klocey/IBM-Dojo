@@ -3,6 +3,7 @@ import numpy as np
 from numpy.random import binomial
 from random import choice, uniform, randint
 from math import radians, cos, sin, asin, sqrt
+import scipy
 
 #def agg_data(i, iDict):
 
@@ -55,6 +56,7 @@ def randcolor():
 
 d_list = ["HantaVirus", 'Influenza', 'Ebola']
 disease = choice(d_list)
+
 if disease == "HantaVirus":
   inf = 0.5 #uniform(0, 1) # infection rate at distance = 0
 elif disease == 'Influenza':
@@ -87,39 +89,52 @@ def update_times(key, iDict, MainDF, disease):
 def reproduce(key, iDict, MainDF, disease): 
   '''
   Made a function an called it reproduce assigned it the dictionary of iDict, and 
-  the GIS Naster Dataframe
+  the GIS Master Dataframe
   '''
-  # inds, sick, x_coords, y_coords, ages, sex
-  i1 = iDict[key]
-  s1 = iDict['inf'][key]
-  x1 = iDict['c_lon'][key]
-  y1 = iDict['c_lat'][key]
-
-  for i, val in enumerate(iDict['inf']): # loop through val of sick
-    x = choice([0, 1])
-    if x == 1: 
-        new_name = max(list(iDict)) + 1
-        iDict[new_name] = {'sex': choice('m','f'), 'age': 0, 'dsi': 0, 'dsr':0, 'dsv':0, 
+  if iDict['sex'] == 'f': # Check if the individual is male or female
+      # declare binomial parameters (n, p):
+      n = 40 # N is the maxnium age an individual can reproduce
+      p = 0.5 #  %0 precent chance the individual will reproduce
+      # declare age variable
+      age = 20 # The average age an individual will reproduce.efrff
+      # below: python code representing the pmf equation of the binomial distribution
+      # scipy.special.binom() is the binomial coefficient
+      prob_of_repro = scipy.special.binom(n, age) * p**age * (1-p)**(n-age)
+     
+      # inds, sick, x_coords, y_coords, ages, sex
+      i1 = iDict[key]
+      x1 = iDict['c_lon'][key]
+      y1 = iDict['c_lat'][key]
+    
+      x = prob_of_repro
+      if x == 1:
+          
+          new_name = max(list(iDict)) + 1
+          iDict[new_name] = {'sex': choice('m','f'), 'age': 0, 'dsi': 0, 'dsr':0, 'dsv':0,
                'ebs':0, 'ebr':0, 'ebv':0, 'vac':0, 'rec':0, 'con':0, 
-               'inf': s1, 'home_chapter': i1['home_chpater'] ,'c_lat': x1, 
+               'inf': 0, 'home_chapter': i1['home_chpater'] ,'c_lat': x1, 
                'c_lon': y1, 'alive': 1}
-        '''
-        iDict[new_name] will add a new individual into the NN population.
-        the sex of the new individual should be 50/50, age will be zero 
-        as it was just born and home_chapter have to be the same as the 
-        parent individaul.
-        '''
-  return key, iDict
+
+      '''
+      iDict[new_name] will add a new individual into the NN population.
+      the sex of the new individual should be 50/50, age will be zero 
+      as it was just born and home_chapter have to be the same as the 
+      parent individaul.
+
+      Sex is the gender of individual, dsi = days since infection, dsr = days since
+      recovery, dsv = days since vac, ebs = ever been sick, ebr = ever been recovered,
+      vac = vacinated, rec = recovered, con = con, inf = infected, c_lat = current 
+      lat, c_lon = current lon. 
+      '''
+  return iDict
 
 def death(key, iDict, MainDF, disease):
-  '''
-  Made a function an called it death assigned it the dictionary of iDict, and 
-  the GIS Naster Dataframe
-  '''
+  prob_of_death = 1 - (78.6/(78.6 + iDict['age'])) # 78.6 is the life expect of human
+  
   for i, val in enumerate(iDict['inf']):
     x = int()
     if val == 1: x = binomial(1, ABM.inf_ded)
-    elif val == 0: x = binomial(1, ABM.nat_ded)
+    elif val == 0: x = binomial(1, prob_of_death) 
     if x == 1: 
         iDict['alive'] = 0
     if disease == "HantaVirus":
@@ -128,7 +143,7 @@ def death(key, iDict, MainDF, disease):
         x = np.random.binomial(p,1)
         if x == 1:
             iDict['alive'] == 0
-  return key, iDict
+  return iDict
 
 def infection(key, iDict, MainDF, disease):
 

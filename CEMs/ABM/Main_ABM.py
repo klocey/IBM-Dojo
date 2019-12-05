@@ -60,24 +60,31 @@ for sim in range(num_sims):
       #print sum(rel_N)
       #print sys.exit()
       home_chapter = np.random.choice(chapter_names, size=1, replace=True, p=rel_N)[0]
+      hc_df = MainDF[MainDF['Chapter'] == home_chapter]
+      c_lat = hc_df['Lat']
+      
       
       inf = 0 # all individuals start healthy
       
-      c_lat = MainDF['Lat']# latitude of the home chaper
-      c_lon = MainDF['Lon']# similar to above
+      c_lat = MainDF['Lat'] # latitude of the home chaper
+      c_lon = MainDF['Lon'] # similar to above
       
       iDict[i] = {'sex': sex, 'age': age, 'dsi': 0, 'dsr':0, 'dsv':0, 
                'ebs':0, 'ebr':0, 'ebv':0, 'vac':0, 'rec':0, 'con':0, 
                'inf': inf, 'home_chapter': home_chapter, 'c_lat': c_lat, 
                'c_lon': c_lon, 'alive': 1}
+      '''
+      Sex is the gender of individual, dsi = days since infection, dsr = days since
+      recovery, dsv = days since vac, ebs = ever been sick, ebr = ever been recovered,
+      vac = vacinated, rec = recovered, con = con, inf = infected, c_lat = current 
+      lat, c_lon = current lon. 
       
-      # IN THIS DICTIONARY (iDict):
-      #   0 = NO, 1 = YES for 'rec', 'inf', 'vac', and 'alive'
+      IN THIS DICTIONARY (iDict):
+      0 = NO, 1 = YES for 'rec', 'inf', 'vac', and 'alive'
 
-      
-      ''' ADD ADDITIONAL INFORMATION AS NECESSARY
-          Need:
-              current latitude, current longtidue, etc.
+      ADD ADDITIONAL INFORMATION AS NECESSARY
+      Need:
+      current latitude, current longtidue, etc.
       '''
       
   # Iterate over some number of days
@@ -104,7 +111,7 @@ for sim in range(num_sims):
     print('simulation:', sim, '| Day:', day, ' | N:', Ni)
     for key, val in iDict.items():
         
-        print(key)
+        #print(key)
         #sys.exit()
 
         # SimFxns ARE COMMENTED OUT FOR THE PURPOSE OF JUST HAVING THE CODE RUN
