@@ -86,47 +86,47 @@ def update_times(key, iDict, MainDF, disease):
 
     return iDict
 
-def reproduce(key, iDict, MainDF, disease): 
-  '''
-  Made a function an called it reproduce assigned it the dictionary of iDict, and 
-  the GIS Master Dataframe
-  '''
-  if iDict['sex'] == 'f': # Check if the individual is male or female
-      # declare binomial parameters (n, p):
-      n = 40 # N is the maxnium age an individual can reproduce
-      p = 0.5 #  %0 precent chance the individual will reproduce
-      # declare age variable
-      age = 20 # The average age an individual will reproduce.efrff
-      # below: python code representing the pmf equation of the binomial distribution
-      # scipy.special.binom() is the binomial coefficient
-      prob_of_repro = scipy.special.binom(n, age) * p**age * (1-p)**(n-age)
+def reproduce(key, iDict, MainDF, disease):
+    '''
+    Made a function an called it reproduce assigned it the dictionary of iDict, and 
+    the GIS Master Dataframe
+    '''
+    if iDict['sex'] == 'f': # Check if the individual is male or female
+        # declare binomial parameters (n, p):
+        n = 40 # N is the maxnium age an individual can reproduce
+        p = 0.5 #  %0 precent chance the individual will reproduce
+        # declare age variable
+        age = 20 # The average age an individual will reproduce.efrff
+        # below: python code representing the pmf equation of the binomial distribution
+        # scipy.special.binom() is the binomial coefficient
+        prob_of_repro = scipy.special.binom(n, age) * p**age * (1-p)**(n-age)
      
-      # inds, sick, x_coords, y_coords, ages, sex
-      i1 = iDict[key]
-      x1 = iDict['c_lon'][key]
-      y1 = iDict['c_lat'][key]
+        # inds, sick, x_coords, y_coords, ages, sex
+        i1 = iDict[key]
+        x1 = iDict['c_lon'][key]
+        y1 = iDict['c_lat'][key]
     
-      x = prob_of_repro
-      if x == 1:
+        x = prob_of_repro
+        if x == 1:
           
           new_name = max(list(iDict)) + 1
           iDict[new_name] = {'sex': choice('m','f'), 'age': 0, 'dsi': 0, 'dsr':0, 'dsv':0,
                'ebs':0, 'ebr':0, 'ebv':0, 'vac':0, 'rec':0, 'con':0, 
                'inf': 0, 'home_chapter': i1['home_chpater'] ,'c_lat': x1, 
                'c_lon': y1, 'alive': 1}
+          
+          '''
+          iDict[new_name] will add a new individual into the NN population.
+          the sex of the new individual should be 50/50, age will be zero 
+          as it was just born and home_chapter have to be the same as the 
+          parent individaul.
 
-      '''
-      iDict[new_name] will add a new individual into the NN population.
-      the sex of the new individual should be 50/50, age will be zero 
-      as it was just born and home_chapter have to be the same as the 
-      parent individaul.
-
-      Sex is the gender of individual, dsi = days since infection, dsr = days since
-      recovery, dsv = days since vac, ebs = ever been sick, ebr = ever been recovered,
-      vac = vacinated, rec = recovered, con = con, inf = infected, c_lat = current 
-      lat, c_lon = current lon. 
-      '''
-  return iDict
+          Sex is the gender of individual, dsi = days since infection, dsr = days since
+          recovery, dsv = days since vac, ebs = ever been sick, ebr = ever been recovered,
+          vac = vacinated, rec = recovered, con = con, inf = infected, c_lat = current 
+          lat, c_lon = current lon. 
+         '''
+    return iDict
 
 def death(key, iDict, MainDF, disease):
   prob_of_death = 1 - (78.6/(78.6 + iDict['age'])) # 78.6 is the life expect of human
@@ -148,10 +148,10 @@ def death(key, iDict, MainDF, disease):
 def infection(key, iDict, MainDF, disease):
 
   # inds, sick, x_coords, y_coords, vac, dsi, dsr
-  i1 = randint(0,len(iDict['inds'])-1)
-  i2 = randint(0,len(iDict['inds'])-1)
+  i1 = randint(0,len(iDict)-1)
+  i2 = randint(0,len(iDict)-1)
   
-  x1 = iDict['c_lat'][i1]
+  x1 = iDict['c_lat']
   x2 = iDict['c_lon'][i2]
   y1 = iDict['c_lon'][i1]
   y2 = iDict['c_lat'][i2]
@@ -169,37 +169,38 @@ def infection(key, iDict, MainDF, disease):
   return iDict
 
 def recover(key, iDict, MainDF, disease):
-    
   # inds, sick, x_coords, y_coords, rec, vac, dsi, ebs, ebr
-  for i, val in enumerate(iDict['inf']):
-      x = binomial(1, np.all(iDict['rec']))
+    for i, val in enumerate(iDict.key('inf')):
+        x = binomial(1, np.all(iDict['rec']))
+        if x == 1:
+            iDict['inf'][i] = 0
+    if disease == "HantaVirus":
+      rec = np.random.uniform(14,21)
+      p = (1 - np.random.uniform(0.33,0.5))/rec
+      x = np.random.binomial(p,1)
       if x == 1:
-          iDict['inf'][i] = 0
-  if disease == "HantaVirus":
-    rec = np.random.uniform(14,21)
-    p = (1 - np.random.uniform(0.33,0.5))/rec
-    x = np.random.binomial(p,1)
-    if x == 1:
-        iDict['inf'] = 0      
-  return iDict
+          iDict['inf'] = 0      
+    return iDict
 
 def incubation(key, iDict, MainDF, disease):
     # inds, sick, x_coords, y_coords, ages, sex
-    for i, val in enumerate(iDict['inf']):
+    for i, val in enumerate(iDict.key('inf')):
         x = np.random.binomial(1,inf)
-        if x == 1:
-            iDict['inf'][i] = 0
+        if x == 1:   
+            iDict['inf'][i] == 1
     if disease == "HantaVirus":
         incubation = np.random.uniform(7,39)
         p = (1 - np.random.uniform(0.33,0.5))/incubation
         x = np.random.binomial(p,1)
+        if x == 1:
+            iDict['inf'] == 1
     return iDict
-
+ 
 def dispersal(key, iDict, MainDF, disease):
   
   # inds, sick, x_coords, y_coords
-  for num in range(len(iDict['inf'])): 
-    i = randint(0, len(iDict['inds'])-1) 
+  for num in range(len(iDict)): 
+    i = randint(0, len(iDict.key()-1) 
     iDict['c_lat'][i] += uniform(-1, 1) 
     iDict['c_lon'] += uniform(-1, 1) 
   return iDict
@@ -212,7 +213,7 @@ def immigration(key, iDict, MainDF, disease):
     z = 0.1 # probability that an immigrant is sick
     s = binomial(1, z)
     
-    iDict['inds'].append(max(iDict['inds'])+1)
+    iDict.append(max(iDict['inds'])+1)
     iDict['inf'].append(s)
     iDict['c_lat'].append(uniform(min(iDict['c_lat']), max(iDict['c_lat'])))
     iDict['c_lon'].append(uniform(min(iDict['c_lon']), max(iDict['c_lon'])))

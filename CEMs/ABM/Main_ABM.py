@@ -8,7 +8,7 @@ import pandas as pd
 mydir = os.path.expanduser('~/GitHub/IBM-Dojo/CEMs/ABM')
 sys.path.append(mydir)
 
-#import SimFxns
+import SimFxns
 
 #OUT = open(mydir + '/SimData/main_data.txt', 'w+')
 #print(OUT, 'sim,disease,day,N,Nmale,Nfemale,N_age10orless,N_age20orless, ...') # etc.
@@ -25,7 +25,7 @@ chapter_rel_popsize = [] # relative pop size = probability
 num_sims = 1
 for sim in range(num_sims):
     
-  N = 1736 # This should be the size of the Navajo Nation
+  N = 17 # This should be the size of the Navajo Nation
   nat_ded = 0.1
   inf_ded = 0.6
   imm = 2  
@@ -115,9 +115,8 @@ for sim in range(num_sims):
         #sys.exit()
 
         # SimFxns ARE COMMENTED OUT FOR THE PURPOSE OF JUST HAVING THE CODE RUN
-        # AND HAVING agg_data INITIATED AND PROCESSED
+        # AND HAVING agg_data INITIATED AND PROCESSED       
         
-        '''
         j = choice([0, 1, 2, 3, 4, 5, 6])
         if j == 0:
             iDict = SimFxns.reproduce(key, iDict, MainDF, disease)
@@ -133,7 +132,6 @@ for sim in range(num_sims):
             iDict = SimFxns.recover(key, iDict, MainDF, disease)
         elif j == 6:
             iDict = SimFxns.incubation(key, iDict, MainDF, disease)
-        '''
 
         inf = val['inf']
         rec = val['rec']
