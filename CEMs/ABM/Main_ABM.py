@@ -13,7 +13,7 @@ import SimFxns
 #OUT = open(mydir + '/SimData/main_data.txt', 'w+')
 #print(OUT, 'sim,disease,day,N,Nmale,Nfemale,N_age10orless,N_age20orless, ...') # etc.
 #OUT.close()
-file_name = '2019_10_28_1345_MasterData.tsv'
+file_name = '2019_12_16_1505_MasterData.txt'
 MainDF = pd.read_csv(mydir + '/GIS_Data_Frame/'+file_name, delimiter="\t")
 
 chapter_names = list(set(MainDF['Chapter']))

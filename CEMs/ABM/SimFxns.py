@@ -2,7 +2,7 @@ from __future__ import division
 import numpy as np
 from numpy.random import binomial
 from random import choice, uniform, randint
-from math import radians, cos, sin, asin, sqrt
+from math import radians, cos, sin, asin, sqrt, pi, exp
 import scipy
 
 #def agg_data(i, iDict):
@@ -63,7 +63,12 @@ elif disease == 'Influenza':
     inf = 0.1
 elif disease == 'Ebola':
     inf = 0.8
-  
+    
+def time_convertor(key, iDict):
+    year = iDict['age'] / 365
+    
+    return iDict, year
+        
 def update_times(key, iDict, MainDF, disease):
     
     ages = np.array(iDict['ages'])
@@ -146,7 +151,6 @@ def death(key, iDict, MainDF, disease):
   return iDict
 
 def infection(key, iDict, MainDF, disease):
-
   # inds, sick, x_coords, y_coords, vac, dsi, dsr
   i1 = randint(0,len(iDict)-1)
   i2 = randint(0,len(iDict)-1)
@@ -169,7 +173,9 @@ def infection(key, iDict, MainDF, disease):
   return iDict
 
 def recover(key, iDict, MainDF, disease):
-  # inds, sick, x_coords, y_coords, rec, vac, dsi, ebs, ebr
+    # inds, sick, x_coords, y_coords, rec, vac, dsi, ebs, ebr
+    p = 1/(np.sqrt(2*pi)*exp(-0.5*((iDict['dsi'] - 17.5))*2))
+
     for i, val in enumerate(iDict.key('inf')):
         x = binomial(1, np.all(iDict['rec']))
         if x == 1:
