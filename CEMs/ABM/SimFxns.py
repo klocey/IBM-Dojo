@@ -200,7 +200,7 @@ def dispersal(key, iDict, MainDF, disease):
   
   # inds, sick, x_coords, y_coords
   for num in range(len(iDict)): 
-    i = randint(0, len(iDict.key()-1) 
+    i = randint(0, len(iDict.key)-1) 
     iDict['c_lat'][i] += uniform(-1, 1) 
     iDict['c_lon'] += uniform(-1, 1) 
   return iDict
