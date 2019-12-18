@@ -1,0 +1,56 @@
+Disease 	Parameter	Value	Model Value	Refenece
+HantaVirus	Mortality	50%	0.5	URL: https://www.cdc.gov/hantavirus/technical/hanta/virology.html
+HantaVirus	Mortality	36%	0.36	URL: https://wwwnc.cdc.gov/eid/article/12/8/05-1127_article
+HantaVirus	Mortality	50%	0.5	URL:https://www.merckmanuals.com/home/infections/arboviruses,-arenaviruses,-and-filoviruses/hantavirus-infection
+HantaVirus	Mortality	33-36% 	.33-.36	URL:http://www.nec.navajo-nsn.gov/
+HantaVirus	Mortality	Male = 51.8	0.52	URL: http://www.nec.navajo-nsn.gov/Portals/0/Reports/Navajo%20Hantavirus%20Surveillance%20Report%20October%202016.pdf
+HantaVirus	Mortality	Female = 36.5	0.36	URL: http://www.nec.navajo-nsn.gov/Portals/0/Reports/Navajo%20Hantavirus%20Surveillance%20Report%20October%202016.pdf
+HantaVirus	Incubation	7-39 days 		URL: https://wwwnc.cdc.gov/eid/article/12/8/05-1127_article
+HantaVirus	Incubation	11-39 days		URL: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3291207/
+HantaVirus	Incubation	14-17 days		URL: https://www.ncbi.nlm.nih.gov/pubmed?cmd=Retrieve&db=PubMed&list_uids=11304061&dopt=Abstract
+HantaVirus	Recovery 	2-3 weeks		URL: https://www.merckmanuals.com/home/infections/arboviruses,-arenaviruses,-and-filoviruses/hantavirus-infection
+HantaVirus	Infection	51.90%	0.52	URL: http://www.nec.navajo-nsn.gov/Portals/0/Reports/Navajo%20Hantavirus%20Surveillance%20Report%20October%202016.pdf
+HantaVirus	Infection	48.20%	0.48	URL: http://www.nec.navajo-nsn.gov/Portals/0/Reports/Navajo%20Hantavirus%20Surveillance%20Report%20October%202016.pdf
+HantaVirus	Infection	53.1% - Moblie Home	0.53	URL:http://www.nec.navajo-nsn.gov/
+HantaVirus	Infection	32.7% - NHA housing	0.33	URL:http://www.nec.navajo-nsn.gov/
+HantaVirus	Infection	14.1% - Hogan	0.14	URL:http://www.nec.navajo-nsn.gov/
+HantaVirus	Infection	"Wet Winter" - 33%	0.33	URL:http://www.nec.navajo-nsn.gov/
+HantaVirus	Infection	<18 = 8%	0.08	URL: http://www.nec.navajo-nsn.gov/Portals/0/Reports/Hantavirus%20Exposure%20Characteristics%20Report,%201993-2015.pdf
+HantaVirus	Infection	18-39 = 46%	0.46	URL: http://www.nec.navajo-nsn.gov/Portals/0/Reports/Hantavirus%20Exposure%20Characteristics%20Report,%201993-2015.pdf
+HantaVirus	Infection	40-64 = 38%	0.38	URL: http://www.nec.navajo-nsn.gov/Portals/0/Reports/Hantavirus%20Exposure%20Characteristics%20Report,%201993-2015.pdf
+HantaVirus	Infection	> 64 = 7%	0.07	URL: http://www.nec.navajo-nsn.gov/Portals/0/Reports/Hantavirus%20Exposure%20Characteristics%20Report,%201993-2015.pdf
+Influenza	Infection	Per 100,00 = 25.93		URL: http://www.nec.navajo-nsn.gov/Portals/0/Reports/Vital%20Statistics%20Report%202006%20to%202009%20FINAL.pdf
+Influenza	Infection	49,000,000		URL: https://www.cdc.gov/flu/about/burden/index.html
+Influenza	Mortality	79,000		URL: https://www.cdc.gov/flu/about/burden/index.html
+Influenza	Mortality	14.30%		URL: https://www.cdc.gov/nchs/data/databriefs/db328-h.pdf
+Influenza	Mortality	0-4 years: (0.0 - 1.5)		URL: https://www.cdc.gov/flu/about/burden/2017-2018.htm?CDC_AA_refVal=https%3A%2F%2Fwww.cdc.gov%2Fflu%2Fabout%2Fburden%2Festimates.htm
+Influenza	Mortality	5-17 years (0.4 - 1.8)		URL; https://www.cdc.gov/flu/about/burden/2017-2018.htm?CDC_AA_refVal=https%3A%2F%2Fwww.cdc.gov%2Fflu%2Fabout%2Fburden%2Festimates.htm
+Influenza	Mortality	18 - 49 years (1.4 - 3.2)		URL: https://www.cdc.gov/flu/about/burden/2017-2018.htm?CDC_AA_refVal=https%3A%2F%2Fwww.cdc.gov%2Fflu%2Fabout%2Fburden%2Festimates.htm
+Influenza	Mortality	50 - 64 years (8.8 - 16.9)		URL: https://www.cdc.gov/flu/about/burden/2017-2018.htm?CDC_AA_refVal=https%3A%2F%2Fwww.cdc.gov%2Fflu%2Fabout%2Fburden%2Festimates.htm
+Influenza	Mortality	64+ years (13.0 - 17.0)		URL: https://www.cdc.gov/flu/about/burden/2017-2018.htm?CDC_AA_refVal=https%3A%2F%2Fwww.cdc.gov%2Fflu%2Fabout%2Fburden%2Festimates.htm
+Influenza	Mortality	Per 100,00 = 4.6		URL: http://www.nec.navajo-nsn.gov/Portals/0/Reports/Vital%20Statistics%20Report%202006%20to%202009%20FINAL.pdf
+Influenza	Mortality	Per 100,000 = 0.9		URL: https://www.cdc.gov/nchs/fastats/flu.htm
+Influenza	Vaccination	18-44: 31.1%		URL: https://www.cdc.gov/nchs/data/hus/2017/068.pdf
+Influenza	Vaccination	45-64: 42.8% 		URL: https://www.cdc.gov/nchs/data/hus/2017/068.pdf
+Influenza	Vaccination	65 and over: 67.5%		URL: https://www.cdc.gov/nchs/data/hus/2017/068.pdf
+Influenza	Vaccination	Male: 38.7		URL: https://www.cdc.gov/nchs/data/hus/2017/068.pdf
+Influenza	Vaccination	Female: 45.4		URL: https://www.cdc.gov/nchs/data/hus/2017/068.pdf
+Ebola	Incubtion 	2-21 days		URL: https://www.cdc.gov/vhf/ebola/transmission/index.html
+Ebola	Incubtion 	Avg: 8 -10 days		URL: Younger people appear to have better recovery rates than older people
+Ebola	Mortality	59%		URL: https://www.cdc.gov/vhf/ebola/history/2014-2016-outbreak/index.html
+Ebola	Mortality	60%-90%		URL: https://www.cdc.gov/vhf/ebola/transmission/index.html
+Ebola	Mortality	25%-90%		URL: https://www.who.int/news-room/fact-sheets/detail/ebola-virus-disease
+Ebola	Mortality	25%-90%		URL: https://www.bcm.edu/departments/molecular-virology-and-microbiology/emerging-infections-and-biodefense/ebola-virus
+Ebola	Recovery	Younger people appear to have better recovery rates than older people		URL: Younger people appear to have better recovery rates than older people
+Ebola 	Infection	After a person infected with Ebola develops symptoms of illness, they can spread Ebola to others.		Allela L, Bourry O, Pouillot R. et al. Ebola Virus Antibody Prevalence in Dogs and Human Risk.  Emerging Infectious Diseases. Vol. 11, No. 3, March 2005.
+Ebola	Recovery	Antibodies can be found in survivors bodies for up to 10 years		URL: https://www.cdc.gov/vhf/ebola/treatment/survivors.html
+Ebola	Attack rate	18%		
+Ebola	Attack rate	Childern: 5%		
+Ebola	Attack rate	Adults: 15%		
+	Life expectancy	78.6 years		URL: https://www.cdc.gov/nchs/nvss/deaths.htm
+	Pregnancy	USA: 25 years		URL: https://www.cdc.gov/nchs/data/databriefs/db21_table2.pdf
+	Pregnancy	Arizona: 24 years		URL: https://www.cdc.gov/nchs/data/databriefs/db21_table2.pdf
+	Pregnancy	Arizona Native American: 21 years		URL: https://www.cdc.gov/nchs/data/databriefs/db21_table2.pdf
+	Population 	Navajo: 332,129		URL: http://www.nec.navajo-nsn.gov/Portals/0/Reports/NN2010PopulationProfile.pdf
+	Population 	Navajo Nation: 173,667		URL: http://www.nec.navajo-nsn.gov/Portals/0/Reports/NN2010PopulationProfile.pdf
+	Size	Area: 27,413 mi²		URL: https://www.discovernavajo.com/fact-sheet.aspx
