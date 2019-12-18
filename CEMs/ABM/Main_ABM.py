@@ -16,11 +16,17 @@ import SimFxns
 file_name = '2019_12_16_1505_MasterData.txt'
 MainDF = pd.read_csv(mydir + '/GIS_Data_Frame/'+file_name, delimiter="\t")
 
-chapter_names = list(set(MainDF['Chapter']))
-#print len(chapter_names)
+chapter_names = list(set(MainDF['Chapters']))
+#print(len(chapter_names))
 #sys.exit()
 
-chapter_rel_popsize = [] # relative pop size = probability
+chapter_pops = list(MainDF['Population'])
+N = sum(MainDF['Population'])
+
+print(len(chapter_pops), min(chapter_pops), max(chapter_pops), sum(chapter_pops)/N)
+sys.exit()
+
+chapter_rel_popsize = sum(chapter_pops)/N # relative pop size = probability
 
 num_sims = 1
 for sim in range(num_sims):
@@ -33,6 +39,7 @@ for sim in range(num_sims):
   
   # Generate iDict:
   iDict = {}
+  chDict = {}
   for i in range(N):
        
       # sexes for individuals on the Navajo Nation
@@ -56,11 +63,14 @@ for sim in range(num_sims):
       # population size of various towns (or chapters) and N is the population
       # size of the Navajo Nation
       
+      # 1. list of population sizes for each chapter
+      # 2. divide each element in the list by N
+      
       rel_N = [(N/109)/N]*109
       #print sum(rel_N)
       #print sys.exit()
       home_chapter = np.random.choice(chapter_names, size=1, replace=True, p=rel_N)[0]
-      hc_df = MainDF[MainDF['Chapter'] == home_chapter]
+      hc_df = MainDF[MainDF['Chapters'] == home_chapter]
       c_lat = hc_df['Lat']
       
       
@@ -118,21 +128,21 @@ for sim in range(num_sims):
         # AND HAVING agg_data INITIATED AND PROCESSED       
         
         j = choice([0, 1, 2, 3, 4, 5, 6])
-        if j == 0:
-            iDict = SimFxns.reproduce(key, iDict, MainDF, disease)
+        if j == 0 and val['sex'] == 'f':
+            iDict = SimFxns.reproduce(key, iDict, MainDF, disease, chDict)
         elif j == 1:
-            iDict = SimFxns.death(key, iDict, MainDF, disease)
+            iDict = SimFxns.death(key, iDict, MainDF, disease, chDict)
         elif j == 2:
-            iDict = SimFxns.dispersal(key, iDict, MainDF, disease)
+            iDict = SimFxns.dispersal(key, iDict, MainDF, disease, chDict)
         elif j == 3:
-            iDict = SimFxns.immigration(key, iDict, MainDF, disease)
+            iDict = SimFxns.immigration(key, iDict, MainDF, disease, chDict)
         elif j == 4:
-            iDict = SimFxns.infection(key, iDict, MainDF, disease)
+            iDict = SimFxns.infection(key, iDict, MainDF, disease, chDict)
         elif j == 5:
-            iDict = SimFxns.recover(key, iDict, MainDF, disease)
+            iDict = SimFxns.recover(key, iDict, MainDF, disease, chDict)
         elif j == 6:
-            iDict = SimFxns.incubation(key, iDict, MainDF, disease)
-
+            iDict = SimFxns.incubation(key, iDict, MainDF, disease, chDict)
+                 
         inf = val['inf']
         rec = val['rec']
         vac = val['vac']
@@ -158,20 +168,17 @@ for sim in range(num_sims):
         if vac == 0:
             p3 = 'inf_'
             agg_data[ch][p1+p2+p3+'age'][age] += 1
-
-
-
-        
+         
     print(agg_data['Becenti'])
-    sys.exit()
+    #sys.exit()
         
     outlist = [sim, disease, day, N] # list to hold data 
     
     # Process data in agg_data to get data for outlist
         
-    
-    
     # write data to file for every day
     #OUT = open(mydir + '/SimData/main_data.txt', 'a+')
     #print>>OUT, # what to print
     #OUT.close()
+    
+    chapter_rel_popsize = sum(chapter_pops)/N
