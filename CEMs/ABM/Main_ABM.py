@@ -13,7 +13,7 @@ import SimFxns
 #OUT = open(mydir + '/SimData/main_data.txt', 'w+')
 #print(OUT, 'sim,disease,day,N,Nmale,Nfemale,N_age10orless,N_age20orless, ...') # etc.
 #OUT.close()
-file_name = '2019_12_16_1505_MasterData.txt'
+file_name = '2019_12_20_0932_MasterData.txt'
 MainDF = pd.read_csv(mydir + '/GIS_Data_Frame/'+file_name, delimiter="\t")
 
 chapter_names = list(set(MainDF['Chapters']))
@@ -22,9 +22,9 @@ chapter_names = list(set(MainDF['Chapters']))
 
 chapter_pops = list(MainDF['Population'])
 N = sum(MainDF['Population'])
-
+ 
 print(len(chapter_pops), min(chapter_pops), max(chapter_pops), sum(chapter_pops)/N)
-sys.exit()
+#sys.exit()
 
 chapter_rel_popsize = sum(chapter_pops)/N # relative pop size = probability
 
@@ -66,10 +66,14 @@ for sim in range(num_sims):
       # 1. list of population sizes for each chapter
       # 2. divide each element in the list by N
       
-      rel_N = [(N/109)/N]*109
-      #print sum(rel_N)
-      #print sys.exit()
-      home_chapter = np.random.choice(chapter_names, size=1, replace=True, p=rel_N)[0]
+              
+      chapter_pops = list(MainDF['Population'])
+      N = sum(MainDF['Population'])
+
+      chapter_rel_popsize = sum(chapter_pops)/N # relative pop size = probability
+     
+      home_chapter = np.random.choice(chapter_names, size = 1, replace=True,p=chapter_rel_popsize)  
+      
       hc_df = MainDF[MainDF['Chapters'] == home_chapter]
       c_lat = hc_df['Lat']
       
@@ -127,7 +131,7 @@ for sim in range(num_sims):
         # SimFxns ARE COMMENTED OUT FOR THE PURPOSE OF JUST HAVING THE CODE RUN
         # AND HAVING agg_data INITIATED AND PROCESSED       
         
-        j = choice([0, 1, 2, 3, 4, 5, 6])
+        j = choice([0])#, 1, 2, 3, 4, 5, 6])
         if j == 0 and val['sex'] == 'f':
             iDict = SimFxns.reproduce(key, iDict, MainDF, disease, chDict)
         elif j == 1:
