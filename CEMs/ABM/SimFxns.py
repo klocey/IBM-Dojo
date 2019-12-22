@@ -4,6 +4,7 @@ from numpy.random import binomial
 from random import choice, uniform, randint
 from math import radians, cos, sin, asin, sqrt, pi, exp
 import scipy
+from scipy import special
 
 #def agg_data(i, iDict):
 
@@ -12,10 +13,10 @@ def haversine(key, iDict, MainDF):
     Calculate the great circle distance between two points 
     on the earth (specified in decimal degrees)
     """
-    lat1 = iDict['c_lat']
-    lon1 = iDict['c_lon']
-    lat2 = iDict['c_lat']
-    lon2 = iDict['c_lon']
+    lat1 = iDict['key']['c_lat']
+    lon1 = iDict['key']['c_lon']
+    lat2 = iDict['key']['c_lat']
+    lon2 = iDict['key']['c_lon']
     
     # convert decimal degrees to radians 
     lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
@@ -81,8 +82,8 @@ def update_times(key, iDict, MainDF, disease):
     return iDict
 
 def time_convertor(key, iDict):
-    year = iDict[key]['age'] / 365 # Convert the individuals age (days) to years
-    r_year = round(iDict[key]['age'] / 365) # Rounds the individuals age (days) to years
+    year = iDict['key']['age'] / 365 # Convert the individuals age (days) to years
+    r_year = round(iDict['key']['age'] / 365) # Rounds the individuals age (days) to years
     
     return iDict, year, r_year
 
@@ -100,13 +101,13 @@ def reproduce(key, iDict, MainDF, disease, chDict):
     # scipy.special.binom() is the binomial coefficient
     prob_of_repro = scipy.special.binom(n, age) * p**age * (1-p)**(n-age)
     #Amt_of_offspring = 1 - 1/(1+p**(x-4.2))
-     
+      
     # inds, sick, x_coords, y_coords, ages, sex
     i1 = iDict[key]
-    x1 = iDict['c_lon'][key]
-    y1 = iDict['c_lat'][key]
+    x1 = iDict[key]['c_lon']
+    y1 = iDict[key]['c_lat']
     
-    home_chapter = i1['home_chpater']
+    home_chapter = i1['home_chapter']
     chDict[home_chapter] += 1
           
     x = prob_of_repro
@@ -134,9 +135,9 @@ def reproduce(key, iDict, MainDF, disease, chDict):
     return iDict, chDict
  
 def death(key, iDict, MainDF, disease, chDict):
-  prob_of_death = 1 - (78.6/(78.6 + iDict[key]['age'])) # 78.6 is the life expect of human
+  prob_of_death = 1 - (78.6/(78.6 + iDict['key']['age'])) # 78.6 is the life expect of human
   
-  for i, val in enumerate(iDict[key]['inf']):
+  for i, val in enumerate(iDict['key']['inf']):
     x = int()
     home_chapter = iDict['key']['home_chapter']
     if val == 1: x = binomial(1, inf)
@@ -178,10 +179,10 @@ def infection(key, iDict, MainDF, disease, chDict):
 def recover(key, iDict, MainDF, disease, chDict):
     # inds, sick, x_coords, y_coords, rec, vac, dsi, ebs, ebr
     b = .7
-    p = 1 / (1+b**(iDict[key]['dsi']-21))
+    p = 1 / (1+b**(iDict['key']['dsi']-21))
     
     #p = 2.22 -70/(17.5 + iDict['age'])
-    for i, val in enumerate(iDict[key]['inf']):
+    for i, val in enumerate(iDict['key']['inf']):
         x = binomial(1, np.all(iDict['rec']))
         if x == 1:
             iDict['inf'][i] = 0
@@ -193,25 +194,25 @@ def recover(key, iDict, MainDF, disease, chDict):
 
 def incubation(key, iDict, MainDF, disease, chDict):
     # inds, sick, x_coords, y_coords, ages, sex
-    p = 1/(np.sqrt(2*pi)*exp(-0.5*(iDict[key]['dsi'] - 17.5))*2)
+    p = 1/(np.sqrt(2*pi)*exp(-0.5*(iDict['key']['dsi'] - 17.5))*2)
     #incubation = np.random.uniform(7,39)
     # p = (1 - np.random.uniform(0.33,0.5))/incubation
-    for i, val in enumerate(iDict[key]['inf']):
+    for i, val in enumerate(iDict['key']['inf']):
         x = np.random.binomial(1,inf)
         if x == 1:   
-            iDict[key]['inf'][i] == 1
+            iDict['key']['inf'][i] == 1
     if disease == "HantaVirus":
         x = np.random.binomial(p,1)
         if x == 1:
-            iDict[key]['inf'] == 1
+            iDict['key']['inf'] == 1
     return iDict, chDict
  
 def dispersal(key, iDict, MainDF, disease, chDict):
   # inds, sick, x_coords, y_coords
   for num in range(len(iDict)): 
     i = randint(0, len(iDict[key])-1) 
-    iDict[key]['c_lat'][i] += uniform(-1, 1) 
-    iDict[key]['c_lon'] += uniform(-1, 1) 
+    iDict['key']['c_lat'][i] += uniform(-1, 1) 
+    iDict['key']['c_lon'] += uniform(-1, 1) 
   return iDict, chDict
 
 def immigration(key, iDict, MainDF, disease, chDict):
@@ -223,10 +224,11 @@ def immigration(key, iDict, MainDF, disease, chDict):
     s = binomial(1, z)
     chapter_pops = list(MainDF['Population'])
     N = sum(MainDF['Population'])
-
+    chapter_names = list(set(MainDF['Chapters']))
+    
     chapter_rel_popsize = sum(chapter_pops)/N # relative pop size = probability
     
-    home_chapter = np.random.choice(chapter_names, size=1, replace=True, p= chapter_rel_popsize
+    home_chapter = np.random.choice(chapter_names, size=1, replace=True, p= chapter_rel_popsize)
     chDict[home_chapter] += 1
     
     hc_df = MainDF[MainDF['Chapters'] == home_chapter]
