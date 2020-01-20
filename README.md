@@ -10,7 +10,7 @@ Alexander Nez, Undergrad
 
 # To do list for project
 * [] Finish Main_ABM.py
-* [] Finishh Master_DataFrame
+* [] Finish Master_DataFrame
     * Add hospital and change degree minutes second to decimals
 * [] Finish SimFxn
     * Check disease parameter
