@@ -1,5 +1,5 @@
 # Project Description
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Navajo_flag.svg/200px-Navajo_flag.svg.png" align="right" width="600" height="300"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Navajo_flag.svg/200px-Navajo_flag.svg.png" align="right" width="450" height="225"/>
 
 # Authors 
 Kenneth J. Locey, Ph.D.
