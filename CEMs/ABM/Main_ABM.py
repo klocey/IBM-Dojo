@@ -151,7 +151,7 @@ for sim in range(num_sims):
                  
         inf = val['inf']
         rec = val['rec']
-        vac = val['vac']
+c         vac = val['vac']
         age = val['age']
         sex = val['sex']
         alive = val['alive']
