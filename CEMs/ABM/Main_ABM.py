@@ -67,16 +67,18 @@ for sim in range(num_sims):
       # 2. divide each element in the list by N
       
               
-      chapter_pops = list(MainDF['Population'])
+      chapter_pops = MainDF['Population']
       N = sum(MainDF['Population'])
-
-      chapter_rel_popsize = sum(chapter_pops)/N # relative pop size = probability
+ 
+      chapter_rel_popsize = chapter_pops/N # relative pop size = probability
      
-      home_chapter = np.random.choice(chapter_names, size = 1, replace=True,p=chapter_rel_popsize)  
+      home_chapter = np.random.choice(chapter_names, size = 1, replace=True,p=chapter_rel_popsize)[0]  
+      print(home_chapter)
       
+      #print(MainDF['Chapters'].tolist())
       hc_df = MainDF[MainDF['Chapters'] == home_chapter]
+      print('got here') 
       c_lat = hc_df['Lat']
-      
       
       inf = 0 # all individuals start healthy
       
