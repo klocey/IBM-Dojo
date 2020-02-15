@@ -108,6 +108,7 @@ def reproduce(key, iDict, MainDF, disease, chDict):
     y1 = iDict[key]['c_lat']
     
     home_chapter = i1['home_chapter']
+    #print(home_chapter)
     chDict[home_chapter] += 1
           
     x = prob_of_repro
@@ -120,7 +121,7 @@ def reproduce(key, iDict, MainDF, disease, chDict):
           
         home_chapter = i1['home_chpater']
         chDict[home_chapter] += 1
-          
+        
         '''
         iDict[new_name] will add a new individual into the NN population.
         the sex of the new individual should be 50/50, age will be zero 
