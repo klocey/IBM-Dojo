@@ -13,7 +13,7 @@ import SimFxns
 #OUT = open(mydir + '/SimData/main_data.txt', 'w+')
 #print(OUT, 'sim,disease,day,N,Nmale,Nfemale,N_age10orless,N_age20orless, ...') # etc.
 #OUT.close()
-file_name = '2019_12_20_0932_MasterData.txt'
+file_name = '2020_01_28_2231_MasterData.txt'
 MainDF = pd.read_csv(mydir + '/GIS_Data_Frame/'+file_name, delimiter="\t")
 
 chapter_names = list(set(MainDF['Chapters']))
@@ -23,7 +23,7 @@ chapter_names = list(set(MainDF['Chapters']))
 chapter_pops = list(MainDF['Population'])
 N = sum(MainDF['Population'])
  
-print(len(chapter_pops), min(chapter_pops), max(chapter_pops), sum(chapter_pops)/N)
+#print(len(chapter_pops), min(chapter_pops), max(chapter_pops), sum(chapter_pops)/N)
 #sys.exit()
 
 chapter_rel_popsize = sum(chapter_pops)/N # relative pop size = probability
@@ -31,7 +31,7 @@ chapter_rel_popsize = sum(chapter_pops)/N # relative pop size = probability
 num_sims = 1
 for sim in range(num_sims):
     
-  N = 17 # This should be the size of the Navajo Nation
+  N = 173010 #This should be the size of the Navajo Nation
   nat_ded = 0.1
   inf_ded = 0.6
   imm = 2  
@@ -41,7 +41,7 @@ for sim in range(num_sims):
   iDict = {}
   chDict = {}
   for i in range(N):
-       
+      print(N-i, N)
       # sexes for individuals on the Navajo Nation
       sexes = ['m','f']
       # probabilities for a randomly chosen individual being M or F
@@ -67,16 +67,18 @@ for sim in range(num_sims):
       # 2. divide each element in the list by N
       
               
-      chapter_pops = list(MainDF['Population'])
+      chapter_pops = MainDF['Population']
       N = sum(MainDF['Population'])
-
-      chapter_rel_popsize = sum(chapter_pops)/N # relative pop size = probability
+ 
+      chapter_rel_popsize = chapter_pops/N # relative pop size = probability
      
-      home_chapter = np.random.choice(chapter_names, size = 1, replace=True,p=chapter_rel_popsize)  
-      
+      home_chapter = np.random.choice(chapter_names, size = 1, replace=True,p=chapter_rel_popsize)[0]  
+      #print(home_chapter)
+       
+      #print(MainDF['Chapters'].tolist())
       hc_df = MainDF[MainDF['Chapters'] == home_chapter]
+      #print('got here') 
       c_lat = hc_df['Lat']
-      
       
       inf = 0 # all individuals start healthy
       
@@ -123,8 +125,11 @@ for sim in range(num_sims):
     
     Ni = len(iDict)
     print('simulation:', sim, '| Day:', day, ' | N:', Ni)
-    for key, val in iDict.items():
-        
+    keys = iDict.keys()
+    for i in keys:
+        x = keys[i]
+        print(x)
+        sys.exit()
         #print(key)
         #sys.exit()
 
