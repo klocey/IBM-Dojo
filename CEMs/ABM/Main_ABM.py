@@ -9,16 +9,15 @@ mydir = os.path.expanduser('~/GitHub/IBM-Dojo/CEMs/ABM')
 sys.path.append(mydir)
 
 import SimFxns
-
 #OUT = open(mydir + '/SimData/main_data.txt', 'w+')
 #print(OUT, 'sim,disease,day,N,Nmale,Nfemale,N_age10orless,N_age20orless, ...') # etc.
 #OUT.close()
-file_name = '2020_01_28_2231_MasterData.txt'
+file_name = '2020_02_29_0907_MasterData.txt'
 MainDF = pd.read_csv(mydir + '/GIS_Data_Frame/'+file_name, delimiter="\t")
 
 chapter_names = list(set(MainDF['Chapters']))
 #print(len(chapter_names))
-#sys.exit()
+#sys.exit() 
 
 chapter_pops = list(MainDF['Population'])
 N = sum(MainDF['Population'])
