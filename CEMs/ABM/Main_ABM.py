@@ -14,7 +14,7 @@ import SimFxns
 #OUT = open(mydir + '/SimData/main_data.txt', 'w+')
 #print(OUT, 'sim,disease,day,N,Nmale,Nfemale,N_age10orless,N_age20orless, ...') # etc.
 #OUT.close()
-file_name = '2020_02_29_0907_MasterData.txt'
+file_name = '2020_07_11_1635_MasterData.txt'
 MainDF = pd.read_csv(mydir + '/GIS_Data_Frame/'+file_name, delimiter="\t")
 
 ch_names = list(set(MainDF['Chapters'])) # List of 110 Navajo Chapter
