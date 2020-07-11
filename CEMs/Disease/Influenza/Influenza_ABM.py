@@ -24,12 +24,8 @@ An Agent-Based Model to simulate the spread of disease...
 OUT = open(mydir + 'CEMs/SimData/inds_data.txt', 'w+') 
 OUT.close()                                       
 
-
-
 OUT = open(mydir + 'CEMs/SimData/sick_data.txt', 'w+') 
 OUT.close()                                       
-
-
 
 OUT = open(mydir + 'CEMs/SimData/x_coords_data.txt', 'w+')
 OUT.close()                                       
