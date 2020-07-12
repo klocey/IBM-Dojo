@@ -39,6 +39,8 @@ plt.xlabel("Time")
 plt.ylabel("Relative abundance")
 #plt.yscale('log')
 
+print("I just want to sleep")
+
 plt.legend(loc='best', edgecolor='None', fontsize=8)
 plt.subplots_adjust(wspace=0.5, hspace=0.5)
 plt.savefig(mydir + '/CEMs/figures/Fig1.png', dpi=400, bbox_inches = "tight")

@@ -4,6 +4,7 @@ from random import choice
 import sys
 import os
 import pandas as pd
+from numpy.random import seed
 
 mydir = os.path.expanduser('~/GitHub/IBM-Dojo/CEMs/ABM')
 sys.path.append(mydir)
@@ -13,175 +14,150 @@ import SimFxns
 #OUT = open(mydir + '/SimData/main_data.txt', 'w+')
 #print(OUT, 'sim,disease,day,N,Nmale,Nfemale,N_age10orless,N_age20orless, ...') # etc.
 #OUT.close()
-file_name = '2020_01_28_2231_MasterData.txt'
+file_name = '2020_07_11_1635_MasterData.txt'
 MainDF = pd.read_csv(mydir + '/GIS_Data_Frame/'+file_name, delimiter="\t")
 
-chapter_names = list(set(MainDF['Chapters']))
+ch_names = list(set(MainDF['Chapters'])) # List of 110 Navajo Chapter
+ch_lats = list(set(MainDF['Lat']) # List of corresponding Lat with respect to their chpater
+ch_lons = list(set(MainDF['Lon']) # List of corresponding Lat with respect to their chpater
+# set() takes a column and checks if they're no duplicated in the column
+# list() turns the unquie set into into a list of variable 
+
+nat_ded = 0.1 # The chance of an indivdual dying from natural causes. 
+inf_ded = 0. # The chance of dying for the choosen diseases causes. 
+imm = 2  # the rate of how much individuals 
+disease = "HantaViruS"
 #print(len(chapter_names))
-#sys.exit()
+#sys.exit() 
 
 chapter_pops = list(MainDF['Population'])
-N = sum(MainDF['Population'])
+N = sum(chapter_pops)
  
 #print(len(chapter_pops), min(chapter_pops), max(chapter_pops), sum(chapter_pops)/N)
 #sys.exit()
 
-chapter_rel_popsize = sum(chapter_pops)/N # relative pop size = probability
+ch_rel_popsize = np.array(chapter_pops)/N # relative pop size = probability
 
 num_sims = 1
-for sim in range(num_sims):
-    
-  N = 173010 #This should be the size of the Navajo Nation
-  nat_ded = 0.1
-  inf_ded = 0.6
-  imm = 2  
-  disease = "HantaViruS"
-  
-  # Generate iDict:
-  iDict = {}
-  chDict = {}
-  for i in range(N):
-      print(N-i, N)
-      # sexes for individuals on the Navajo Nation
-      sexes = ['m','f']
-      # probabilities for a randomly chosen individual being M or F
-      sex_ps = [0.47, 0.53]
-      
-      sex = np.random.choice(sexes, size=1, replace=True, p=sex_ps)[0]
-      
-      # get age groups (e.g., <10, < 20, etc.) using age demographics of 
-      # the Navajo Nation
-      age_groups = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-      # demographies: a list of probabilities that a randomly chosen individual
-      # will belong to a given age group. These probabilities must add up to 1.0
-      # if all probabilities equal 0.1, then all age groups are equally likely.
-      demographies = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
-      age = np.random.choice(age_groups, size=1, replace=True, p=demographies)[0]
-      
-      
-      # choose home town (or chapter) according to n/N, where n is the 
-      # population size of various towns (or chapters) and N is the population
-      # size of the Navajo Nation
-      
-      # 1. list of population sizes for each chapter
-      # 2. divide each element in the list by N
-      
-              
-      chapter_pops = MainDF['Population']
-      N = sum(MainDF['Population'])
- 
-      chapter_rel_popsize = chapter_pops/N # relative pop size = probability
-     
-      home_chapter = np.random.choice(chapter_names, size = 1, replace=True,p=chapter_rel_popsize)[0]  
-      #print(home_chapter)
-       
-      #print(MainDF['Chapters'].tolist())
-      hc_df = MainDF[MainDF['Chapters'] == home_chapter]
-      #print('got here') 
-      c_lat = hc_df['Lat']
-      
-      inf = 0 # all individuals start healthy
-      
-      c_lat = MainDF['Lat'] # latitude of the home chaper
-      c_lon = MainDF['Lon'] # similar to above
-      
-      iDict[i] = {'sex': sex, 'age': age, 'dsi': 0, 'dsr':0, 'dsv':0, 
-               'ebs':0, 'ebr':0, 'ebv':0, 'vac':0, 'rec':0, 'con':0, 
-               'inf': inf, 'home_chapter': home_chapter, 'c_lat': c_lat, 
-               'c_lon': c_lon, 'alive': 1}
-      '''
-      Sex is the gender of individual, dsi = days since infection, dsr = days since
-      recovery, dsv = days since vac, ebs = ever been sick, ebr = ever been recovered,
-      vac = vacinated, rec = recovered, con = con, inf = infected, c_lat = current 
-      lat, c_lon = current lon. 
-      
-      IN THIS DICTIONARY (iDict):
-      0 = NO, 1 = YES for 'rec', 'inf', 'vac', and 'alive'
 
-      ADD ADDITIONAL INFORMATION AS NECESSARY
-      Need:
-      current latitude, current longtidue, etc.
-      '''
-      
-  # Iterate over some number of days
-  for day in range(365*1): # 365*x = years
-      
-    agg_data = {}
-    for ch in chapter_names:
-      # agg_data can include as much chapter specific info as needed
-      agg_data[ch] = {
-              # Note: ls = []*100 represents a list of 100 elements, where
-              # each element is an age corresponding to its index.
-              # So: ls[0] would hold the value for the number of individuals of age 0.
-              
-              'm_a_inf_age': [0]*101, 'm_a_rec_age': [0]*101, 'm_a_vac_age': [0]*101,
-              'm_d_inf_age': [0]*101, 'm_d_rec_age': [0]*101, 'm_d_vac_age': [0]*101, 
-              'f_a_inf_age': [0]*101, 'f_a_rec_age': [0]*101, 'f_a_vac_age': [0]*101,
-              'f_d_inf_age': [0]*101, 'f_d_rec_age': [0]*101, 'f_d_vac_age': [0]*101}
-              
+column_names = ['sex', 'age', 'dsi', 'dsr', 'dsv','ebs', 'ebr', 'ebv', 'vac', 
+                'rec', 'con', 'inf', 'home_chapter', 'c_lat', 'c_lon', 'alive']               
+               
+df_NN = pd.DataFrame(columns = column_names)
 
-    #print agg_data[chapter_names[0]]
-    #sys.exit()                 
-    
-    Ni = len(iDict)
-    print('simulation:', sim, '| Day:', day, ' | N:', Ni)
-    keys = iDict.keys()
-    for i in keys:
-        x = keys[i]
-        print(x)
-        sys.exit()
-        #print(key)
-        #sys.exit()
+df_NN['sex'] = np.random.binomial(1, 0.53, N)  # 1 == Female ; 0 = Male    
 
-        # SimFxns ARE COMMENTED OUT FOR THE PURPOSE OF JUST HAVING THE CODE RUN
-        # AND HAVING agg_data INITIATED AND PROCESSED       
+### Get ages
+Age_0_9 = 30558/N
+Age_10_19 = 34320/N
+Age_20_29 = 23827/N
+Age_30_39 = 19797/N
+Age_40_49 = 22123/N
+Age_50_59 = 19469/N
+Age_60_69 = 12307/N
+Age_70_79 = 7667/N
+Age_80 = 3599/N
+
+age_groups = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+demographies = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+
+age_groups = [10, 20, 30, 40, 50, 60, 70, 80]
+demographies = [Age_0_9,Age_10_19, Age_20_29, Age_30_39, Age_40_49, Age_50_59,
+                Age_60_69, Age_70_79, Age_80]
+df_NN['age'] = np.random.choice(age_groups, size=N, replace=True, 
+     p=demographies)
+
+### Get home chapters
+#rand_seed = np.random.randint(0)
+
+seed(0)
+df_NN['home_chapter'] = np.random.choice(ch_names, size = N, 
+     replace=True, p=ch_rel_popsize)
+
+seed(0)
+df_NN['c_lat'] = np.random.choice(ch_lats, size = N, 
+     replace=True, p=ch_rel_popsize)
+
+seed(0)
+df_NN['c_lon'] = np.random.choice(ch_lons, size = N, 
+     replace=True, p=ch_rel_popsize)
+
+#print(df_NN['home_chapter'][0], df_NN['c_lat'][0], df_NN['c_lon'][0])
+
+df_NN['dsi'] = 0
+df_NN['dsr'] = 0
+df_NN['dss'] = 0
+df_NN['ebs'] = 0
+df_NN['ebr'] = 0
+df_NN['ebv'] = 0
+df_NN['vac'] = 0
+df_NN['rec'] = 0
+df_NN['con'] = 0
+df_NN['inf'] = 0
+df_NN['alive'] = 1
+
+print(df_NN.shape)
+print(list(df_NN))            
+
+Ni = len(iDict)
+print('simulation:', sim, '| Day:', day, ' | N:', N)
+keys = iDict.keys()
+for i in keys:
+   x = keys[i]
+   print(x)
+   sys.exit()
+   #print(key)
+   #sys.exit()
+   
+   # SimFxns ARE COMMENTED OUT FOR THE PURPOSE OF JUST HAVING THE CODE RUN
+   # AND HAVING agg_data INITIATED AND PROCESSED       
         
-        j = choice([0])#, 1, 2, 3, 4, 5, 6])
-        if j == 0 and val['sex'] == 'f':
-            iDict = SimFxns.reproduce(key, iDict, MainDF, disease, chDict)
-        elif j == 1:
-            iDict = SimFxns.death(key, iDict, MainDF, disease, chDict)
-        elif j == 2:
-            iDict = SimFxns.dispersal(key, iDict, MainDF, disease, chDict)
-        elif j == 3:
-            iDict = SimFxns.immigration(key, iDict, MainDF, disease, chDict)
-        elif j == 4:
-            iDict = SimFxns.infection(key, iDict, MainDF, disease, chDict)
-        elif j == 5:
-            iDict = SimFxns.recover(key, iDict, MainDF, disease, chDict)
-        elif j == 6:
-            iDict = SimFxns.incubation(key, iDict, MainDF, disease, chDict)
+   j = choice([0])#, 1, 2, 3, 4, 5, 6])
+   if j == 0 and val['sex'] == 'f':
+       iDict = SimFxns.reproduce(key, iDict, MainDF, disease, chDict)
+   elif j == 1:
+       iDict = SimFxns.death(key, iDict, MainDF, disease, chDict)
+   elif j == 2:
+       iDict = SimFxns.dispersal(key, iDict, MainDF, disease, chDict)
+   elif j == 3:
+       iDict = SimFxns.immigration(key, iDict, MainDF, disease, chDict)
+   elif j == 4:
+       iDict = SimFxns.infection(key, iDict, MainDF, disease, chDict)
+   elif j == 5:
+       iDict = SimFxns.recover(key, iDict, MainDF, disease, chDict)
+   elif j == 6:
+       iDict = SimFxns.incubation(key, iDict, MainDF, disease, chDict)
                  
-        inf = val['inf']
-        rec = val['rec']
-        vac = val['vac']
-        age = val['age']
-        sex = val['sex']
-        alive = val['alive']
-        ch = val['home_chapter']
+   inf = val['inf']
+   rec = val['rec']
+   vac = val['vac']
+   age = val['age']
+   sex = val['sex']
+   alive = val['alive']
+   ch = val['home_chapter']
         
-        p1, p2, p3 = str(), str(), str()
+   p1, p2, p3 = str(), str(), str()
         
-        if sex == 'm': p1 = 'm_'
-        else: p1 = 'f_'
+   if sex == 'm': p1 = 'm_'
+   else: p1 = 'f_'
         
-        if alive == 1: p2 = 'a_'
-        else: p2 = 'd_'
+   if alive == 1: p2 = 'a_'
+   else: p2 = 'd_'
         
-        if rec == 0:
-            p3 = 'rec_'
-            agg_data[ch][p1+p2+p3+'age'][age] += 1
-        if inf == 0:
-            p3 = 'inf_'
-            agg_data[ch][p1+p2+p3+'age'][age] += 1
-        if vac == 0:
-            p3 = 'inf_'
-            agg_data[ch][p1+p2+p3+'age'][age] += 1
+   if rec == 0:
+       p3 = 'rec_'
+       agg_data[ch][p1+p2+p3+'age'][age] += 1
+   if inf == 0:
+       p3 = 'inf_'
+       agg_data[ch][p1+p2+p3+'age'][age] += 1
+   if vac == 0:
+       p3 = 'inf_'
+       agg_data[ch][p1+p2+p3+'age'][age] += 1
          
-    print(agg_data['Becenti'])
+       print(agg_data['Becenti'])
     #sys.exit()
         
-    outlist = [sim, disease, day, N] # list to hold data 
+       outlist = [sim, disease, day, N] # list to hold data 
     
     # Process data in agg_data to get data for outlist
         
@@ -190,4 +166,4 @@ for sim in range(num_sims):
     #print>>OUT, # what to print
     #OUT.close()
     
-    chapter_rel_popsize = sum(chapter_pops)/N
+       chapter_rel_popsize = sum(chapter_pops)/N

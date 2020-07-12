@@ -7,7 +7,15 @@ Kenneth J. Locey, Ph.D.
 Alexander Nez, Undergrad
 
 # Software Used
-
+* Anaconda navigator
+* Python 3.7.4 
+* Sypder 3.3.6
+* numpy 1.17.2
+* geopy 1.20.0
+* Cartopy 0.17.0
+* matplotlib 3.1.1
+* pandas 0.25.1
+* scipy 1.3.1.
 # To do list for project
 * [] Finish Main_ABM.py
 * [] Finish Master_DataFrame
