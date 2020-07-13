@@ -43,6 +43,8 @@ df_NN = pd.DataFrame(columns = column_names)
 
 #print('Numbers of rows and columns in dataframe:', df_NN.shape)
 #print('Row names of dataframe:', list(df_NN))
+#sys.exit()
+
 
 ############ Below: filling dataframe
 
@@ -58,14 +60,14 @@ Age_40_49 = 22123/N
 Age_50_59 = 19469/N
 Age_60_69 = 12307/N
 Age_70_79 = 7667/N
-Age_80 = 3599/N
 
-age_groups = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-demographies = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+sN = sum([Age_0_9, Age_10_19, Age_20_29, Age_30_39, Age_40_49, Age_50_59, Age_60_69, Age_70_79])
+Age_80_plus = 1 - sN # # 3599
 
-age_groups = [10, 20, 30, 40, 50, 60, 70, 80]
-demographies = [Age_0_9,Age_10_19, Age_20_29, Age_30_39, Age_40_49, Age_50_59,
-                Age_60_69, Age_70_79, Age_80]
+age_groups = [10, 20, 30, 40, 50, 60, 70, 80, 90]
+demographies = [Age_0_9, Age_10_19, Age_20_29, Age_30_39, Age_40_49, Age_50_59,
+                Age_60_69, Age_70_79, Age_80_plus]
+
 df_NN['age'] = np.random.choice(age_groups, size=N, replace=True, 
      p=demographies)
 
@@ -84,7 +86,6 @@ seed(0)
 df_NN['c_lon'] = np.random.choice(ch_lons, size = N, 
      replace=True, p=ch_rel_popsize)
 
-#print(df_NN['home_chapter'][0], df_NN['c_lat'][0], df_NN['c_lon'][0])
 
 df_NN['dsi'] = 0
 df_NN['dsr'] = 0

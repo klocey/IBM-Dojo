@@ -1,12 +1,13 @@
-# Project Description
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Navajo_flag.svg/200px-Navajo_flag.svg.png" align="right" width="450" height="225"/>
+# Project Description   
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Navajo_flag.svg/200px-Navajo_flag.svg.png" align="right" width="350" height="225"/>
 
-# Authors 
+# Authors  
+Alexander Nez, Undergrad
 Kenneth J. Locey, Ph.D.
 
-Alexander Nez, Undergrad
 
-# Software Used
+# Software Used  
+
 * Anaconda navigator
 * Python 3.7.4 
 * Sypder 3.3.6
@@ -15,8 +16,10 @@ Alexander Nez, Undergrad
 * Cartopy 0.17.0
 * matplotlib 3.1.1
 * pandas 0.25.1
-* scipy 1.3.1.
-# To do list for project
+* scipy 1.3.1
+
+# To do list for project   
+
 * [] Finish Main_ABM.py
 * [] Finish Master_DataFrame
     * Add hospital and change degree minutes second to decimals

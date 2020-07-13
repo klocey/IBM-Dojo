@@ -18,8 +18,8 @@ file_name = '2020_07_11_1635_MasterData.txt'
 MainDF = pd.read_csv(mydir + '/GIS_Data_Frame/'+file_name, delimiter="\t")
 
 ch_names = list(set(MainDF['Chapters'])) # List of 110 Navajo Chapter
-ch_lats = list(set(MainDF['Lat']) # List of corresponding Lat with respect to their chpater
-ch_lons = list(set(MainDF['Lon']) # List of corresponding Lat with respect to their chpater
+ch_lats = list(set(MainDF['Lat'])) # List of corresponding Lat with respect to their chpater
+ch_lons = list(set(MainDF['Lon'])) # List of corresponding Lat with respect to their chpater
 # set() takes a column and checks if they're no duplicated in the column
 # list() turns the unquie set into into a list of variable 
 
@@ -27,8 +27,9 @@ nat_ded = 0.1 # The chance of an indivdual dying from natural causes.
 inf_ded = 0. # The chance of dying for the choosen diseases causes. 
 imm = 2  # the rate of how much individuals 
 disease = "HantaViruS"
-#print(len(chapter_names))
-#sys.exit() 
+
+print(len(ch_names))
+sys.exit() 
 
 chapter_pops = list(MainDF['Population'])
 N = sum(chapter_pops)
